@@ -1,0 +1,21 @@
+name: Deploy Notification to Telegram
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Telegram Notification
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_CHAT_ID }}
+          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          message: |
+            🚀 ${{ github.repository }} 배포 시작\!
+            브랜치: ${{ github.ref_name }}
+            커밋: ${{ github.event.head_commit.message }}
+            작성자: ${{ github.actor }}
+            URL: https://github.com/${{ github.repository }}/commit/${{ github.sha }}
