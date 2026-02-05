@@ -14,7 +14,7 @@ jobs:
           to: ${{ secrets.TELEGRAM_CHAT_ID }}
           token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           message: |
-            🚀 ${{ github.repository }} 배포 시작\!
+            🚀 ${{ github.repository }} 배포 시작!
             브랜치: ${{ github.ref_name }}
             커밋: ${{ github.event.head_commit.message }}
             작성자: ${{ github.actor }}
