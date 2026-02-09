@@ -1,0 +1,147 @@
+---
+title: "AI 코딩 도구 활용 가이드"
+description: "GitHub Copilot, ChatGPT, Claude 등 AI 코딩 도구를 효과적으로 활용하는 전략과 팁을 공유합니다."
+date: "2025-02-18"
+tags: ["AI", "개발도구", "생산성"]
+---
+
+## AI 코딩 도구의 현재
+
+AI 코딩 도구는 이제 개발자의 일상적인 도구가 되었습니다. 코드 자동완성부터 리팩토링, 버그 디버깅, 문서 작성까지 다양한 영역에서 개발 생산성을 높여주고 있습니다.
+
+## 주요 AI 코딩 도구
+
+### GitHub Copilot
+
+에디터에 통합되어 실시간으로 코드를 제안합니다:
+
+```typescript
+// 함수 시그니처만 작성하면 본문을 제안
+function calculateShippingCost(
+  weight: number,
+  distance: number,
+  isExpress: boolean
+): number {
+  // Copilot이 함수 내용을 추론하여 완성
+  const baseRate = 3000;
+  const weightRate = weight * 500;
+  const distanceRate = distance * 100;
+  const expressMultiplier = isExpress ? 1.5 : 1;
+
+  return (baseRate + weightRate + distanceRate) * expressMultiplier;
+}
+```
+
+### AI 채팅 도구
+
+ChatGPT, Claude 등을 활용하면 복잡한 문제를 대화형으로 해결할 수 있습니다:
+
+```
+프롬프트 예시:
+"이 React 컴포넌트에서 메모리 누수가 발생하는 원인을 분석해 주세요.
+그리고 수정 방법을 코드와 함께 설명해 주세요."
+```
+
+### CLI 기반 AI 도구
+
+터미널에서 직접 AI를 활용하는 도구도 등장했습니다:
+
+```bash
+# 코드베이스 전체를 이해하고 작업 수행
+# 파일 수정, 테스트 실행, 디버깅 등을 자동화
+```
+
+## 효과적인 프롬프트 작성법
+
+AI 도구의 결과물 품질은 프롬프트에 크게 좌우됩니다:
+
+### 1. 구체적으로 요청하기
+
+```
+나쁜 예: "로그인 기능 만들어 줘"
+
+좋은 예: "Next.js App Router에서 JWT 기반 로그인 기능을 구현해 주세요.
+- POST /api/auth/login 엔드포인트
+- bcrypt로 비밀번호 검증
+- HttpOnly 쿠키에 JWT 저장
+- TypeScript 타입 포함"
+```
+
+### 2. 맥락 제공하기
+
+```
+프로젝트 정보:
+- Next.js 15, TypeScript, Tailwind CSS
+- Prisma ORM, PostgreSQL
+- 기존 User 모델이 있음
+
+요청:
+사용자 프로필 수정 API와 페이지를 만들어 주세요.
+```
+
+### 3. 제약 조건 명시하기
+
+```
+조건:
+- 외부 라이브러리 없이 순수 CSS로 구현
+- 접근성(a11y) 기준 준수
+- 모바일 반응형 필수
+```
+
+## AI 도구 활용 베스트 프랙티스
+
+### 코드 리뷰 보조
+
+```typescript
+// AI에게 코드 리뷰를 요청할 수 있습니다
+// 보안 취약점, 성능 이슈, 코드 스타일 검토
+
+// AI 리뷰 요청 예시:
+// "이 API 라우트에서 보안 취약점이 있는지 검토해 주세요"
+export async function POST(request: Request) {
+  const body = await request.json();
+  const user = await db.user.findUnique({
+    where: { email: body.email }
+  });
+  // AI: SQL 인젝션은 Prisma가 방지하지만,
+  // 입력 유효성 검사가 필요합니다
+}
+```
+
+### 테스트 코드 생성
+
+```typescript
+// 함수를 제공하고 테스트 생성을 요청
+function formatPrice(amount: number, currency: string): string {
+  return new Intl.NumberFormat('ko-KR', {
+    style: 'currency',
+    currency,
+  }).format(amount);
+}
+
+// AI가 생성한 테스트
+describe('formatPrice', () => {
+  it('한국 원화를 포맷한다', () => {
+    expect(formatPrice(10000, 'KRW')).toBe('₩10,000');
+  });
+
+  it('미국 달러를 포맷한다', () => {
+    expect(formatPrice(99.99, 'USD')).toBe('US$99.99');
+  });
+});
+```
+
+### 문서 자동 생성
+
+복잡한 함수의 JSDoc이나 README를 AI로 빠르게 생성할 수 있습니다.
+
+## 주의할 점
+
+- **코드를 항상 검토하세요**: AI가 생성한 코드를 그대로 사용하지 마세요
+- **보안 민감 코드 주의**: 비밀키, 인증 로직은 직접 검증
+- **학습 목적으로 활용**: AI가 제안한 코드를 이해하려고 노력하세요
+- **의존하지 마세요**: 기본기를 먼저 다진 후 보조 도구로 활용
+
+## 마무리
+
+AI 코딩 도구는 개발자를 대체하는 것이 아니라 증강하는 도구입니다. 반복적인 작업을 자동화하고, 학습 속도를 높이며, 더 나은 코드를 작성하는 데 도움을 줍니다. 핵심은 도구의 한계를 이해하면서 자신의 워크플로우에 자연스럽게 통합하는 것입니다.

@@ -1,0 +1,112 @@
+---
+title: "Next.js App Router 핵심 가이드"
+description: "Next.js App Router의 주요 개념과 실전 활용법을 알아봅니다. 파일 기반 라우팅부터 서버 컴포넌트까지 핵심을 정리합니다."
+date: "2025-02-05"
+tags: ["Next.js", "React", "웹개발"]
+---
+
+## App Router란?
+
+Next.js 13부터 도입된 App Router는 `app/` 디렉토리 기반의 새로운 라우팅 시스템입니다. 기존 Pages Router와 달리 React Server Components를 기본으로 사용하며, 레이아웃 중첩, 스트리밍, 서버 액션 등 현대적인 웹 개발 패턴을 지원합니다.
+
+## 파일 기반 라우팅
+
+App Router에서는 폴더 구조가 곧 URL 경로가 됩니다:
+
+```
+app/
+├── page.tsx          → /
+├── about/
+│   └── page.tsx      → /about
+├── blog/
+│   ├── page.tsx      → /blog
+│   └── [slug]/
+│       └── page.tsx  → /blog/:slug
+```
+
+각 라우트 세그먼트에서 사용할 수 있는 특수 파일들이 있습니다:
+
+```typescript
+// layout.tsx - 하위 라우트에 공통 레이아웃 적용
+export default function Layout({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="container">
+      <nav>내비게이션</nav>
+      {children}
+    </div>
+  );
+}
+```
+
+- `page.tsx`: 해당 경로의 페이지 컴포넌트
+- `layout.tsx`: 하위 경로에 공유되는 레이아웃
+- `loading.tsx`: 로딩 상태 UI (React Suspense 기반)
+- `error.tsx`: 에러 처리 UI (Error Boundary 기반)
+- `not-found.tsx`: 404 페이지
+
+## 서버 컴포넌트와 클라이언트 컴포넌트
+
+App Router의 가장 큰 변화는 **모든 컴포넌트가 기본적으로 서버 컴포넌트**라는 점입니다:
+
+```typescript
+// 서버 컴포넌트 (기본값) - DB 접근, 파일 시스템 접근 가능
+async function PostList() {
+  const posts = await db.post.findMany();
+  return (
+    <ul>
+      {posts.map(post => (
+        <li key={post.id}>{post.title}</li>
+      ))}
+    </ul>
+  );
+}
+```
+
+클라이언트에서 상호작용이 필요한 경우 `'use client'` 지시어를 사용합니다:
+
+```typescript
+'use client';
+
+import { useState } from 'react';
+
+export function Counter() {
+  const [count, setCount] = useState(0);
+  return <button onClick={() => setCount(c => c + 1)}>{count}</button>;
+}
+```
+
+## 데이터 페칭
+
+서버 컴포넌트에서는 `async/await`을 직접 사용할 수 있어 데이터 페칭이 매우 직관적입니다:
+
+```typescript
+async function ProductPage({ params }: { params: { id: string } }) {
+  const product = await fetch(`https://api.example.com/products/${params.id}`);
+  const data = await product.json();
+
+  return <h1>{data.name}</h1>;
+}
+```
+
+## 메타데이터 API
+
+SEO에 필수적인 메타데이터를 타입 안전하게 관리할 수 있습니다:
+
+```typescript
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: '페이지 제목',
+  description: '페이지 설명',
+  openGraph: {
+    title: '소셜 공유 제목',
+    description: '소셜 공유 설명',
+  },
+};
+```
+
+동적 메타데이터가 필요한 경우 `generateMetadata` 함수를 사용합니다.
+
+## 마무리
+
+App Router는 React의 최신 기능을 적극 활용하면서도 Next.js 특유의 개발자 경험을 유지합니다. 서버 컴포넌트를 기본으로 활용하면 번들 크기를 줄이고, 데이터 페칭을 단순화하며, SEO를 자연스럽게 개선할 수 있습니다. 새 프로젝트를 시작한다면 App Router를 적극 추천합니다.

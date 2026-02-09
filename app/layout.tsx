@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { siteConfig } from '@/lib/config';
 import './globals.css';
 
 const geistSans = Geist({
@@ -19,25 +20,37 @@ export const metadata: Metadata = {
     default: 'Joonit - 개인 블로그',
     template: '%s | Joonit',
   },
-  description: '개발, 기술, 그리고 일상에 대한 이야기를 나누는 개인 블로그입니다.',
-  keywords: ['블로그', '개발', '프로그래밍', 'Next.js', 'React', 'TypeScript'],
-  authors: [{ name: 'Joonsang' }],
+  description: siteConfig.description,
+  keywords: siteConfig.keywords,
+  authors: [{ name: siteConfig.author.name }],
   openGraph: {
     type: 'website',
     locale: 'ko_KR',
-    url: 'https://joonit.dev',
-    siteName: 'Joonit',
+    url: siteConfig.url,
+    siteName: siteConfig.title,
     title: 'Joonit - 개인 블로그',
-    description: '개발, 기술, 그리고 일상에 대한 이야기를 나누는 개인 블로그입니다.',
+    description: siteConfig.description,
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Joonit - 개인 블로그',
-    description: '개발, 기술, 그리고 일상에 대한 이야기를 나누는 개인 블로그입니다.',
+    description: siteConfig.description,
   },
   robots: {
     index: true,
     follow: true,
+  },
+};
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: siteConfig.title,
+  url: siteConfig.url,
+  description: siteConfig.description,
+  author: {
+    '@type': 'Person',
+    name: siteConfig.author.name,
   },
 };
 
@@ -49,6 +62,10 @@ export default function RootLayout({
   return (
     <html lang="ko" suppressHydrationWarning>
       <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -65,6 +82,14 @@ export default function RootLayout({
             `,
           }}
         />
+        {/* AdSense: 승인 후 아래 주석 해제하고 환경변수 NEXT_PUBLIC_ADSENSE_ID 설정 */}
+        {/* process.env.NEXT_PUBLIC_ADSENSE_ID && (
+          <script
+            async
+            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_ADSENSE_ID}`}
+            crossOrigin="anonymous"
+          />
+        ) */}
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}

@@ -1,0 +1,168 @@
+---
+title: "MDX로 기술 블로그 만들기"
+description: "Next.js와 MDX를 조합하여 커스터마이징이 자유로운 기술 블로그를 처음부터 구축하는 과정을 공유합니다."
+date: "2025-02-11"
+tags: ["MDX", "블로그", "Next.js"]
+---
+
+## MDX란?
+
+MDX는 Markdown에 JSX를 결합한 포맷입니다. 일반 Markdown으로 글을 작성하면서도 React 컴포넌트를 삽입할 수 있어 기술 블로그에 이상적입니다.
+
+```mdx
+# 일반 Markdown 문법
+
+이것은 일반 텍스트입니다.
+
+<CustomAlert type="info">
+  여기에 React 컴포넌트를 넣을 수 있습니다!
+</CustomAlert>
+```
+
+## 프로젝트 구조 설계
+
+MDX 블로그의 기본 구조를 설계합니다:
+
+```
+project/
+├── app/
+│   ├── blog/
+│   │   ├── page.tsx           # 블로그 목록
+│   │   └── [slug]/
+│   │       └── page.tsx       # 블로그 상세
+│   └── layout.tsx
+├── content/
+│   └── posts/
+│       ├── first-post.mdx
+│       └── second-post.mdx
+├── components/
+│   └── MDXComponents.tsx      # 커스텀 MDX 컴포넌트
+└── lib/
+    ├── posts.ts               # 포스트 유틸리티
+    └── mdx.ts                 # MDX 파싱
+```
+
+## 핵심 라이브러리 설치
+
+```bash
+npm install next-mdx-remote gray-matter
+```
+
+- `next-mdx-remote`: Next.js에서 원격/파일 기반 MDX를 처리
+- `gray-matter`: frontmatter 파싱 (YAML 메타데이터)
+
+## Frontmatter 설계
+
+각 포스트의 메타데이터를 정의합니다:
+
+```yaml
+---
+title: "포스트 제목"
+description: "SEO를 위한 설명"
+date: "2025-02-11"
+tags: ["태그1", "태그2"]
+image: "/images/thumbnail.jpg"
+---
+```
+
+## 포스트 데이터 로딩
+
+파일 시스템에서 MDX 파일을 읽어오는 유틸리티를 작성합니다:
+
+```typescript
+// lib/posts.ts
+import fs from 'fs';
+import path from 'path';
+import matter from 'gray-matter';
+
+const postsDirectory = path.join(process.cwd(), 'content/posts');
+
+export interface PostMeta {
+  slug: string;
+  title: string;
+  description: string;
+  date: string;
+  tags?: string[];
+}
+
+export async function getAllPosts(): Promise<PostMeta[]> {
+  const fileNames = fs.readdirSync(postsDirectory);
+
+  const posts = fileNames
+    .filter(name => name.endsWith('.mdx'))
+    .map(name => {
+      const slug = name.replace(/\.mdx$/, '');
+      const content = fs.readFileSync(
+        path.join(postsDirectory, name), 'utf8'
+      );
+      const { data } = matter(content);
+
+      return { slug, ...data } as PostMeta;
+    });
+
+  return posts.sort((a, b) => (a.date > b.date ? -1 : 1));
+}
+```
+
+## MDX 파싱과 커스텀 컴포넌트
+
+MDX를 HTML로 변환하면서 커스텀 스타일을 적용합니다:
+
+```typescript
+// lib/mdx.ts
+import { compileMDX } from 'next-mdx-remote/rsc';
+import { MDXComponents } from '@/components/MDXComponents';
+
+export async function parseMDX(source: string) {
+  return compileMDX({
+    source,
+    components: MDXComponents,
+    options: { parseFrontmatter: true },
+  });
+}
+```
+
+커스텀 컴포넌트로 코드 블록, 이미지, 링크 등의 렌더링을 제어할 수 있습니다:
+
+```typescript
+// components/MDXComponents.tsx
+export const MDXComponents = {
+  code({ children, className }) {
+    const isInline = !className;
+    if (isInline) {
+      return <code className="bg-card px-1.5 py-0.5 rounded">{children}</code>;
+    }
+    return <code className={className}>{children}</code>;
+  },
+  a({ href, children }) {
+    const isExternal = href?.startsWith('http');
+    return (
+      <a href={href} target={isExternal ? '_blank' : undefined}>
+        {children}
+      </a>
+    );
+  },
+};
+```
+
+## SEO 최적화
+
+각 포스트의 메타데이터를 동적으로 생성합니다:
+
+```typescript
+export async function generateMetadata({ params }): Promise<Metadata> {
+  const post = await getPostBySlug(params.slug);
+  return {
+    title: post.frontmatter.title,
+    description: post.frontmatter.description,
+    openGraph: {
+      type: 'article',
+      publishedTime: post.frontmatter.date,
+    },
+  };
+}
+```
+
+## 마무리
+
+MDX 기반 블로그는 콘텐츠 자유도가 높고, 데이터베이스 없이 파일 시스템만으로 운영할 수 있어 관리가 편합니다. Vercel이나 Netlify에 배포하면 빌드 시 정적 HTML로 변환되어 빠른 로딩 속도를 보장합니다. 기술 블로그를 시작하고 싶다면 MDX + Next.js 조합을 추천합니다.

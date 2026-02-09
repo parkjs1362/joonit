@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { getPostBySlug, getAllPosts } from '@/lib/posts';
 import { parseMDX } from '@/lib/mdx';
+import { siteConfig } from '@/lib/config';
 import AnimatedSection from '@/components/AnimatedSection';
 
 interface PageProps {
@@ -34,6 +35,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       description: post.frontmatter.description,
       type: 'article',
       publishedTime: post.frontmatter.date,
+      url: `${siteConfig.url}/blog/${slug}`,
       ...(post.frontmatter.image && { images: [post.frontmatter.image] }),
     },
   };
@@ -49,8 +51,26 @@ export default async function BlogPostPage({ params }: PageProps) {
 
   const { content } = await parseMDX(post.content);
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.frontmatter.title,
+    description: post.frontmatter.description,
+    datePublished: post.frontmatter.date,
+    author: {
+      '@type': 'Person',
+      name: siteConfig.author.name,
+    },
+    url: `${siteConfig.url}/blog/${slug}`,
+    ...(post.frontmatter.tags && { keywords: post.frontmatter.tags.join(', ') }),
+  };
+
   return (
     <article className="max-w-3xl mx-auto px-4 sm:px-6 py-12">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <AnimatedSection>
         <Link
           href="/blog"

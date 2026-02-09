@@ -1,0 +1,153 @@
+---
+title: "Tailwind CSS v4 실전 팁"
+description: "Tailwind CSS v4의 새로운 기능과 변경 사항을 정리하고, 실전에서 유용한 팁을 공유합니다."
+date: "2025-02-07"
+tags: ["Tailwind CSS", "CSS", "프론트엔드"]
+---
+
+## Tailwind CSS v4의 변화
+
+Tailwind CSS v4는 기존 버전과 근본적으로 다른 접근 방식을 취합니다. JavaScript 기반의 설정 파일(`tailwind.config.js`)이 사라지고, CSS 네이티브 방식으로 전환되었습니다.
+
+## 설정 방식의 변화
+
+### v3 방식 (JavaScript 설정)
+
+```javascript
+// tailwind.config.js (v3)
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        primary: '#3b82f6',
+      },
+    },
+  },
+  plugins: [require('@tailwindcss/typography')],
+};
+```
+
+### v4 방식 (CSS 네이티브)
+
+```css
+/* globals.css (v4) */
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme inline {
+  --color-primary: #3b82f6;
+  --color-primary-hover: #2563eb;
+}
+```
+
+설정이 CSS 안에서 이루어지기 때문에 별도의 설정 파일이 필요 없습니다. `@theme` 지시어를 통해 디자인 토큰을 정의합니다.
+
+## CSS 변수 기반 다크모드
+
+v4에서는 CSS 변수를 활용한 다크모드 구현이 더 자연스럽습니다:
+
+```css
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --primary: #3b82f6;
+  --muted: #6b7280;
+  --border: #e5e7eb;
+  --card: #f9fafb;
+}
+
+.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  --primary: #60a5fa;
+  --muted: #9ca3af;
+  --border: #374151;
+  --card: #1f2937;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-card: var(--card);
+}
+```
+
+이렇게 하면 `bg-background`, `text-foreground`, `border-border` 같은 유틸리티 클래스를 바로 사용할 수 있습니다.
+
+## 실전 팁
+
+### 1. 반투명 색상 활용
+
+Tailwind v4에서는 `bg-primary/10`처럼 투명도를 간단히 조절할 수 있습니다:
+
+```html
+<span class="bg-primary/10 text-primary px-2 py-1 rounded-full">
+  태그
+</span>
+```
+
+### 2. 컨테이너 쿼리
+
+v4에서는 `@container` 지원이 내장되어 있습니다:
+
+```html
+<div class="@container">
+  <div class="@sm:flex @sm:gap-4">
+    <div class="@sm:w-1/3">사이드바</div>
+    <div class="@sm:w-2/3">메인 콘텐츠</div>
+  </div>
+</div>
+```
+
+### 3. 그라데이션 텍스트
+
+```html
+<h1 class="bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
+  그라데이션 제목
+</h1>
+```
+
+### 4. 그룹 호버
+
+부모 요소에 호버했을 때 자식 요소의 스타일을 변경합니다:
+
+```html
+<div class="group p-4 border rounded-xl hover:border-primary transition-colors">
+  <h3 class="group-hover:text-primary transition-colors">제목</h3>
+  <p class="text-muted">설명</p>
+</div>
+```
+
+### 5. 스크롤바 커스터마이징
+
+```css
+/* Tailwind과 함께 사용하는 커스텀 스크롤바 */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--muted);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+```
+
+## 마이그레이션 체크리스트
+
+v3에서 v4로 마이그레이션할 때 확인할 사항:
+
+- `tailwind.config.js` → `globals.css`의 `@theme` 블록으로 이동
+- `require()` 플러그인 → `@plugin` 지시어로 변경
+- `darkMode: 'class'` → CSS 변수 방식으로 전환
+- 커스텀 색상 → `--color-*` CSS 변수로 정의
+
+## 마무리
+
+Tailwind CSS v4는 CSS 네이티브 방식을 채택하면서 더 빠른 빌드 속도와 더 작은 출력 파일을 제공합니다. CSS 변수를 적극 활용하면 다크모드, 테마 전환 등의 기능을 매우 유연하게 구현할 수 있습니다.

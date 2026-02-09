@@ -1,0 +1,159 @@
+---
+title: "Framer Motion으로 웹 애니메이션 구현"
+description: "Framer Motion 라이브러리를 활용해 React에서 자연스러운 웹 애니메이션을 구현하는 방법을 소개합니다."
+date: "2025-02-09"
+tags: ["Framer Motion", "애니메이션", "React"]
+---
+
+## Framer Motion 소개
+
+Framer Motion은 React 전용 애니메이션 라이브러리입니다. 선언적인 API로 복잡한 애니메이션도 간결하게 표현할 수 있으며, 스프링 물리 기반의 자연스러운 모션을 제공합니다.
+
+## 기본 애니메이션
+
+가장 기본적인 사용법은 `motion` 컴포넌트와 `animate` prop입니다:
+
+```typescript
+import { motion } from 'framer-motion';
+
+function FadeIn() {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      부드럽게 나타납니다
+    </motion.div>
+  );
+}
+```
+
+- `initial`: 애니메이션 시작 상태
+- `animate`: 애니메이션 종료 상태
+- `transition`: 애니메이션 속도, 타이밍 등 제어
+
+## 스크롤 기반 애니메이션
+
+`whileInView`를 사용하면 요소가 뷰포트에 진입할 때 애니메이션을 실행합니다:
+
+```typescript
+function ScrollReveal({ children }: { children: React.ReactNode }) {
+  return (
+    <motion.section
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-100px' }}
+      transition={{
+        duration: 0.6,
+        ease: [0.25, 0.1, 0.25, 1],
+      }}
+    >
+      {children}
+    </motion.section>
+  );
+}
+```
+
+`viewport.once: true`로 설정하면 한 번만 실행되어 성능에 유리합니다. `margin`은 뷰포트 감지 영역을 조절합니다.
+
+## 호버/탭 인터랙션
+
+사용자 상호작용에 반응하는 애니메이션도 간단합니다:
+
+```typescript
+function InteractiveCard() {
+  return (
+    <motion.div
+      whileHover={{ scale: 1.02, y: -4 }}
+      whileTap={{ scale: 0.98 }}
+      transition={{ type: 'spring', stiffness: 300 }}
+      className="p-6 rounded-xl border cursor-pointer"
+    >
+      <h3>호버해 보세요</h3>
+      <p>카드가 살짝 올라갑니다</p>
+    </motion.div>
+  );
+}
+```
+
+`type: 'spring'`은 스프링 물리를 사용하여 자연스러운 느낌을 줍니다.
+
+## 리스트 애니메이션
+
+순차적으로 나타나는 리스트 애니메이션을 구현할 수 있습니다:
+
+```typescript
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const item = {
+  hidden: { opacity: 0, x: -20 },
+  show: { opacity: 1, x: 0 },
+};
+
+function StaggeredList({ items }: { items: string[] }) {
+  return (
+    <motion.ul variants={container} initial="hidden" animate="show">
+      {items.map((text, i) => (
+        <motion.li key={i} variants={item}>
+          {text}
+        </motion.li>
+      ))}
+    </motion.ul>
+  );
+}
+```
+
+`staggerChildren`은 각 자식 요소의 애니메이션 시작 시간을 순차적으로 지연시킵니다.
+
+## 페이지 전환 애니메이션
+
+`AnimatePresence`를 사용하면 컴포넌트가 DOM에서 제거될 때의 애니메이션도 제어할 수 있습니다:
+
+```typescript
+import { AnimatePresence, motion } from 'framer-motion';
+
+function Modal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          onClick={onClose}
+          className="fixed inset-0 bg-black/50"
+        >
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.9, opacity: 0 }}
+            className="bg-white rounded-xl p-6"
+          >
+            모달 콘텐츠
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
+```
+
+## 성능 팁
+
+- `transform`과 `opacity` 속성만 애니메이션하세요 (GPU 가속)
+- `layout` prop은 필요한 경우에만 사용하세요
+- `viewport.once: true`로 반복 실행을 방지하세요
+- 대량의 요소에 동시 애니메이션을 적용하지 마세요
+
+## 마무리
+
+Framer Motion은 선언적인 API 덕분에 학습 곡선이 낮으면서도 매우 표현력이 높은 라이브러리입니다. 특히 React 생태계와의 통합이 뛰어나 Next.js 프로젝트에서 활용하기 좋습니다. 자연스러운 애니메이션으로 사용자 경험을 한 단계 끌어올려 보세요.

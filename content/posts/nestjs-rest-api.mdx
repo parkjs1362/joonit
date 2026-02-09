@@ -1,0 +1,172 @@
+---
+title: "NestJS로 REST API 설계하기"
+description: "NestJS 프레임워크를 사용하여 체계적인 REST API를 설계하고 구현하는 방법을 알아봅니다."
+date: "2025-02-12"
+tags: ["NestJS", "백엔드", "REST API"]
+---
+
+## NestJS란?
+
+NestJS는 TypeScript를 기본으로 지원하는 Node.js 백엔드 프레임워크입니다. Angular에서 영감을 받은 모듈 기반 아키텍처로, 대규모 애플리케이션에서도 체계적인 코드 구조를 유지할 수 있습니다.
+
+## 프로젝트 생성
+
+```bash
+# NestJS CLI 설치 및 프로젝트 생성
+npm i -g @nestjs/cli
+nest new my-api
+```
+
+생성된 프로젝트 구조:
+
+```
+src/
+├── app.module.ts      # 루트 모듈
+├── app.controller.ts  # 루트 컨트롤러
+├── app.service.ts     # 루트 서비스
+└── main.ts            # 엔트리 포인트
+```
+
+## 모듈 기반 아키텍처
+
+NestJS의 핵심은 모듈입니다. 기능별로 모듈을 분리하여 관심사를 명확히 합니다:
+
+```typescript
+// users/users.module.ts
+import { Module } from '@nestjs/common';
+import { UsersController } from './users.controller';
+import { UsersService } from './users.service';
+
+@Module({
+  controllers: [UsersController],
+  providers: [UsersService],
+  exports: [UsersService],
+})
+export class UsersModule {}
+```
+
+## 컨트롤러 구현
+
+컨트롤러는 요청을 받아 응답을 반환하는 역할을 합니다:
+
+```typescript
+// users/users.controller.ts
+import { Controller, Get, Post, Put, Delete, Param, Body } from '@nestjs/common';
+import { UsersService } from './users.service';
+import { CreateUserDto, UpdateUserDto } from './dto';
+
+@Controller('users')
+export class UsersController {
+  constructor(private readonly usersService: UsersService) {}
+
+  @Get()
+  findAll() {
+    return this.usersService.findAll();
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.usersService.findOne(+id);
+  }
+
+  @Post()
+  create(@Body() createUserDto: CreateUserDto) {
+    return this.usersService.create(createUserDto);
+  }
+
+  @Put(':id')
+  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+    return this.usersService.update(+id, updateUserDto);
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.usersService.remove(+id);
+  }
+}
+```
+
+## DTO와 유효성 검사
+
+Data Transfer Object로 요청 데이터의 형식을 정의하고 검증합니다:
+
+```typescript
+// users/dto/create-user.dto.ts
+import { IsEmail, IsString, MinLength } from 'class-validator';
+
+export class CreateUserDto {
+  @IsString()
+  @MinLength(2)
+  name: string;
+
+  @IsEmail()
+  email: string;
+
+  @IsString()
+  @MinLength(8)
+  password: string;
+}
+```
+
+글로벌 유효성 검사 파이프를 설정합니다:
+
+```typescript
+// main.ts
+import { ValidationPipe } from '@nestjs/common';
+
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
+  app.useGlobalPipes(new ValidationPipe({
+    whitelist: true,       // DTO에 없는 속성 자동 제거
+    transform: true,       // 타입 자동 변환
+    forbidNonWhitelisted: true,
+  }));
+  await app.listen(3000);
+}
+```
+
+## 서비스 레이어
+
+비즈니스 로직은 서비스에서 처리합니다:
+
+```typescript
+// users/users.service.ts
+import { Injectable, NotFoundException } from '@nestjs/common';
+
+@Injectable()
+export class UsersService {
+  private users = [];
+
+  findAll() {
+    return this.users;
+  }
+
+  findOne(id: number) {
+    const user = this.users.find(u => u.id === id);
+    if (!user) throw new NotFoundException(`User #${id} not found`);
+    return user;
+  }
+
+  create(createUserDto: CreateUserDto) {
+    const user = { id: Date.now(), ...createUserDto };
+    this.users.push(user);
+    return user;
+  }
+}
+```
+
+## 에러 처리
+
+NestJS는 내장 예외 클래스를 제공하여 일관된 에러 응답을 보장합니다:
+
+```typescript
+throw new NotFoundException('리소스를 찾을 수 없습니다');
+// → { statusCode: 404, message: '리소스를 찾을 수 없습니다' }
+
+throw new BadRequestException('잘못된 요청입니다');
+// → { statusCode: 400, message: '잘못된 요청입니다' }
+```
+
+## 마무리
+
+NestJS는 TypeScript와 데코레이터 기반의 선언적 프로그래밍으로 체계적인 API를 구축할 수 있게 해줍니다. 모듈-컨트롤러-서비스 패턴을 따르면 코드의 테스트 용이성과 유지보수성이 크게 향상됩니다. 중소규모부터 대규모까지 폭넓게 활용할 수 있는 프레임워크입니다.

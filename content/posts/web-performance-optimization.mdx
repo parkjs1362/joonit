@@ -1,0 +1,121 @@
+---
+title: "웹 성능 최적화 실전 전략"
+description: "Core Web Vitals 개선부터 번들 최적화까지, 실제 프로젝트에서 바로 적용할 수 있는 웹 성능 최적화 전략을 소개합니다."
+date: "2025-02-10"
+tags: ["성능최적화", "웹개발", "Core Web Vitals"]
+---
+
+## 왜 웹 성능이 중요한가
+
+웹 성능은 사용자 경험과 비즈니스 성과에 직접적인 영향을 미칩니다. Google의 연구에 따르면 로딩 시간이 1초에서 3초로 늘어나면 이탈률이 32% 증가합니다. 또한 Core Web Vitals는 검색 순위에도 영향을 주는 요소입니다.
+
+## Core Web Vitals
+
+Google이 정의한 세 가지 핵심 지표를 이해해야 합니다:
+
+- **LCP (Largest Contentful Paint)**: 가장 큰 콘텐츠가 화면에 표시되기까지의 시간. 2.5초 이내가 좋음
+- **INP (Interaction to Next Paint)**: 사용자 상호작용 후 시각적 반응까지의 시간. 200ms 이내가 좋음
+- **CLS (Cumulative Layout Shift)**: 예상치 못한 레이아웃 변동의 누적 점수. 0.1 이하가 좋음
+
+## 이미지 최적화
+
+웹 성능에서 가장 큰 영향을 미치는 것은 이미지입니다:
+
+```typescript
+// Next.js Image 컴포넌트 활용
+import Image from 'next/image';
+
+function HeroImage() {
+  return (
+    <Image
+      src="/images/hero.jpg"
+      alt="히어로 이미지"
+      width={1200}
+      height={630}
+      priority  // LCP 이미지에는 priority 설정
+      placeholder="blur"
+      blurDataURL="data:image/jpeg;base64,/9j/4AAQ..."
+    />
+  );
+}
+```
+
+핵심 원칙:
+- `next/image`의 자동 최적화 활용 (WebP/AVIF 변환)
+- LCP 대상 이미지에 `priority` 속성 추가
+- 적절한 `width`/`height` 지정으로 CLS 방지
+- 화면 밖 이미지는 lazy loading (기본 동작)
+
+## 폰트 최적화
+
+웹 폰트는 CLS와 LCP에 영향을 줍니다:
+
+```typescript
+// Next.js의 내장 폰트 최적화
+import { Geist } from 'next/font/google';
+
+const geistSans = Geist({
+  subsets: ['latin'],
+  variable: '--font-geist-sans',
+  display: 'swap',  // FOIT 방지
+});
+```
+
+`next/font`를 사용하면 빌드 시 폰트 파일을 자체 호스팅하여 외부 네트워크 요청을 제거합니다.
+
+## 코드 분할과 지연 로딩
+
+필요한 시점에만 코드를 로드하여 초기 번들 크기를 줄입니다:
+
+```typescript
+import dynamic from 'next/dynamic';
+
+// 무거운 컴포넌트는 동적 import
+const HeavyChart = dynamic(() => import('@/components/Chart'), {
+  loading: () => <div className="h-64 bg-card animate-pulse rounded" />,
+  ssr: false,  // 클라이언트에서만 필요한 경우
+});
+```
+
+## 캐싱 전략
+
+적절한 캐싱은 재방문 시 성능을 크게 개선합니다:
+
+```typescript
+// Next.js fetch 캐싱
+const data = await fetch('https://api.example.com/data', {
+  next: { revalidate: 3600 },  // 1시간마다 갱신
+});
+```
+
+정적 에셋에는 긴 캐시 기간을 설정합니다:
+
+```
+// next.config.ts에서 헤더 설정
+Cache-Control: public, max-age=31536000, immutable
+```
+
+## 번들 분석
+
+무엇이 번들을 크게 만드는지 파악하는 것이 중요합니다:
+
+```bash
+# 번들 크기 분석
+npx @next/bundle-analyzer
+```
+
+tree-shaking이 제대로 동작하는지 확인하고, 불필요한 의존성을 제거합니다.
+
+## 실전 체크리스트
+
+1. `next/image`로 이미지 최적화
+2. `next/font`로 폰트 자체 호스팅
+3. LCP 이미지에 `priority` 설정
+4. 무거운 컴포넌트 동적 import
+5. 서버 컴포넌트 활용으로 클라이언트 번들 축소
+6. 적절한 캐싱 헤더 설정
+7. 번들 크기 정기 분석
+
+## 마무리
+
+웹 성능 최적화는 한 번에 끝나는 작업이 아니라 지속적으로 관리해야 하는 과정입니다. Lighthouse나 PageSpeed Insights로 정기적으로 측정하고, 병목 지점을 파악하여 점진적으로 개선해 나가세요.

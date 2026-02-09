@@ -1,0 +1,138 @@
+---
+title: "React Server Components 이해하기"
+description: "React Server Components가 무엇이고 왜 중요한지, 기존 방식과 어떻게 다른지 실제 예제와 함께 알아봅니다."
+date: "2025-02-06"
+tags: ["React", "RSC", "서버컴포넌트"]
+---
+
+## React Server Components란?
+
+React Server Components(RSC)는 서버에서만 실행되는 React 컴포넌트입니다. 클라이언트로 JavaScript가 전송되지 않기 때문에 번들 크기에 영향을 주지 않으면서도 서버 자원에 직접 접근할 수 있습니다.
+
+## 기존 방식과의 차이
+
+전통적인 React 앱에서는 모든 컴포넌트가 클라이언트에서 실행됩니다. 데이터가 필요하면 `useEffect`와 `fetch`를 조합해야 했습니다:
+
+```typescript
+// 기존 방식 - 클라이언트에서 데이터 페칭
+'use client';
+
+import { useEffect, useState } from 'react';
+
+function PostList() {
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch('/api/posts')
+      .then(res => res.json())
+      .then(data => {
+        setPosts(data);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) return <p>로딩 중...</p>;
+  return <ul>{posts.map(p => <li key={p.id}>{p.title}</li>)}</ul>;
+}
+```
+
+RSC를 사용하면 이 코드가 훨씬 간결해집니다:
+
+```typescript
+// Server Component - 서버에서 직접 데이터 접근
+async function PostList() {
+  const posts = await db.post.findMany({
+    orderBy: { createdAt: 'desc' }
+  });
+
+  return (
+    <ul>
+      {posts.map(post => (
+        <li key={post.id}>{post.title}</li>
+      ))}
+    </ul>
+  );
+}
+```
+
+## 서버 컴포넌트의 장점
+
+### 1. 번들 크기 감소
+
+서버 컴포넌트는 클라이언트로 JavaScript를 보내지 않습니다. 마크다운 파싱, 날짜 포맷팅 같은 라이브러리를 서버에서만 사용하면 번들에 포함되지 않습니다.
+
+```typescript
+// 이 import는 클라이언트 번들에 포함되지 않음
+import { format } from 'date-fns';
+import { remark } from 'remark';
+
+async function BlogPost({ slug }: { slug: string }) {
+  const post = await getPost(slug);
+  const html = await remark().process(post.content);
+
+  return (
+    <article>
+      <time>{format(new Date(post.date), 'yyyy년 MM월 dd일')}</time>
+      <div dangerouslySetInnerHTML={{ __html: html.toString() }} />
+    </article>
+  );
+}
+```
+
+### 2. 직접적인 백엔드 리소스 접근
+
+파일 시스템, 데이터베이스 등 서버 리소스에 별도의 API 없이 직접 접근할 수 있습니다.
+
+### 3. 자동 코드 분할
+
+서버/클라이언트 경계에서 자동으로 코드 분할이 이루어집니다.
+
+## 서버와 클라이언트의 조합
+
+실제 앱에서는 서버 컴포넌트와 클라이언트 컴포넌트를 적절히 조합하여 사용합니다:
+
+```typescript
+// ServerComponent.tsx (서버)
+import ClientButton from './ClientButton';
+
+async function ProductCard({ id }: { id: string }) {
+  const product = await getProduct(id);
+
+  return (
+    <div>
+      <h2>{product.name}</h2>
+      <p>{product.description}</p>
+      <ClientButton productId={id} />
+    </div>
+  );
+}
+```
+
+```typescript
+// ClientButton.tsx (클라이언트)
+'use client';
+
+import { useState } from 'react';
+
+export default function ClientButton({ productId }: { productId: string }) {
+  const [added, setAdded] = useState(false);
+
+  return (
+    <button onClick={() => setAdded(true)}>
+      {added ? '담김' : '장바구니 담기'}
+    </button>
+  );
+}
+```
+
+## 주의할 점
+
+- 서버 컴포넌트에서는 `useState`, `useEffect` 등의 훅을 사용할 수 없습니다
+- 이벤트 핸들러(`onClick` 등)를 사용할 수 없습니다
+- 브라우저 API(`window`, `document`)에 접근할 수 없습니다
+- 클라이언트 컴포넌트에서 서버 컴포넌트를 import할 수 없습니다 (children으로는 가능)
+
+## 마무리
+
+React Server Components는 "기본적으로 서버에서 렌더링하고, 필요한 부분만 클라이언트에서 처리한다"는 철학을 따릅니다. 이를 통해 더 빠른 초기 로딩, 더 작은 번들, 더 나은 SEO를 자연스럽게 달성할 수 있습니다.

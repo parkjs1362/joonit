@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 export default function Footer() {
   return (
     <footer className="border-t border-border mt-auto">
@@ -6,6 +8,20 @@ export default function Footer() {
           <p className="text-muted text-sm">
             &copy; {new Date().getFullYear()} Joonit. All rights reserved.
           </p>
+
+          <nav className="flex items-center gap-4 text-sm text-muted">
+            <Link href="/privacy" className="hover:text-foreground transition-colors">
+              개인정보처리방침
+            </Link>
+            <span className="text-border">|</span>
+            <Link href="/terms" className="hover:text-foreground transition-colors">
+              이용약관
+            </Link>
+            <span className="text-border">|</span>
+            <Link href="/contact" className="hover:text-foreground transition-colors">
+              연락처
+            </Link>
+          </nav>
 
           <div className="flex items-center gap-4">
             <a
