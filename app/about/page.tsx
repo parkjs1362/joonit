@@ -28,7 +28,7 @@ export default function AboutPage() {
           <h2>여기서 쓰는 글</h2>
           <ul>
             <li>
-              <strong>개발</strong>: Next.js, TypeScript, UI, 성능, DX
+              <strong>개발</strong>: 웹, UI, 성능, DX
             </li>
             <li>
               <strong>역사</strong>: 기술과 사회가 맞물리는 순간(표준, 인프라, 정보의 역사)
@@ -45,18 +45,11 @@ export default function AboutPage() {
             <li>나중의 내가 다시 읽어도 이해되는 글 쓰기</li>
           </ul>
 
-          <h2>블로그 스택</h2>
-          <ul>
-            <li>
-              <strong>Framework</strong>: Next.js (App Router)
-            </li>
-            <li>
-              <strong>Content</strong>: MDX
-            </li>
-            <li>
-              <strong>Styling</strong>: Tailwind CSS
-            </li>
-          </ul>
+          <h2>만드는 방식</h2>
+          <p>
+            정해진 기술 스택을 강조하기보다, 먼저 만들고(대충이라도) 쓰면서 다듬는
+            방식으로 운영합니다. 필요하면 과감히 바꾸고, 바뀐 이유를 기록해 둡니다.
+          </p>
 
           <h2>연락처</h2>
           <p>
