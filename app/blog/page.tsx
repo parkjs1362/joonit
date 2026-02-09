@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
-import PostCard from '@/components/PostCard';
 import AnimatedSection from '@/components/AnimatedSection';
-import { getAllPosts } from '@/lib/posts';
+import { getAllPosts, getAllCategories } from '@/lib/posts';
+import BlogContent from './BlogContent';
 
 export const metadata: Metadata = {
   title: '블로그',
@@ -10,6 +10,7 @@ export const metadata: Metadata = {
 
 export default async function BlogPage() {
   const posts = await getAllPosts();
+  const categories = await getAllCategories();
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12">
@@ -20,27 +21,7 @@ export default async function BlogPage() {
         </p>
       </AnimatedSection>
 
-      <AnimatedSection delay={0.2}>
-        {posts.length > 0 ? (
-          <div className="grid gap-6">
-            {posts.map((post) => (
-              <PostCard
-                key={post.slug}
-                slug={post.slug}
-                title={post.title}
-                description={post.description}
-                date={post.date}
-                tags={post.tags}
-              />
-            ))}
-          </div>
-        ) : (
-          <div className="text-center py-12 text-muted">
-            <p>아직 작성된 글이 없습니다.</p>
-            <p className="mt-2">곧 새로운 글이 올라올 예정입니다!</p>
-          </div>
-        )}
-      </AnimatedSection>
+      <BlogContent posts={posts} categories={categories} />
     </div>
   );
 }

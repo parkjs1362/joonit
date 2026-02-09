@@ -9,6 +9,7 @@ export interface PostMeta {
   title: string;
   description: string;
   date: string;
+  category: string;
   tags?: string[];
   image?: string;
 }
@@ -32,6 +33,7 @@ export async function getAllPosts(): Promise<PostMeta[]> {
         title: data.title || 'Untitled',
         description: data.description || '',
         date: data.date || new Date().toISOString().split('T')[0],
+        category: data.category || '개발',
         tags: data.tags || [],
         image: data.image,
       };
@@ -56,6 +58,7 @@ export async function getPostBySlug(slug: string) {
       title: data.title || 'Untitled',
       description: data.description || '',
       date: data.date || new Date().toISOString().split('T')[0],
+      category: data.category || '개발',
       tags: data.tags || [],
       image: data.image,
     },
@@ -66,4 +69,10 @@ export async function getPostBySlug(slug: string) {
 export async function getLatestPosts(count: number = 5): Promise<PostMeta[]> {
   const posts = await getAllPosts();
   return posts.slice(0, count);
+}
+
+export async function getAllCategories(): Promise<string[]> {
+  const posts = await getAllPosts();
+  const categories = [...new Set(posts.map((post) => post.category))];
+  return categories;
 }
