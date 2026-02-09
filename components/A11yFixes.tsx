@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 function fixBottomBarImageAlt() {
   const imgs = document.querySelectorAll<HTMLImageElement>('#bottomBar > img:not([alt])');
   for (const img of imgs) {
-    img.setAttribute('alt', '하단 바');
+    img.setAttribute('alt', '하단 안내 배너');
   }
 }
 
@@ -29,4 +29,3 @@ export default function A11yFixes() {
 
   return null;
 }
-
