@@ -100,6 +100,7 @@ export default function BlogContent({
                   date={post.date}
                   category={post.category}
                   tags={post.tags}
+                  image={post.image}
                 />
               </motion.div>
             ))}

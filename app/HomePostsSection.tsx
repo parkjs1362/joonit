@@ -48,6 +48,7 @@ export default function HomePostsSection({ posts, categories }: HomePostsSection
                   date={post.date}
                   category={post.category}
                   tags={post.tags}
+                  image={post.image}
                 />
               </motion.div>
             ))}
