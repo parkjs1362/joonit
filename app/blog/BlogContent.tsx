@@ -13,15 +13,57 @@ interface BlogContentProps {
 
 export default function BlogContent({ posts, categories }: BlogContentProps) {
   const [selected, setSelected] = useState('전체');
+  const [query, setQuery] = useState('');
 
-  const filteredPosts =
-    selected === '전체'
-      ? posts
-      : posts.filter((post) => post.category === selected);
+  const normalizedQuery = query.trim().toLowerCase();
+  const filteredPosts = posts
+    .filter((post) => (selected === '전체' ? true : post.category === selected))
+    .filter((post) => {
+      if (!normalizedQuery) return true;
+      const hay = [
+        post.title,
+        post.description,
+        post.category,
+        ...(post.tags ?? []),
+      ]
+        .join(' ')
+        .toLowerCase();
+      return hay.includes(normalizedQuery);
+    });
 
   return (
     <div>
-      <div className="mb-8">
+      <div className="flex flex-col gap-4 mb-8">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex-1">
+            <div className="relative">
+              <svg
+                className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M21 21l-4.35-4.35m1.35-5.65a7 7 0 11-14 0 7 7 0 0114 0z"
+                />
+              </svg>
+              <input
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="검색: 제목, 태그, 카테고리..."
+                className="w-full rounded-2xl border border-border bg-card/60 px-10 py-3 text-sm outline-none focus:ring-2 focus:ring-primary/30"
+              />
+            </div>
+          </div>
+
+          <p className="text-sm text-muted whitespace-nowrap">
+            {filteredPosts.length}개의 글
+          </p>
+        </div>
+
         <CategoryFilter
           categories={categories}
           selected={selected}
@@ -29,12 +71,8 @@ export default function BlogContent({ posts, categories }: BlogContentProps) {
         />
       </div>
 
-      <p className="text-sm text-muted mb-6">
-        {filteredPosts.length}개의 글
-      </p>
-
       {filteredPosts.length > 0 ? (
-        <div className="grid gap-6">
+        <div className="grid gap-6 md:grid-cols-2">
           <AnimatePresence mode="popLayout">
             {filteredPosts.map((post) => (
               <motion.div

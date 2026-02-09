@@ -9,9 +9,11 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="max-w-3xl mx-auto px-4 sm:px-6 py-12">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <AnimatedSection>
-        <h1 className="text-3xl sm:text-4xl font-bold mb-8">소개</h1>
+        <h1 className="font-display text-4xl sm:text-5xl font-semibold tracking-tight mb-8">
+          소개
+        </h1>
 
         <div className="prose prose-lg max-w-none">
           <p>
@@ -56,6 +58,11 @@ export default function AboutPage() {
                 rel="noopener noreferrer"
               >
                 GitHub
+              </a>
+            </li>
+            <li>
+              <a href={`mailto:${siteConfig.author.email}`}>
+                {siteConfig.author.email}
               </a>
             </li>
           </ul>

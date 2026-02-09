@@ -8,9 +8,11 @@ export const metadata: Metadata = {
 
 export default function TermsPage() {
   return (
-    <div className="max-w-3xl mx-auto px-4 sm:px-6 py-12">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <AnimatedSection>
-        <h1 className="text-3xl sm:text-4xl font-bold mb-8">이용약관</h1>
+        <h1 className="font-display text-4xl sm:text-5xl font-semibold tracking-tight mb-8">
+          이용약관
+        </h1>
 
         <div className="prose prose-lg max-w-none">
           <h2>제1조 (목적)</h2>

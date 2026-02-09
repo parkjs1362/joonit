@@ -30,7 +30,7 @@ export default function HomePostsSection({ posts, categories }: HomePostsSection
       </div>
 
       {filteredPosts.length > 0 ? (
-        <div className="grid gap-6">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           <AnimatePresence mode="popLayout">
             {filteredPosts.map((post) => (
               <motion.div

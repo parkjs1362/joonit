@@ -17,12 +17,12 @@ export default function CategoryFilter({ categories, selected, onChange }: Categ
         <button
           key={category}
           onClick={() => onChange(category)}
-          className="relative px-4 py-2 text-sm font-medium rounded-full whitespace-nowrap transition-colors duration-200"
+          className="relative px-4 py-2 text-sm font-medium rounded-full whitespace-nowrap border border-border bg-card/50 hover:bg-card/70 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
         >
           {selected === category && (
             <motion.span
               layoutId="category-indicator"
-              className="absolute inset-0 bg-primary rounded-full"
+              className="absolute inset-0 bg-primary rounded-full shadow-sm"
               transition={{ type: 'spring', bounce: 0.2, duration: 0.5 }}
             />
           )}

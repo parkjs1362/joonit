@@ -13,11 +13,13 @@ export default async function BlogPage() {
   const categories = await getAllCategories();
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <AnimatedSection>
-        <h1 className="text-3xl sm:text-4xl font-bold mb-4">블로그</h1>
-        <p className="text-muted mb-8">
-          개발, 기술, 그리고 일상에 대한 글들을 모아놓았습니다.
+        <h1 className="font-display text-4xl sm:text-5xl font-semibold tracking-tight mb-4">
+          글
+        </h1>
+        <p className="text-muted text-lg leading-relaxed mb-10 max-w-2xl">
+          개발, 역사, 그리고 일상. 지금의 생각을 가능한 한 좋은 문장으로 남깁니다.
         </p>
       </AnimatedSection>
 

@@ -1,16 +1,74 @@
 import type { MDXComponents } from 'mdx/types';
 import Link from 'next/link';
 import Image from 'next/image';
+import { slugifyHeading } from '@/lib/slugify';
+import type { ElementType, ReactNode } from 'react';
+
+function getText(node: unknown): string {
+  if (typeof node === 'string' || typeof node === 'number') return String(node);
+  if (Array.isArray(node)) return node.map(getText).join('');
+  if (node && typeof node === 'object' && 'props' in node) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return getText((node as any).props?.children);
+  }
+  return '';
+}
+
+function HeadingLink({
+  level,
+  children,
+  className,
+}: {
+  level: 1 | 2 | 3;
+  children: ReactNode;
+  className: string;
+}) {
+  const text = getText(children);
+  const id = slugifyHeading(text);
+  const Tag = (`h${level}` as unknown) as ElementType;
+
+  return (
+    <Tag
+      id={id}
+      className={`font-display scroll-mt-28 group ${className}`}
+    >
+      <a
+        href={`#${id}`}
+        className="no-underline text-inherit hover:text-inherit"
+      >
+        {children}
+      </a>
+      <span className="ml-2 align-middle text-muted/70 opacity-0 group-hover:opacity-100 transition-opacity select-none">
+        #
+      </span>
+    </Tag>
+  );
+}
 
 const components: MDXComponents = {
   h1: ({ children }) => (
-    <h1 className="text-3xl font-bold mt-8 mb-4">{children}</h1>
+    <HeadingLink
+      level={1}
+      className="text-3xl sm:text-4xl font-semibold tracking-tight mt-10 mb-4"
+    >
+      {children}
+    </HeadingLink>
   ),
   h2: ({ children }) => (
-    <h2 className="text-2xl font-semibold mt-6 mb-3">{children}</h2>
+    <HeadingLink
+      level={2}
+      className="text-2xl sm:text-3xl font-semibold tracking-tight mt-10 mb-3"
+    >
+      {children}
+    </HeadingLink>
   ),
   h3: ({ children }) => (
-    <h3 className="text-xl font-semibold mt-5 mb-2">{children}</h3>
+    <HeadingLink
+      level={3}
+      className="text-xl sm:text-2xl font-semibold tracking-tight mt-8 mb-2"
+    >
+      {children}
+    </HeadingLink>
   ),
   p: ({ children }) => (
     <p className="my-4 leading-relaxed">{children}</p>
@@ -23,7 +81,7 @@ const components: MDXComponents = {
           href={href}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-primary hover:text-primary-hover underline underline-offset-2"
+          className="text-primary hover:text-primary-hover underline underline-offset-4 decoration-primary/40 hover:decoration-primary transition-colors"
         >
           {children}
         </a>
@@ -32,7 +90,7 @@ const components: MDXComponents = {
     return (
       <Link
         href={href || '/'}
-        className="text-primary hover:text-primary-hover underline underline-offset-2"
+        className="text-primary hover:text-primary-hover underline underline-offset-4 decoration-primary/40 hover:decoration-primary transition-colors"
       >
         {children}
       </Link>
@@ -61,13 +119,13 @@ const components: MDXComponents = {
       return <code className={className}>{children}</code>;
     }
     return (
-      <code className="px-1.5 py-0.5 rounded bg-card text-sm font-mono">
+      <code className="px-1.5 py-0.5 rounded-md bg-card text-sm font-mono border border-border/70">
         {children}
       </code>
     );
   },
   pre: ({ children }) => (
-    <pre className="p-4 rounded-lg overflow-x-auto my-4 bg-card border border-border">
+    <pre className="p-5 rounded-2xl overflow-x-auto my-6 bg-card border border-border shadow-sm">
       {children}
     </pre>
   ),
@@ -77,7 +135,7 @@ const components: MDXComponents = {
       alt={alt || ''}
       width={800}
       height={400}
-      className="rounded-lg my-4"
+      className="rounded-2xl my-6 border border-border"
     />
   ),
   hr: () => <hr className="my-8 border-border" />,

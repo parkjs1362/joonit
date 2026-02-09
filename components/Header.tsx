@@ -3,10 +3,12 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import { usePathname } from 'next/navigation';
 
 export default function Header() {
   const [theme, setTheme] = useState<'light' | 'dark' | 'system'>('system');
   const [mounted, setMounted] = useState(false);
+  const pathname = usePathname();
 
   const applyTheme = (newTheme: 'light' | 'dark' | 'system') => {
     const root = document.documentElement;
@@ -64,41 +66,79 @@ export default function Header() {
     );
   };
 
+  const navItems = [
+    { href: '/blog', label: '글' },
+    { href: '/about', label: '소개' },
+    { href: '/contact', label: '연락' },
+  ];
+
   return (
     <motion.header
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ type: 'spring', stiffness: 100, damping: 20 }}
-      className="sticky top-0 z-50 backdrop-blur-md bg-background/80 border-b border-border"
+      className="sticky top-0 z-50 backdrop-blur-xl bg-background/70 border-b border-border/70"
     >
-      <nav className="max-w-4xl mx-auto px-4 sm:px-6 py-4">
+      <nav className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <div className="flex items-center justify-between">
-          <Link href="/" className="text-xl font-bold hover:text-primary transition-colors">
+          <Link
+            href="/"
+            className="font-display text-xl font-semibold tracking-tight hover:text-primary transition-colors"
+          >
             Joonit
           </Link>
 
-          <div className="flex items-center gap-6">
-            <Link
-              href="/blog"
-              className="text-muted hover:text-foreground transition-colors"
-            >
-              Blog
-            </Link>
-            <Link
-              href="/about"
-              className="text-muted hover:text-foreground transition-colors"
-            >
-              About
-            </Link>
+          <div className="flex items-center gap-3">
+            <div className="hidden sm:flex items-center gap-1 rounded-full border border-border bg-card/40 p-1">
+              {navItems.map((item) => {
+                const isActive =
+                  item.href === '/blog'
+                    ? pathname.startsWith('/blog')
+                    : pathname === item.href;
+
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={`px-3 py-1.5 text-sm rounded-full transition-colors ${
+                      isActive
+                        ? 'bg-primary text-white'
+                        : 'text-muted hover:text-foreground hover:bg-card/70'
+                    }`}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
+            </div>
 
             <button
               onClick={toggleTheme}
-              className="p-2 rounded-lg hover:bg-card transition-colors"
+              className="p-2 rounded-xl border border-border bg-card/40 hover:bg-card/70 transition-colors"
               aria-label="Toggle theme"
             >
               {getThemeIcon()}
             </button>
           </div>
+        </div>
+
+        <div className="sm:hidden mt-3 flex gap-2 overflow-x-auto scrollbar-hide pb-2 -mb-2">
+          {navItems.map((item) => {
+            const isActive =
+              item.href === '/blog' ? pathname.startsWith('/blog') : pathname === item.href;
+
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`px-4 py-2 text-sm rounded-full border border-border bg-card/40 whitespace-nowrap transition-colors ${
+                  isActive ? 'text-foreground' : 'text-muted hover:text-foreground'
+                }`}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
         </div>
       </nav>
     </motion.header>

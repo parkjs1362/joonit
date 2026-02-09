@@ -1,18 +1,27 @@
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import { Fraunces, Geist_Mono, Noto_Sans_KR } from 'next/font/google';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { siteConfig } from '@/lib/config';
 import './globals.css';
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
+const sans = Noto_Sans_KR({
+  variable: '--font-noto-sans',
+  // NOTE: Next.js requires specifying subsets. For KR fonts this is still fine.
   subsets: ['latin'],
+  display: 'swap',
 });
 
-const geistMono = Geist_Mono({
+const display = Fraunces({
+  variable: '--font-fraunces',
+  subsets: ['latin'],
+  display: 'swap',
+});
+
+const mono = Geist_Mono({
   variable: '--font-geist-mono',
   subsets: ['latin'],
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
@@ -92,7 +101,7 @@ export default function RootLayout({
         ) */}
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
+        className={`${sans.variable} ${display.variable} ${mono.variable} antialiased min-h-screen flex flex-col`}
       >
         <Header />
         <main className="flex-1">{children}</main>
