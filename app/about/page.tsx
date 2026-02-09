@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import AnimatedSection from '@/components/AnimatedSection';
+import { siteConfig } from '@/lib/config';
 
 export const metadata: Metadata = {
   title: '소개',
@@ -50,20 +51,11 @@ export default function AboutPage() {
           <ul>
             <li>
               <a
-                href="https://github.com/joonsang"
+                href={siteConfig.author.github}
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 GitHub
-              </a>
-            </li>
-            <li>
-              <a
-                href="https://linkedin.com/in/joonsang"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                LinkedIn
               </a>
             </li>
           </ul>

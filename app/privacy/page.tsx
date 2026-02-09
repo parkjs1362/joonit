@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import AnimatedSection from '@/components/AnimatedSection';
+import { siteConfig } from '@/lib/config';
 
 export const metadata: Metadata = {
   title: '개인정보처리방침',
@@ -77,10 +78,10 @@ export default function PrivacyPage() {
 
           <h2>7. 개인정보 보호책임자</h2>
           <ul>
-            <li>성명: Joonsang</li>
+            <li>성명: {siteConfig.author.name}</li>
             <li>
               이메일:{' '}
-              <a href="mailto:joonsang@example.com">joonsang@example.com</a>
+              <a href={`mailto:${siteConfig.author.email}`}>{siteConfig.author.email}</a>
             </li>
           </ul>
 
