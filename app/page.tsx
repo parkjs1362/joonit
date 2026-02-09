@@ -7,6 +7,7 @@ export default async function HomePage() {
   const posts = await getAllPosts();
   const categories = await getAllCategories();
   const featured = posts[0];
+  const latestPosts = featured ? posts.slice(1) : posts;
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
@@ -14,7 +15,7 @@ export default async function HomePage() {
       <AnimatedSection className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr] items-start mb-16">
         <div>
           <p className="text-sm text-muted tracking-wide uppercase">
-            Notes on building, learning, living
+            개발, 역사, 일상 기록
           </p>
           <h1 className="font-display text-5xl sm:text-6xl font-semibold tracking-tight mt-4">
             개발과 일상,
@@ -43,13 +44,13 @@ export default async function HomePage() {
           {categories.length > 0 && (
             <div className="mt-10">
               <p className="text-xs font-semibold tracking-wide text-muted uppercase mb-3">
-                Topics
+                주제
               </p>
               <div className="flex flex-wrap gap-2">
                 {categories.slice(0, 8).map((c) => (
                   <Link
                     key={c}
-                    href="/blog"
+                    href={`/blog?category=${encodeURIComponent(c)}`}
                     className="px-3 py-1.5 text-sm rounded-full border border-border bg-card/50 text-muted hover:text-foreground hover:bg-card/70 transition-colors"
                   >
                     {c}
@@ -62,7 +63,7 @@ export default async function HomePage() {
 
         <div className="rounded-3xl border border-border bg-card/60 p-6 backdrop-blur-sm">
           <p className="text-xs font-semibold tracking-wide text-muted uppercase">
-            Featured
+            추천 글
           </p>
           {featured ? (
             <div className="mt-4">
@@ -118,7 +119,7 @@ export default async function HomePage() {
           </Link>
         </div>
 
-        <HomePostsSection posts={posts} categories={categories} />
+        <HomePostsSection posts={latestPosts} categories={categories} />
       </AnimatedSection>
     </div>
   );

@@ -9,8 +9,8 @@ export default function TableOfContents({ headings }: TableOfContentsProps) {
 
   return (
     <nav className="rounded-2xl border border-border bg-card/60 p-5 backdrop-blur-sm">
-      <p className="text-xs font-semibold tracking-wide text-muted uppercase">
-        On this page
+      <p className="text-xs font-semibold tracking-wide text-muted">
+        목차
       </p>
       <ul className="mt-3 space-y-2 text-sm">
         {headings.map((h) => (
@@ -27,4 +27,3 @@ export default function TableOfContents({ headings }: TableOfContentsProps) {
     </nav>
   );
 }
-

@@ -16,8 +16,8 @@ export default function HomePostsSection({ posts, categories }: HomePostsSection
 
   const filteredPosts =
     selected === '전체'
-      ? posts.slice(0, 3)
-      : posts.filter((post) => post.category === selected).slice(0, 3);
+      ? posts.slice(0, 6)
+      : posts.filter((post) => post.category === selected).slice(0, 6);
 
   return (
     <div>

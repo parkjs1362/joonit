@@ -9,11 +9,21 @@ import type { PostMeta } from '@/lib/posts';
 interface BlogContentProps {
   posts: PostMeta[];
   categories: string[];
+  initialCategory?: string;
+  initialQuery?: string;
 }
 
-export default function BlogContent({ posts, categories }: BlogContentProps) {
-  const [selected, setSelected] = useState('전체');
-  const [query, setQuery] = useState('');
+export default function BlogContent({
+  posts,
+  categories,
+  initialCategory,
+  initialQuery,
+}: BlogContentProps) {
+  const safeInitialCategory =
+    initialCategory && categories.includes(initialCategory) ? initialCategory : '전체';
+
+  const [selected, setSelected] = useState(safeInitialCategory);
+  const [query, setQuery] = useState(initialQuery ?? '');
 
   const normalizedQuery = query.trim().toLowerCase();
   const filteredPosts = posts

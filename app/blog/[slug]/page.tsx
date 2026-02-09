@@ -150,7 +150,7 @@ export default async function BlogPostPage({ params }: PageProps) {
               <TableOfContents headings={headings} />
 
               <div className="rounded-2xl border border-border bg-card/60 p-5 backdrop-blur-sm">
-                <p className="text-sm font-semibold">작성자</p>
+                <p className="text-sm font-semibold">{siteConfig.author.name}</p>
                 <p className="mt-1 text-sm text-muted leading-relaxed">
                   {siteConfig.description}
                 </p>
