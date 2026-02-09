@@ -29,7 +29,7 @@ export default function CategoryFilter({ categories, selected, onChange }: Categ
           <span
             className={`relative z-10 ${
               selected === category
-                ? 'text-white'
+                ? 'text-white dark:text-background'
                 : 'text-muted hover:text-foreground'
             }`}
           >

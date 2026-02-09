@@ -102,7 +102,7 @@ export default function Header() {
                     href={item.href}
                     className={`px-3 py-1.5 text-sm rounded-full transition-colors ${
                       isActive
-                        ? 'bg-primary text-white'
+                        ? 'bg-primary text-white dark:text-background'
                         : 'text-muted hover:text-foreground hover:bg-card/70'
                     }`}
                   >

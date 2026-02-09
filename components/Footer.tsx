@@ -25,7 +25,10 @@ export default function Footer() {
             <Link href="/contact" className="hover:text-foreground transition-colors">
               연락
             </Link>
-            <span className="text-border/60">•</span>
+            <span
+              aria-hidden="true"
+              className="h-4 w-px bg-border/90"
+            />
             <Link href="/privacy" className="hover:text-foreground transition-colors">
               개인정보처리방침
             </Link>

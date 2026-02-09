@@ -3,6 +3,7 @@ import { Fraunces, Geist_Mono, Noto_Sans_KR } from 'next/font/google';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { siteConfig } from '@/lib/config';
+import A11yFixes from '@/components/A11yFixes';
 import './globals.css';
 
 const sans = Noto_Sans_KR({
@@ -103,6 +104,7 @@ export default function RootLayout({
       <body
         className={`${sans.variable} ${display.variable} ${mono.variable} antialiased min-h-screen flex flex-col`}
       >
+        <A11yFixes />
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />

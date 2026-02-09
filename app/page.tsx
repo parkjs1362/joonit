@@ -29,7 +29,7 @@ export default async function HomePage() {
           <div className="flex flex-wrap gap-3 mt-8">
             <Link
               href="/blog"
-              className="px-5 py-3 bg-primary text-white rounded-2xl hover:bg-primary-hover transition-colors shadow-sm"
+              className="px-5 py-3 bg-primary text-white dark:text-background rounded-2xl hover:bg-primary-hover transition-colors shadow-sm"
             >
               글 보러가기
             </Link>
