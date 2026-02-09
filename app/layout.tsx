@@ -92,14 +92,12 @@ export default function RootLayout({
             `,
           }}
         />
-        {/* AdSense: 승인 후 아래 주석 해제하고 환경변수 NEXT_PUBLIC_ADSENSE_ID 설정 */}
-        {/* process.env.NEXT_PUBLIC_ADSENSE_ID && (
-          <script
-            async
-            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_ADSENSE_ID}`}
-            crossOrigin="anonymous"
-          />
-        ) */}
+        {/* Google AdSense */}
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9437130351538375"
+          crossOrigin="anonymous"
+        />
       </head>
       <body
         className={`${sans.variable} ${display.variable} ${mono.variable} antialiased min-h-screen flex flex-col`}
