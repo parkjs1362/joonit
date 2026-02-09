@@ -17,52 +17,64 @@ export default function AboutPage() {
 
         <div className="prose prose-lg max-w-none">
           <p>
-            안녕하세요! 저는 <strong>Joonit</strong>입니다.
+            안녕하세요. <strong>Joonit</strong>입니다.
           </p>
 
           <p>
-            개발을 좋아하고, 새로운 기술을 배우는 것에 즐거움을 느낍니다.
-            이 블로그는 제가 배우고 경험한 것들을 기록하고 공유하기 위한 공간입니다.
+            만들고 배우는 과정을 좋아합니다. 이 블로그는 그 과정에서 얻은 것들을
+            가능한 한 <strong>짧고, 구체적으로</strong> 기록해 두기 위해 만들었습니다.
           </p>
 
-          <h2>기술 스택</h2>
+          <h2>여기서 쓰는 글</h2>
           <ul>
             <li>
-              <strong>Frontend</strong>: React, Next.js, TypeScript, Tailwind CSS
+              <strong>개발</strong>: Next.js, TypeScript, UI, 성능, DX
             </li>
             <li>
-              <strong>Backend</strong>: Node.js, NestJS, PostgreSQL
+              <strong>역사</strong>: 기술과 사회가 맞물리는 순간(표준, 인프라, 정보의 역사)
             </li>
             <li>
-              <strong>Tools</strong>: Git, Docker, AWS
+              <strong>일상</strong>: 습관, 기록, 생각 정리
             </li>
           </ul>
 
-          <h2>관심 분야</h2>
+          <h2>이 블로그의 원칙</h2>
           <ul>
-            <li>웹 개발 및 사용자 경험 최적화</li>
-            <li>클린 코드와 소프트웨어 아키텍처</li>
-            <li>생산성 도구 및 자동화</li>
-            <li>AI 및 머신러닝 활용</li>
+            <li>결론만 말하기보다, 왜 그렇게 했는지(맥락)를 함께 남기기</li>
+            <li>가능하면 코드/예제로 설명하기</li>
+            <li>나중의 내가 다시 읽어도 이해되는 글 쓰기</li>
+          </ul>
+
+          <h2>블로그 스택</h2>
+          <ul>
+            <li>
+              <strong>Framework</strong>: Next.js (App Router)
+            </li>
+            <li>
+              <strong>Content</strong>: MDX
+            </li>
+            <li>
+              <strong>Styling</strong>: Tailwind CSS
+            </li>
           </ul>
 
           <h2>연락처</h2>
           <p>
-            궁금한 점이 있으시거나 협업 제안이 있으시다면 언제든지 연락해 주세요!
+            질문이나 협업 제안이 있다면 편하게 연락 주세요.
           </p>
           <ul>
+            <li>
+              <a href={`mailto:${siteConfig.author.email}`}>
+                {siteConfig.author.email}
+              </a>
+            </li>
             <li>
               <a
                 href={siteConfig.author.github}
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href={`mailto:${siteConfig.author.email}`}>
-                {siteConfig.author.email}
+                GitHub (github.com/parkjs1362)
               </a>
             </li>
           </ul>
