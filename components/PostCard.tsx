@@ -14,26 +14,17 @@ interface PostCardProps {
   image?: string;
 }
 
-function hashString(input: string): number {
-  // Simple deterministic hash (djb2)
-  let h = 5381;
-  for (let i = 0; i < input.length; i += 1) {
-    h = (h << 5) + h + input.charCodeAt(i);
-  }
-  return h >>> 0;
-}
-
-function pickCover(category: string | undefined, slug: string): string {
-  const byCategory: Record<string, string[]> = {
-    개발: ['/images/covers/dev-1.svg', '/images/covers/dev-2.svg'],
-    역사: ['/images/covers/history-1.svg', '/images/covers/history-2.svg'],
-    일상: ['/images/covers/daily-1.svg', '/images/covers/daily-2.svg'],
-    default: ['/images/covers/default-1.svg', '/images/covers/default-2.svg'],
+function pickCover(category: string | undefined): string {
+  // Category-level unified covers (same image for all posts in a category).
+  const byCategory: Record<string, string> = {
+    개발: '/images/covers/dev-1.svg',
+    역사: '/images/covers/history-1.svg',
+    일상: '/images/covers/daily-1.svg',
+    default: '/images/covers/default-1.svg',
   };
 
-  const list = (category && byCategory[category]) ? byCategory[category] : byCategory.default;
-  const idx = hashString(slug) % list.length;
-  return list[idx];
+  if (!category) return byCategory.default;
+  return byCategory[category] ?? byCategory.default;
 }
 
 export default function PostCard({
@@ -45,7 +36,7 @@ export default function PostCard({
   tags,
   image,
 }: PostCardProps) {
-  const cover = image || pickCover(category, slug);
+  const cover = image || pickCover(category);
   return (
     <motion.article
       initial={{ opacity: 0, y: 20 }}
