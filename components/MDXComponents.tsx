@@ -48,8 +48,11 @@ const components: MDXComponents = {
     <li className="leading-relaxed">{children}</li>
   ),
   blockquote: ({ children }) => (
-    <blockquote className="border-l-4 border-primary pl-4 my-4 italic text-muted">
-      {children}
+    <blockquote className="my-6 rounded-xl border border-border bg-card/60 px-5 py-4 text-foreground/85">
+      <div className="flex gap-3">
+        <span className="mt-2 h-2.5 w-2.5 flex-none rounded-full bg-primary/70" />
+        <div className="[&>p]:my-0">{children}</div>
+      </div>
     </blockquote>
   ),
   code: ({ children, className }) => {
