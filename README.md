@@ -1,12 +1,12 @@
 # Joonit Blog
 
-개인 블로그 - Next.js 15 + Tailwind CSS v4 + Framer Motion + MDX
+개인 블로그 - Next.js 16 + Tailwind CSS v4 + Framer Motion + MDX
 
 **Live**: https://joonit.vercel.app
 
 ## Tech Stack
 
-- **Framework**: Next.js 15 (App Router)
+- **Framework**: Next.js 16 (App Router)
 - **Styling**: Tailwind CSS v4
 - **Animation**: Framer Motion
 - **Content**: MDX (next-mdx-remote + gray-matter)
@@ -95,6 +95,7 @@ touch content/posts/my-new-post.mdx
 title: "글 제목"
 description: "글 설명"
 date: "2025-02-04"
+category: "개발"
 tags: ["태그1", "태그2"]
 image: "/images/cover.jpg"  # 선택사항
 ---

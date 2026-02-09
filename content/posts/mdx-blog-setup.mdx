@@ -84,7 +84,9 @@ export interface PostMeta {
   title: string;
   description: string;
   date: string;
+  category: string;
   tags?: string[];
+  image?: string;
 }
 
 export async function getAllPosts(): Promise<PostMeta[]> {
@@ -99,7 +101,15 @@ export async function getAllPosts(): Promise<PostMeta[]> {
       );
       const { data } = matter(content);
 
-      return { slug, ...data } as PostMeta;
+      return {
+        slug,
+        title: data.title || 'Untitled',
+        description: data.description || '',
+        date: data.date || new Date().toISOString().split('T')[0],
+        category: data.category || '개발',
+        tags: data.tags || [],
+        image: data.image,
+      } as PostMeta;
     });
 
   return posts.sort((a, b) => (a.date > b.date ? -1 : 1));
@@ -113,12 +123,12 @@ MDX를 HTML로 변환하면서 커스텀 스타일을 적용합니다:
 ```typescript
 // lib/mdx.ts
 import { compileMDX } from 'next-mdx-remote/rsc';
-import { MDXComponents } from '@/components/MDXComponents';
+import components from '@/components/MDXComponents';
 
 export async function parseMDX(source: string) {
   return compileMDX({
     source,
-    components: MDXComponents,
+    components,
     options: { parseFrontmatter: true },
   });
 }
@@ -128,23 +138,34 @@ export async function parseMDX(source: string) {
 
 ```typescript
 // components/MDXComponents.tsx
-export const MDXComponents = {
+const components = {
+  // inline code / code block 구분
   code({ children, className }) {
-    const isInline = !className;
-    if (isInline) {
-      return <code className="bg-card px-1.5 py-0.5 rounded">{children}</code>;
-    }
-    return <code className={className}>{children}</code>;
+    const isCodeBlock = className?.includes('language-');
+    if (isCodeBlock) return <code className={className}>{children}</code>;
+    return (
+      <code className="px-1.5 py-0.5 rounded bg-card text-sm font-mono">
+        {children}
+      </code>
+    );
   },
+
+  // 외부 링크는 새 탭 + noopener
   a({ href, children }) {
     const isExternal = href?.startsWith('http');
     return (
-      <a href={href} target={isExternal ? '_blank' : undefined}>
+      <a
+        href={href}
+        target={isExternal ? '_blank' : undefined}
+        rel={isExternal ? 'noopener noreferrer' : undefined}
+      >
         {children}
       </a>
     );
   },
 };
+
+export default components;
 ```
 
 ## SEO 최적화

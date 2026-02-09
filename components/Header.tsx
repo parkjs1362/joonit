@@ -8,15 +8,6 @@ export default function Header() {
   const [theme, setTheme] = useState<'light' | 'dark' | 'system'>('system');
   const [mounted, setMounted] = useState(false);
 
-  useEffect(() => {
-    setMounted(true);
-    const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | 'system' | null;
-    if (savedTheme) {
-      setTheme(savedTheme);
-      applyTheme(savedTheme);
-    }
-  }, []);
-
   const applyTheme = (newTheme: 'light' | 'dark' | 'system') => {
     const root = document.documentElement;
     root.classList.remove('light', 'dark');
@@ -30,6 +21,17 @@ export default function Header() {
       root.classList.add(newTheme);
     }
   };
+
+  useEffect(() => {
+    // This runs only on the client; we use state here to avoid hydration mismatch for the icon.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setMounted(true);
+    const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | 'system' | null;
+    if (savedTheme) {
+      setTheme(savedTheme);
+      applyTheme(savedTheme);
+    }
+  }, []);
 
   const toggleTheme = () => {
     const nextTheme = theme === 'light' ? 'dark' : theme === 'dark' ? 'system' : 'light';

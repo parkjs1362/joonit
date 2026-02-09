@@ -39,7 +39,12 @@ export async function getAllPosts(): Promise<PostMeta[]> {
       };
     });
 
-  return posts.sort((a, b) => (a.date > b.date ? -1 : 1));
+  return posts.sort((a, b) => {
+    if (a.date === b.date) {
+      return a.slug.localeCompare(b.slug);
+    }
+    return a.date > b.date ? -1 : 1;
+  });
 }
 
 export async function getPostBySlug(slug: string) {
