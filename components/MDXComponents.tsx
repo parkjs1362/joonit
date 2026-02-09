@@ -31,14 +31,17 @@ function HeadingLink({
     <Tag
       id={id}
       className={`font-display scroll-mt-28 group ${className}`}
-    >
-      <a
-        href={`#${id}`}
-        className="no-underline text-inherit hover:text-inherit"
       >
-        {children}
-      </a>
-      <span className="ml-2 align-middle text-muted/70 opacity-0 group-hover:opacity-100 transition-opacity select-none">
+        <a
+          href={`#${id}`}
+          className="no-underline text-inherit hover:text-inherit"
+        >
+          {children}
+        </a>
+      <span
+        aria-hidden="true"
+        className="ml-2 align-middle text-muted opacity-0 group-hover:opacity-100 transition-opacity select-none"
+      >
         #
       </span>
     </Tag>

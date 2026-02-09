@@ -38,6 +38,7 @@ export default function PrivacyPage() {
             <li>사이트 이용 통계 분석 및 서비스 개선</li>
             <li>콘텐츠 최적화</li>
             <li>부정 이용 방지</li>
+            <li>광고 제공 및 광고 성과 측정</li>
           </ul>
 
           <h2>3. 개인정보 보유 및 이용 기간</h2>
@@ -50,24 +51,23 @@ export default function PrivacyPage() {
           </ul>
 
           <h2>4. 제3자 제공</h2>
-          <p>본 사이트는 다음과 같은 제3자 서비스를 이용할 수 있습니다:</p>
+          <p>본 사이트는 광고 제공을 위해 다음과 같은 제3자 서비스를 이용합니다:</p>
           <ul>
-            <li>
-              <strong>Google Analytics</strong>: 사이트 방문 통계 분석 목적.
-              Google의 개인정보처리방침에 따라 데이터가 처리됩니다.
-            </li>
             <li>
               <strong>Google AdSense</strong>: 광고 제공 목적.
               맞춤형 광고를 위해 쿠키가 사용될 수 있습니다.
             </li>
           </ul>
 
-          <h2>5. 쿠키의 사용</h2>
+          <h2>5. 쿠키 및 맞춤형 광고</h2>
           <p>
-            본 사이트는 이용자 경험을 향상시키기 위해 쿠키를 사용합니다.
-            이용자는 웹 브라우저 설정을 통해 쿠키 허용 여부를 선택할 수 있습니다.
-            다만, 쿠키를 차단할 경우 일부 서비스 이용에 제한이 있을 수 있습니다.
+            Google을 포함한 제3자 공급업체는 쿠키를 사용하여 이용자의
+            이전 방문 기록 등을 기반으로 광고를 게재할 수 있습니다.
           </p>
+          <ul>
+            <li>이용자는 브라우저 설정을 통해 쿠키 저장을 거부하거나 삭제할 수 있습니다.</li>
+            <li>맞춤형 광고 노출 여부는 Google 광고 설정 등에서 관리할 수 있습니다.</li>
+          </ul>
 
           <h2>6. 정보주체의 권리</h2>
           <p>이용자는 언제든지 다음의 권리를 행사할 수 있습니다:</p>
@@ -93,7 +93,7 @@ export default function PrivacyPage() {
             수정될 수 있으며, 변경 시 사이트를 통해 공지합니다.
           </p>
 
-          <p className="text-muted text-sm mt-8">시행일자: 2025년 2월 9일</p>
+          <p className="text-muted text-sm mt-8">시행일자: 2026년 2월 9일</p>
         </div>
       </AnimatedSection>
     </div>

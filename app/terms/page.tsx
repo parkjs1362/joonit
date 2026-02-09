@@ -37,8 +37,8 @@ export default function TermsPage() {
           <h2>제3조 (서비스의 제공)</h2>
           <p>본 사이트는 다음과 같은 서비스를 제공합니다:</p>
           <ul>
-            <li>기술 블로그 게시물 열람</li>
-            <li>개발 관련 정보 및 튜토리얼 제공</li>
+            <li>블로그 게시물 열람</li>
+            <li>개발/역사/일상 관련 정보 제공</li>
             <li>기타 본 사이트가 정하는 서비스</li>
           </ul>
 
@@ -99,7 +99,7 @@ export default function TermsPage() {
             경우, 서비스 이용을 중단할 수 있습니다.
           </p>
 
-          <p className="text-muted text-sm mt-8">시행일자: 2025년 2월 9일</p>
+          <p className="text-muted text-sm mt-8">시행일자: 2026년 2월 9일</p>
         </div>
       </AnimatedSection>
     </div>
