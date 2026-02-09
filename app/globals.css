@@ -115,10 +115,15 @@ body {
 
 .prose strong {
   color: var(--foreground);
-  font-weight: 700;
-  background: color-mix(in srgb, var(--primary) 16%, transparent);
-  padding: 0.05em 0.2em;
-  border-radius: 0.35em;
+  font-weight: 750;
+  /* Marker-style emphasis that stays readable in both light/dark modes */
+  background-image: linear-gradient(
+    to bottom,
+    transparent 58%,
+    color-mix(in srgb, var(--primary) 34%, transparent) 0
+  );
+  padding: 0 0.08em;
+  border-radius: 0.2em;
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
 }

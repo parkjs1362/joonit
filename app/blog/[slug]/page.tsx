@@ -52,6 +52,14 @@ export default async function BlogPostPage({ params }: PageProps) {
     notFound();
   }
 
+  const allPosts = await getAllPosts();
+  const index = allPosts.findIndex((p) => p.slug === slug);
+  const newerPost = index > 0 ? allPosts[index - 1] : null;
+  const olderPost = index >= 0 && index < allPosts.length - 1 ? allPosts[index + 1] : null;
+  const relatedPosts = allPosts
+    .filter((p) => p.category === post.frontmatter.category && p.slug !== slug)
+    .slice(0, 3);
+
   const { content } = await parseMDX(post.content);
   const headings = extractHeadingsFromMDX(post.content);
   const readingMinutes = estimateReadingMinutes(post.content);
@@ -106,9 +114,12 @@ export default async function BlogPostPage({ params }: PageProps) {
                 <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-muted">
                   <time>{post.frontmatter.date}</time>
                   <span className="h-1 w-1 rounded-full bg-border" />
-                  <span className="px-2.5 py-0.5 rounded-full border border-primary/20 bg-primary/5 text-primary">
+                  <Link
+                    href={`/blog?category=${encodeURIComponent(post.frontmatter.category)}`}
+                    className="px-2.5 py-0.5 rounded-full border border-primary/20 bg-primary/5 text-primary hover:bg-primary/10 transition-colors"
+                  >
                     {post.frontmatter.category}
-                  </span>
+                  </Link>
                   <span className="h-1 w-1 rounded-full bg-border" />
                   <span>{readingMinutes}분 읽기</span>
                 </div>
@@ -126,12 +137,13 @@ export default async function BlogPostPage({ params }: PageProps) {
                 {post.frontmatter.tags && post.frontmatter.tags.length > 0 && (
                   <div className="mt-6 flex flex-wrap gap-2">
                     {post.frontmatter.tags.map((tag: string) => (
-                      <span
+                      <Link
                         key={tag}
+                        href={`/blog?q=${encodeURIComponent(tag)}`}
                         className="px-2.5 py-1 text-xs rounded-full border border-border bg-card/70 text-muted"
                       >
                         {tag}
-                      </span>
+                      </Link>
                     ))}
                   </div>
                 )}
@@ -142,6 +154,71 @@ export default async function BlogPostPage({ params }: PageProps) {
               <div className="mt-10 prose prose-lg max-w-none">
                 {content}
               </div>
+
+              {(newerPost || olderPost || relatedPosts.length > 0) && (
+                <div className="mt-16 space-y-8">
+                  {(newerPost || olderPost) && (
+                    <div className="grid gap-4 sm:grid-cols-2">
+                      {newerPost && (
+                        <Link
+                          href={`/blog/${newerPost.slug}`}
+                          className="group rounded-3xl border border-border bg-card/60 p-6 backdrop-blur-sm hover:border-primary/25 hover:shadow-lg hover:shadow-primary/10 transition-colors"
+                        >
+                          <p className="text-xs font-semibold tracking-wide text-muted uppercase">
+                            더 최근 글
+                          </p>
+                          <p className="mt-2 font-display text-xl font-semibold tracking-tight group-hover:text-primary transition-colors">
+                            {newerPost.title}
+                          </p>
+                          <p className="mt-3 text-sm text-muted line-clamp-2">
+                            {newerPost.description}
+                          </p>
+                        </Link>
+                      )}
+
+                      {olderPost && (
+                        <Link
+                          href={`/blog/${olderPost.slug}`}
+                          className="group rounded-3xl border border-border bg-card/60 p-6 backdrop-blur-sm hover:border-primary/25 hover:shadow-lg hover:shadow-primary/10 transition-colors"
+                        >
+                          <p className="text-xs font-semibold tracking-wide text-muted uppercase">
+                            이전 글
+                          </p>
+                          <p className="mt-2 font-display text-xl font-semibold tracking-tight group-hover:text-primary transition-colors">
+                            {olderPost.title}
+                          </p>
+                          <p className="mt-3 text-sm text-muted line-clamp-2">
+                            {olderPost.description}
+                          </p>
+                        </Link>
+                      )}
+                    </div>
+                  )}
+
+                  {relatedPosts.length > 0 && (
+                    <div>
+                      <p className="text-sm font-semibold">같은 카테고리의 다른 글</p>
+                      <div className="mt-4 grid gap-4 md:grid-cols-3">
+                        {relatedPosts.map((p) => (
+                          <Link
+                            key={p.slug}
+                            href={`/blog/${p.slug}`}
+                            className="group rounded-3xl border border-border bg-card/60 p-6 backdrop-blur-sm hover:border-primary/25 hover:shadow-lg hover:shadow-primary/10 transition-colors"
+                          >
+                            <p className="text-sm text-muted">{p.date}</p>
+                            <p className="mt-2 font-display text-lg font-semibold tracking-tight group-hover:text-primary transition-colors line-clamp-2">
+                              {p.title}
+                            </p>
+                            <p className="mt-3 text-sm text-muted line-clamp-2">
+                              {p.description}
+                            </p>
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
             </AnimatedSection>
           </div>
 
