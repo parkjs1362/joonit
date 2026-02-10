@@ -14,16 +14,26 @@ export default async function HomePage() {
       {/* Hero Section */}
       <AnimatedSection className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr] items-start mb-16">
         <div>
-          <p className="text-sm text-muted tracking-wide uppercase">
-            개발, 역사, 일상 기록
-          </p>
-          <h1 className="font-display text-5xl sm:text-6xl font-semibold tracking-tight mt-4">
-            개발과 일상,
-            <span className="text-primary"> 기록</span>
+          <div className="flex items-center gap-3">
+            <div
+              aria-hidden="true"
+              className="w-12 h-12 rounded-2xl border border-primary/20 bg-primary/10 text-primary flex items-center justify-center font-display text-xl"
+            >
+              J
+            </div>
+            <div>
+              <p className="text-sm font-semibold leading-none">Joonit</p>
+              <p className="text-xs text-muted mt-1">개발, 역사, 일상 기록</p>
+            </div>
+          </div>
+
+          <h1 className="font-display text-5xl sm:text-6xl font-semibold tracking-tight mt-6">
+            안녕하세요,
+            <span className="text-primary"> Joonit</span>입니다.
           </h1>
           <p className="text-lg text-muted leading-relaxed mt-6 max-w-xl">
-            일하면서 배운 것, 만들면서 느낀 것, 그리고 시간이 지나도 남겨두고 싶은 생각들을
-            한곳에 모읍니다.
+            웹 개발과 제품 감각, 그리고 역사와 일상을 짧고 구체적인 글로 남깁니다.
+            오래 읽어도 피곤하지 않은 레이아웃을 목표로 계속 다듬고 있습니다.
           </p>
 
           <div className="flex flex-wrap gap-3 mt-8">

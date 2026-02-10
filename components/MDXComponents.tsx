@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { slugifyHeading } from '@/lib/slugify';
 import type { ElementType, ReactNode } from 'react';
+import CodeBlock from '@/components/CodeBlock';
 
 function getText(node: unknown): string {
   if (typeof node === 'string' || typeof node === 'number') return String(node);
@@ -74,7 +75,7 @@ const components: MDXComponents = {
     </HeadingLink>
   ),
   p: ({ children }) => (
-    <p className="my-4 leading-relaxed">{children}</p>
+    <p className="my-4 leading-[1.85]">{children}</p>
   ),
   a: ({ href, children }) => {
     const isExternal = href?.startsWith('http');
@@ -128,9 +129,7 @@ const components: MDXComponents = {
     );
   },
   pre: ({ children }) => (
-    <pre className="p-5 rounded-2xl overflow-x-auto my-6 bg-card border border-border shadow-sm">
-      {children}
-    </pre>
+    <CodeBlock>{children}</CodeBlock>
   ),
   img: ({ src, alt }) => (
     <Image

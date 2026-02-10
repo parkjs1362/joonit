@@ -15,7 +15,7 @@ function pickFirst(value: string | string[] | undefined): string | undefined {
 }
 
 interface BlogPageProps {
-  searchParams?: Promise<SearchParams> | SearchParams;
+  searchParams?: Promise<SearchParams>;
 }
 
 export default async function BlogPage({ searchParams }: BlogPageProps) {

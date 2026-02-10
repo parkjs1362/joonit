@@ -9,6 +9,12 @@
   --muted: #667085;
   --border: #e6e8ee;
   --card: #ffffff;
+  --font-sans-stack: "Pretendard", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+    "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-display-stack: "Pretendard", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+    "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-mono-stack: ui-monospace, "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
 }
 
 @theme inline {
@@ -19,9 +25,9 @@
   --color-muted: var(--muted);
   --color-border: var(--border);
   --color-card: var(--card);
-  --font-sans: var(--font-noto-sans);
-  --font-display: var(--font-fraunces);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-sans-stack);
+  --font-display: var(--font-display-stack);
+  --font-mono: var(--font-mono-stack);
 }
 
 .dark {
@@ -57,14 +63,14 @@ body {
     radial-gradient(900px circle at 90% 0%, color-mix(in srgb, var(--primary) 10%, transparent), transparent 60%),
     radial-gradient(900px circle at 50% 120%, color-mix(in srgb, var(--primary) 8%, transparent), transparent 55%);
   color: var(--foreground);
-  font-family: var(--font-sans), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-family: var(--font-sans-stack);
   transition: background-color 0.3s ease, color 0.3s ease;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 .font-display {
-  font-family: var(--font-display), var(--font-sans), ui-serif, serif;
+  font-family: var(--font-display-stack);
 }
 
 ::selection {

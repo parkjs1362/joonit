@@ -15,7 +15,7 @@ export default function AboutPage() {
           소개
         </h1>
 
-        <div className="prose prose-lg max-w-none">
+        <div className="prose prose-lg mx-auto max-w-[72ch]">
           <p>
             안녕하세요. <strong>Joonit</strong>입니다.
           </p>
@@ -23,6 +23,7 @@ export default function AboutPage() {
           <p>
             만들고 배우는 과정을 좋아합니다. 이 블로그는 그 과정에서 얻은 것들을
             가능한 한 <strong>짧고, 구체적으로</strong> 기록해 두기 위해 만들었습니다.
+            시간이 지나도 다시 읽히는 문장을 목표로 합니다.
           </p>
 
           <h2>여기서 쓰는 글</h2>
@@ -59,15 +60,6 @@ export default function AboutPage() {
             <li>
               <a href={`mailto:${siteConfig.author.email}`}>
                 {siteConfig.author.email}
-              </a>
-            </li>
-            <li>
-              <a
-                href={siteConfig.author.github}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                GitHub (github.com/parkjs1362)
               </a>
             </li>
           </ul>

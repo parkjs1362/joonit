@@ -14,7 +14,7 @@ export default function TermsPage() {
           이용약관
         </h1>
 
-        <div className="prose prose-lg max-w-none">
+        <div className="prose prose-lg mx-auto max-w-[72ch]">
           <h2>제1조 (목적)</h2>
           <p>
             이 약관은 Joonit 블로그(이하 &quot;본 사이트&quot;)가 제공하는

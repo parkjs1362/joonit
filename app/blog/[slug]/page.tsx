@@ -89,137 +89,139 @@ export default async function BlogPostPage({ params }: PageProps) {
 
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_280px]">
           <div className="min-w-0">
-            <AnimatedSection>
-              <Link
-                href="/blog"
-                className="inline-flex items-center gap-2 text-muted hover:text-foreground transition-colors"
-              >
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
+            <div className="mx-auto max-w-[72ch]">
+              <AnimatedSection>
+                <Link
+                  href="/blog"
+                  className="inline-flex items-center gap-2 text-muted hover:text-foreground transition-colors"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M15 19l-7-7 7-7"
-                  />
-                </svg>
-                글 목록으로
-              </Link>
-
-              <header className="mt-8">
-                <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-muted">
-                  <time>{post.frontmatter.date}</time>
-                  <span className="h-1 w-1 rounded-full bg-border" />
-                  <Link
-                    href={`/blog?category=${encodeURIComponent(post.frontmatter.category)}`}
-                    className="px-2.5 py-0.5 rounded-full border border-primary/20 bg-primary/5 text-primary hover:bg-primary/10 transition-colors"
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
                   >
-                    {post.frontmatter.category}
-                  </Link>
-                  <span className="h-1 w-1 rounded-full bg-border" />
-                  <span>{readingMinutes}분 읽기</span>
-                </div>
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M15 19l-7-7 7-7"
+                    />
+                  </svg>
+                  글 목록으로
+                </Link>
 
-                <h1 className="font-display mt-4 text-4xl sm:text-5xl font-semibold tracking-tight">
-                  {post.frontmatter.title}
-                </h1>
-
-                {post.frontmatter.description && (
-                  <p className="mt-5 text-lg text-muted leading-relaxed">
-                    {post.frontmatter.description}
-                  </p>
-                )}
-
-                {post.frontmatter.tags && post.frontmatter.tags.length > 0 && (
-                  <div className="mt-6 flex flex-wrap gap-2">
-                    {post.frontmatter.tags.map((tag: string) => (
-                      <Link
-                        key={tag}
-                        href={`/blog?q=${encodeURIComponent(tag)}`}
-                        className="px-2.5 py-1 text-xs rounded-full border border-border bg-card/70 text-muted"
-                      >
-                        {tag}
-                      </Link>
-                    ))}
+                <header className="mt-8">
+                  <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-muted">
+                    <time>{post.frontmatter.date}</time>
+                    <span className="h-1 w-1 rounded-full bg-border" />
+                    <Link
+                      href={`/blog?category=${encodeURIComponent(post.frontmatter.category)}`}
+                      className="px-2.5 py-0.5 rounded-full border border-primary/20 bg-primary/5 text-primary hover:bg-primary/10 transition-colors"
+                    >
+                      {post.frontmatter.category}
+                    </Link>
+                    <span className="h-1 w-1 rounded-full bg-border" />
+                    <span>{readingMinutes}분 읽기</span>
                   </div>
-                )}
-              </header>
-            </AnimatedSection>
 
-            <AnimatedSection delay={0.15}>
-              <div className="mt-10 prose prose-lg max-w-none">
-                {content}
-              </div>
+                  <h1 className="font-display mt-4 text-4xl sm:text-5xl font-semibold tracking-tight">
+                    {post.frontmatter.title}
+                  </h1>
 
-              {(newerPost || olderPost || relatedPosts.length > 0) && (
-                <div className="mt-16 space-y-8">
-                  {(newerPost || olderPost) && (
-                    <div className="grid gap-4 sm:grid-cols-2">
-                      {newerPost && (
-                        <Link
-                          href={`/blog/${newerPost.slug}`}
-                          className="group rounded-3xl border border-border bg-card/60 p-6 backdrop-blur-sm hover:border-primary/25 hover:shadow-lg hover:shadow-primary/10 transition-colors"
-                        >
-                          <p className="text-xs font-semibold tracking-wide text-muted uppercase">
-                            더 최근 글
-                          </p>
-                          <p className="mt-2 font-display text-xl font-semibold tracking-tight group-hover:text-primary transition-colors">
-                            {newerPost.title}
-                          </p>
-                          <p className="mt-3 text-sm text-muted line-clamp-2">
-                            {newerPost.description}
-                          </p>
-                        </Link>
-                      )}
-
-                      {olderPost && (
-                        <Link
-                          href={`/blog/${olderPost.slug}`}
-                          className="group rounded-3xl border border-border bg-card/60 p-6 backdrop-blur-sm hover:border-primary/25 hover:shadow-lg hover:shadow-primary/10 transition-colors"
-                        >
-                          <p className="text-xs font-semibold tracking-wide text-muted uppercase">
-                            이전 글
-                          </p>
-                          <p className="mt-2 font-display text-xl font-semibold tracking-tight group-hover:text-primary transition-colors">
-                            {olderPost.title}
-                          </p>
-                          <p className="mt-3 text-sm text-muted line-clamp-2">
-                            {olderPost.description}
-                          </p>
-                        </Link>
-                      )}
-                    </div>
+                  {post.frontmatter.description && (
+                    <p className="mt-5 text-lg text-muted leading-relaxed">
+                      {post.frontmatter.description}
+                    </p>
                   )}
 
-                  {relatedPosts.length > 0 && (
-                    <div>
-                      <p className="text-sm font-semibold">같은 카테고리의 다른 글</p>
-                      <div className="mt-4 grid gap-4 md:grid-cols-3">
-                        {relatedPosts.map((p) => (
+                  {post.frontmatter.tags && post.frontmatter.tags.length > 0 && (
+                    <div className="mt-6 flex flex-wrap gap-2">
+                      {post.frontmatter.tags.map((tag: string) => (
+                        <Link
+                          key={tag}
+                          href={`/blog?q=${encodeURIComponent(tag)}`}
+                          className="px-2.5 py-1 text-xs rounded-full border border-border bg-card/70 text-muted"
+                        >
+                          {tag}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </header>
+              </AnimatedSection>
+
+              <AnimatedSection delay={0.15}>
+                <div className="mt-10 prose prose-lg max-w-none">
+                  {content}
+                </div>
+
+                {(newerPost || olderPost || relatedPosts.length > 0) && (
+                  <div className="mt-16 space-y-8">
+                    {(newerPost || olderPost) && (
+                      <div className="grid gap-4 sm:grid-cols-2">
+                        {newerPost && (
                           <Link
-                            key={p.slug}
-                            href={`/blog/${p.slug}`}
+                            href={`/blog/${newerPost.slug}`}
                             className="group rounded-3xl border border-border bg-card/60 p-6 backdrop-blur-sm hover:border-primary/25 hover:shadow-lg hover:shadow-primary/10 transition-colors"
                           >
-                            <p className="text-sm text-muted">{p.date}</p>
-                            <p className="mt-2 font-display text-lg font-semibold tracking-tight group-hover:text-primary transition-colors line-clamp-2">
-                              {p.title}
+                            <p className="text-xs font-semibold tracking-wide text-muted uppercase">
+                              더 최근 글
+                            </p>
+                            <p className="mt-2 font-display text-xl font-semibold tracking-tight group-hover:text-primary transition-colors">
+                              {newerPost.title}
                             </p>
                             <p className="mt-3 text-sm text-muted line-clamp-2">
-                              {p.description}
+                              {newerPost.description}
                             </p>
                           </Link>
-                        ))}
+                        )}
+
+                        {olderPost && (
+                          <Link
+                            href={`/blog/${olderPost.slug}`}
+                            className="group rounded-3xl border border-border bg-card/60 p-6 backdrop-blur-sm hover:border-primary/25 hover:shadow-lg hover:shadow-primary/10 transition-colors"
+                          >
+                            <p className="text-xs font-semibold tracking-wide text-muted uppercase">
+                              이전 글
+                            </p>
+                            <p className="mt-2 font-display text-xl font-semibold tracking-tight group-hover:text-primary transition-colors">
+                              {olderPost.title}
+                            </p>
+                            <p className="mt-3 text-sm text-muted line-clamp-2">
+                              {olderPost.description}
+                            </p>
+                          </Link>
+                        )}
                       </div>
-                    </div>
-                  )}
-                </div>
-              )}
-            </AnimatedSection>
+                    )}
+
+                    {relatedPosts.length > 0 && (
+                      <div>
+                        <p className="text-sm font-semibold">같은 카테고리의 다른 글</p>
+                        <div className="mt-4 grid gap-4 md:grid-cols-3">
+                          {relatedPosts.map((p) => (
+                            <Link
+                              key={p.slug}
+                              href={`/blog/${p.slug}`}
+                              className="group rounded-3xl border border-border bg-card/60 p-6 backdrop-blur-sm hover:border-primary/25 hover:shadow-lg hover:shadow-primary/10 transition-colors"
+                            >
+                              <p className="text-sm text-muted">{p.date}</p>
+                              <p className="mt-2 font-display text-lg font-semibold tracking-tight group-hover:text-primary transition-colors line-clamp-2">
+                                {p.title}
+                              </p>
+                              <p className="mt-3 text-sm text-muted line-clamp-2">
+                                {p.description}
+                              </p>
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </AnimatedSection>
+            </div>
           </div>
 
           <aside className="hidden lg:block">
