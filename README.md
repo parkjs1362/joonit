@@ -25,7 +25,7 @@
 ### 설치
 
 ```bash
-git clone https://github.com/parkjs1362/joonit.git
+git clone <your-repo-url>
 cd joonit
 npm install
 ```
@@ -113,7 +113,7 @@ git commit -m "feat: 새 블로그 글 추가"
 git push
 ```
 
-GitHub에 푸시하면 Vercel이 자동으로 배포합니다.
+원격 저장소에 푸시하면 Vercel이 자동으로 배포합니다.
 
 ## MDX 지원 기능
 
@@ -163,10 +163,6 @@ console.log(greeting);
   --foreground: #ededed;
 }
 ```
-
-### 소셜 링크 변경
-
-`components/Footer.tsx`에서 GitHub, LinkedIn 링크를 수정합니다.
 
 ## License
 
