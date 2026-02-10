@@ -1,20 +1,25 @@
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400..700&family=Noto+Sans+KR:wght@300..800&family=Noto+Serif+KR:wght@400..700&display=swap");
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
 :root {
-  --background: #fcfcfd;
-  --foreground: #0b0d12;
-  --primary: #2563eb;
-  --primary-hover: #1d4ed8;
-  --muted: #667085;
-  --border: #e6e8ee;
-  --card: #ffffff;
-  --font-sans-stack: "Pretendard", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
-    "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
-  --font-display-stack: "Pretendard", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
-    "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
-  --font-mono-stack: ui-monospace, "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono",
-    "Courier New", monospace;
+  /* Awwwards-inspired editorial palette */
+  --background: #f7f2eb;
+  --foreground: #121318;
+  --primary: #1f6a92;
+  --primary-hover: #2779a7;
+  --muted: #596273;
+  --border: #e6ddcf;
+  --card: #fffaf2;
+  --code-bg: #0b0d12;
+  --code-fg: #f5f6f8;
+
+  --font-sans-stack: "Noto Sans KR", "Pretendard", ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-display-stack: "Noto Serif KR", "Noto Sans KR", "Pretendard", ui-serif, Georgia,
+    "Times New Roman", serif;
+  --font-mono-stack: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
 }
 
 @theme inline {
@@ -33,11 +38,13 @@
 .dark {
   --background: #07080b;
   --foreground: #f5f6f8;
-  --primary: #60a5fa;
-  --primary-hover: #93c5fd;
+  --primary: #49c5b6;
+  --primary-hover: #7ae3d8;
   --muted: #a3aab8;
   --border: #1f2330;
   --card: #0f1117;
+  --code-bg: #0f1117;
+  --code-fg: #f5f6f8;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -58,15 +65,57 @@ html {
 
 body {
   background: var(--background);
+  /* Editorial texture: soft gradient + subtle grid */
   background-image:
-    radial-gradient(1200px circle at 10% -10%, color-mix(in srgb, var(--primary) 12%, transparent), transparent 55%),
-    radial-gradient(900px circle at 90% 0%, color-mix(in srgb, var(--primary) 10%, transparent), transparent 60%),
-    radial-gradient(900px circle at 50% 120%, color-mix(in srgb, var(--primary) 8%, transparent), transparent 55%);
+    radial-gradient(1000px circle at 10% -10%, color-mix(in srgb, var(--primary) 10%, transparent), transparent 55%),
+    radial-gradient(800px circle at 95% 0%, color-mix(in srgb, var(--primary) 8%, transparent), transparent 60%),
+    repeating-linear-gradient(
+      to right,
+      color-mix(in srgb, var(--border) 55%, transparent) 0 1px,
+      transparent 1px 24px
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--border) 35%, transparent) 0 1px,
+      transparent 1px 24px
+    );
   color: var(--foreground);
   font-family: var(--font-sans-stack);
   transition: background-color 0.3s ease, color 0.3s ease;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.dark body {
+  background-image:
+    radial-gradient(900px circle at 10% -10%, color-mix(in srgb, var(--primary) 14%, transparent), transparent 55%),
+    radial-gradient(700px circle at 95% 0%, color-mix(in srgb, var(--primary) 10%, transparent), transparent 60%),
+    repeating-linear-gradient(
+      to right,
+      color-mix(in srgb, var(--border) 70%, transparent) 0 1px,
+      transparent 1px 26px
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--border) 55%, transparent) 0 1px,
+      transparent 1px 26px
+    );
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("/images/noise.svg");
+  background-repeat: repeat;
+  opacity: 0.04;
+  mix-blend-mode: multiply;
+}
+
+.dark body::after {
+  opacity: 0.06;
+  mix-blend-mode: screen;
 }
 
 .font-display {
@@ -114,11 +163,6 @@ body {
   --tw-prose-td-borders: var(--border);
 }
 
-.prose :where(pre) {
-  background: var(--card);
-  border: 1px solid var(--border);
-}
-
 .prose strong {
   color: var(--foreground);
   font-weight: 750;
@@ -139,11 +183,6 @@ body {
   padding: 0.125rem 0.25rem;
   border-radius: 0.25rem;
   font-size: 0.875em;
-}
-
-.prose :where(pre code) {
-  background: transparent;
-  padding: 0;
 }
 
 /* Hide scrollbar for category filter */

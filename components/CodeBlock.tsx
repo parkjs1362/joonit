@@ -106,15 +106,22 @@ export default function CodeBlock({ children }: { children: ReactNode }) {
   };
 
   return (
-    <div className="not-prose my-6 overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
-      <div className="flex items-center justify-between gap-3 border-b border-border bg-card/60 px-4 py-3">
-        <span className="text-xs font-semibold tracking-wide text-muted uppercase">
-          {language ?? 'Code'}
-        </span>
+    <div className="not-prose my-6 overflow-hidden rounded-2xl border border-border/80 bg-[var(--code-bg)] text-[var(--code-fg)] shadow-sm">
+      <div className="flex items-center justify-between gap-3 border-b border-border/70 bg-black/20 px-4 py-3">
+        <div className="flex items-center gap-3 min-w-0">
+          <span aria-hidden="true" className="inline-flex items-center gap-1.5">
+            <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
+            <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
+            <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
+          </span>
+          <span className="text-xs font-semibold tracking-wide text-[color-mix(in_srgb,var(--code-fg)_70%,transparent)] uppercase truncate">
+            {language ?? 'Code'}
+          </span>
+        </div>
         <button
           type="button"
           onClick={onCopy}
-          className="inline-flex items-center gap-2 rounded-lg border border-border bg-card/50 px-3 py-1.5 text-xs font-semibold text-muted hover:text-foreground hover:bg-card/70 transition-colors"
+          className="inline-flex items-center gap-2 rounded-lg border border-border/70 bg-white/5 px-3 py-1.5 text-xs font-semibold text-[color-mix(in_srgb,var(--code-fg)_78%,transparent)] hover:text-[var(--code-fg)] hover:bg-white/10 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/35"
           aria-label="Copy code to clipboard"
         >
           {copied ? '복사됨' : '복사'}

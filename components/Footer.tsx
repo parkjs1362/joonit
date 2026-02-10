@@ -4,8 +4,8 @@ import { siteConfig } from '@/lib/config';
 export default function Footer() {
   return (
     <footer className="border-t border-border/70 mt-auto">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        <div className="flex flex-col gap-8 sm:flex-row sm:items-center sm:justify-between">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <p className="font-display text-lg font-semibold tracking-tight">
               {siteConfig.title}
@@ -15,7 +15,7 @@ export default function Footer() {
             </p>
           </div>
 
-          <nav className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted">
+          <nav className="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-semibold tracking-[0.16em] uppercase text-muted">
             <Link href="/blog" className="hover:text-foreground transition-colors">
               글
             </Link>
@@ -40,17 +40,12 @@ export default function Footer() {
           <div className="flex items-center gap-3">
             <a
               href={`mailto:${siteConfig.author.email}`}
-              className="inline-flex items-center justify-center w-10 h-10 rounded-xl border border-border bg-card/40 text-muted hover:text-foreground hover:bg-card/70 transition-colors"
-              aria-label="Email"
+              className="inline-flex items-center gap-2 rounded-xl border border-border bg-card/60 px-4 py-2 text-sm text-muted hover:text-foreground hover:bg-card/80 transition-colors"
             >
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                />
-              </svg>
+              <span className="text-xs font-semibold tracking-[0.16em] uppercase">
+                Email
+              </span>
+              <span className="text-sm">{siteConfig.author.email}</span>
             </a>
           </div>
         </div>

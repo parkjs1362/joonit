@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import { getCoverAlt, getCoverImage } from '@/lib/covers';
 
 interface PostCardProps {
   slug: string;
@@ -14,19 +15,6 @@ interface PostCardProps {
   image?: string;
 }
 
-function pickCover(category: string | undefined): string {
-  // Category-level unified covers (same image for all posts in a category).
-  const byCategory: Record<string, string> = {
-    개발: '/images/covers/dev-1.svg',
-    역사: '/images/covers/history-1.svg',
-    일상: '/images/covers/daily-1.svg',
-    default: '/images/covers/default-1.svg',
-  };
-
-  if (!category) return byCategory.default;
-  return byCategory[category] ?? byCategory.default;
-}
-
 export default function PostCard({
   slug,
   title,
@@ -36,7 +24,7 @@ export default function PostCard({
   tags,
   image,
 }: PostCardProps) {
-  const cover = image || pickCover(category);
+  const cover = getCoverImage({ category, image });
   return (
     <motion.article
       initial={{ opacity: 0, y: 20 }}
@@ -47,7 +35,7 @@ export default function PostCard({
     >
       <Link
         href={`/blog/${slug}`}
-        className="group relative block overflow-hidden rounded-2xl border border-border bg-card/60 backdrop-blur-sm transition-all duration-300 hover:border-primary/25 hover:shadow-lg hover:shadow-primary/10"
+        className="group relative block overflow-hidden rounded-3xl border border-border bg-card/70 backdrop-blur-sm transition-all duration-300 hover:border-primary/25 hover:shadow-lg hover:shadow-primary/10"
       >
         <div className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-[radial-gradient(800px_circle_at_20%_0%,color-mix(in_srgb,var(--primary)_12%,transparent),transparent_55%)]" />
 
@@ -55,7 +43,7 @@ export default function PostCard({
           <div className="relative aspect-[16/9] w-full overflow-hidden">
             <Image
               src={cover}
-              alt={`${title} cover`}
+              alt={getCoverAlt({ title, category })}
               fill
               className="object-cover scale-[1.02] transition-transform duration-500 group-hover:scale-[1.08]"
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"

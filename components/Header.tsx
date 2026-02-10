@@ -77,9 +77,9 @@ export default function Header() {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ type: 'spring', stiffness: 100, damping: 20 }}
-      className="sticky top-0 z-50 backdrop-blur-xl bg-background/70 border-b border-border/70"
+      className="sticky top-0 z-50 backdrop-blur-xl bg-background/75 border-b border-border/70"
     >
-      <nav className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <div className="flex items-center justify-between">
           <Link
             href="/"
@@ -89,7 +89,7 @@ export default function Header() {
           </Link>
 
           <div className="flex items-center gap-3">
-            <div className="hidden sm:flex items-center gap-1 rounded-full border border-border bg-card/40 p-1">
+            <div className="hidden sm:flex items-center gap-6">
               {navItems.map((item) => {
                 const isActive =
                   item.href === '/blog'
@@ -100,13 +100,17 @@ export default function Header() {
                   <Link
                     key={item.href}
                     href={item.href}
-                    className={`px-3 py-1.5 text-sm rounded-full transition-colors ${
-                      isActive
-                        ? 'bg-primary text-white dark:text-background'
-                        : 'text-muted hover:text-foreground hover:bg-card/70'
+                    className={`group relative py-2 text-xs font-semibold tracking-[0.18em] uppercase transition-colors ${
+                      isActive ? 'text-foreground' : 'text-muted hover:text-foreground'
                     }`}
                   >
                     {item.label}
+                    <span
+                      aria-hidden="true"
+                      className={`absolute left-0 -bottom-0.5 h-px w-full bg-primary origin-left transition-transform ${
+                        isActive ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+                      }`}
+                    />
                   </Link>
                 );
               })}
@@ -114,7 +118,7 @@ export default function Header() {
 
             <button
               onClick={toggleTheme}
-              className="p-2 rounded-xl border border-border bg-card/40 hover:bg-card/70 transition-colors"
+              className="p-2 rounded-xl border border-border bg-card/60 hover:bg-card/80 transition-colors"
               aria-label="Toggle theme"
             >
               {getThemeIcon()}
@@ -131,7 +135,7 @@ export default function Header() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`px-4 py-2 text-sm rounded-full border border-border bg-card/40 whitespace-nowrap transition-colors ${
+                className={`px-4 py-2 text-xs font-semibold tracking-[0.14em] uppercase rounded-full border border-border bg-card/60 whitespace-nowrap transition-colors ${
                   isActive ? 'text-foreground' : 'text-muted hover:text-foreground'
                 }`}
               >
