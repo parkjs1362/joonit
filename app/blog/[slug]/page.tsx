@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import { getPostBySlug, getAllPosts } from '@/lib/posts';
 import { parseMDX } from '@/lib/mdx';
 import { siteConfig } from '@/lib/config';
@@ -8,6 +9,7 @@ import AnimatedSection from '@/components/AnimatedSection';
 import ReadingProgress from '@/components/ReadingProgress';
 import TableOfContents from '@/components/TableOfContents';
 import { extractHeadingsFromMDX, estimateReadingMinutes } from '@/lib/content';
+import { getCoverAlt, getCoverImage } from '@/lib/covers';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -39,7 +41,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       type: 'article',
       publishedTime: post.frontmatter.date,
       url: `${siteConfig.url}/blog/${slug}`,
-      ...(post.frontmatter.image && { images: [post.frontmatter.image] }),
+      images: [
+        post.frontmatter.image
+          ? post.frontmatter.image
+          : `${siteConfig.url}${getCoverImage({ category: post.frontmatter.category })}`,
+      ],
     },
   };
 }
@@ -63,6 +69,10 @@ export default async function BlogPostPage({ params }: PageProps) {
   const { content } = await parseMDX(post.content);
   const headings = extractHeadingsFromMDX(post.content);
   const readingMinutes = estimateReadingMinutes(post.content);
+  const cover = getCoverImage({
+    category: post.frontmatter.category,
+    image: post.frontmatter.image,
+  });
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -112,7 +122,24 @@ export default async function BlogPostPage({ params }: PageProps) {
                 </Link>
 
                 <header className="mt-8">
-                  <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-muted">
+                  <div className="relative overflow-hidden rounded-3xl border border-border bg-card">
+                    <div className="relative aspect-[16/9]">
+                      <Image
+                        src={cover}
+                        alt={getCoverAlt({
+                          title: post.frontmatter.title,
+                          category: post.frontmatter.category,
+                        })}
+                        fill
+                        priority
+                        sizes="(max-width: 768px) 100vw, 720px"
+                        className="object-cover"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/10 to-transparent" />
+                    </div>
+                  </div>
+
+                  <div className="mt-7 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-muted">
                     <time>{post.frontmatter.date}</time>
                     <span className="h-1 w-1 rounded-full bg-border" />
                     <Link

@@ -1,6 +1,8 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import AnimatedSection from '@/components/AnimatedSection';
 import { getAllPosts, getAllCategories } from '@/lib/posts';
+import { getCoverAlt, getCoverImage } from '@/lib/covers';
 import HomePostsSection from './HomePostsSection';
 
 export default async function HomePage() {
@@ -8,6 +10,9 @@ export default async function HomePage() {
   const categories = await getAllCategories();
   const featured = posts[0];
   const latestPosts = featured ? posts.slice(1) : posts;
+  const featuredCover = featured
+    ? getCoverImage({ category: featured.category, image: featured.image })
+    : null;
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
@@ -56,59 +61,84 @@ export default async function HomePage() {
               <p className="text-xs font-semibold tracking-wide text-muted uppercase mb-3">
                 주제
               </p>
-              <div className="flex flex-wrap gap-2">
-                {categories.slice(0, 8).map((c) => (
-                  <Link
-                    key={c}
-                    href={`/blog?category=${encodeURIComponent(c)}`}
-                    className="px-3 py-1.5 text-sm rounded-full border border-border bg-card/50 text-muted hover:text-foreground hover:bg-card/70 transition-colors"
-                  >
-                    {c}
-                  </Link>
-                ))}
+              <div className="grid gap-4 sm:grid-cols-3 max-w-xl">
+                {categories.slice(0, 3).map((c) => {
+                  const subtitle =
+                    c === '개발'
+                      ? '웹, UI, 성능, DX'
+                      : c === '역사'
+                        ? '기술과 사회의 교차점'
+                        : c === '일상'
+                          ? '습관, 기록, 생각 정리'
+                          : '기록';
+
+                  return (
+                    <Link
+                      key={c}
+                      href={`/blog?category=${encodeURIComponent(c)}`}
+                      className="group block overflow-hidden rounded-3xl border border-border bg-card/70 hover:bg-card/85 transition-colors"
+                    >
+                      <div className="relative aspect-[4/3]">
+                        <Image
+                          src={getCoverImage({ category: c })}
+                          alt={`${c} 카테고리 대표 이미지`}
+                          fill
+                          sizes="(max-width: 640px) 100vw, 33vw"
+                          className="object-cover scale-[1.02] transition-transform duration-700 group-hover:scale-[1.08]"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/15 to-black/10" />
+                        <div className="absolute inset-0 p-5 flex flex-col justify-end">
+                          <p className="text-sm font-semibold tracking-tight text-white">
+                            {c}
+                          </p>
+                          <p className="mt-1 text-xs text-white/75">
+                            {subtitle}
+                          </p>
+                        </div>
+                      </div>
+                    </Link>
+                  );
+                })}
               </div>
             </div>
           )}
         </div>
 
         <div className="rounded-3xl border border-border bg-card/60 p-6 backdrop-blur-sm">
-          <p className="text-xs font-semibold tracking-wide text-muted uppercase">
+          <p className="text-xs font-semibold tracking-[0.16em] uppercase text-muted">
             추천 글
           </p>
-          {featured ? (
-            <div className="mt-4">
-              <p className="text-sm text-muted">{featured.date}</p>
-              <Link
-                href={`/blog/${featured.slug}`}
-                className="mt-2 block font-display text-2xl font-semibold tracking-tight hover:text-primary transition-colors"
-              >
-                {featured.title}
-              </Link>
-              <p className="mt-3 text-sm text-muted leading-relaxed line-clamp-3">
-                {featured.description}
-              </p>
-              <div className="mt-5">
-                <Link
-                  href={`/blog/${featured.slug}`}
-                  className="inline-flex items-center gap-2 text-sm text-primary hover:text-primary-hover transition-colors"
-                >
-                  계속 읽기
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M13 7h6m0 0v6m0-6L10 20"
-                    />
-                  </svg>
-                </Link>
+
+          {featured && featuredCover ? (
+            <Link
+              href={`/blog/${featured.slug}`}
+              className="group mt-4 block overflow-hidden rounded-3xl border border-border bg-card/70"
+            >
+              <div className="relative aspect-[16/10]">
+                <Image
+                  src={featuredCover}
+                  alt={getCoverAlt({ title: featured.title, category: featured.category })}
+                  fill
+                  priority
+                  sizes="(max-width: 1024px) 100vw, 40vw"
+                  className="object-cover scale-[1.02] transition-transform duration-700 group-hover:scale-[1.08]"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/15 to-black/10" />
+                <div className="absolute inset-0 p-6 flex flex-col justify-end">
+                  <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-[11px] font-semibold tracking-[0.14em] uppercase text-white/75">
+                    <time className="text-white/70">{featured.date}</time>
+                    <span aria-hidden="true" className="h-1 w-1 rounded-full bg-white/40" />
+                    <span className="text-white/80">{featured.category}</span>
+                  </div>
+                  <p className="mt-3 font-display text-3xl font-semibold tracking-tight leading-[1.05] text-white drop-shadow-[0_1px_18px_rgba(0,0,0,0.32)] line-clamp-2">
+                    {featured.title}
+                  </p>
+                  <p className="mt-3 text-sm text-white/75 leading-relaxed line-clamp-2">
+                    {featured.description}
+                  </p>
+                </div>
               </div>
-            </div>
+            </Link>
           ) : (
             <p className="mt-3 text-sm text-muted">아직 글이 없습니다.</p>
           )}

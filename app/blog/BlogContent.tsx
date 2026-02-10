@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
-import PostListItem from '@/components/PostListItem';
+import PostVisualCard from '@/components/PostVisualCard';
 import CategoryFilter from '@/components/CategoryFilter';
 import type { PostMeta } from '@/lib/posts';
 
@@ -40,6 +40,16 @@ export default function BlogContent({
         .toLowerCase();
       return hay.includes(normalizedQuery);
     });
+
+  const pickAspect = (index: number) => {
+    const mod = index % 6;
+    if (mod === 0) return 'aspect-[4/5]';
+    if (mod === 1) return 'aspect-[16/9]';
+    if (mod === 2) return 'aspect-[1/1]';
+    if (mod === 3) return 'aspect-[3/4]';
+    if (mod === 4) return 'aspect-[4/3]';
+    return 'aspect-[9/16]';
+  };
 
   return (
     <div className="grid gap-10 lg:grid-cols-[320px_1fr]">
@@ -90,23 +100,24 @@ export default function BlogContent({
 
       <section>
         {filteredPosts.length > 0 ? (
-          <div className="space-y-4">
-            <AnimatePresence mode="popLayout">
+          <AnimatePresence mode="popLayout">
+            <div className="columns-1 md:columns-2 2xl:columns-3 [column-gap:1.5rem]">
               {filteredPosts.map((post, idx) => (
-                <PostListItem
-                  key={post.slug}
-                  index={idx + 1}
-                  slug={post.slug}
-                  title={post.title}
-                  description={post.description}
-                  date={post.date}
-                  category={post.category}
-                  tags={post.tags}
-                  image={post.image}
-                />
+                <div key={post.slug} className="mb-6 [break-inside:avoid]">
+                  <PostVisualCard
+                    slug={post.slug}
+                    title={post.title}
+                    description={post.description}
+                    date={post.date}
+                    category={post.category}
+                    tags={post.tags}
+                    image={post.image}
+                    aspectClassName={pickAspect(idx)}
+                  />
+                </div>
               ))}
-            </AnimatePresence>
-          </div>
+            </div>
+          </AnimatePresence>
         ) : (
           <div className="text-center py-12 text-muted">
             <p>해당 조건에 맞는 글이 없습니다.</p>
