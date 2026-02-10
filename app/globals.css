@@ -78,7 +78,10 @@ body {
       to bottom,
       color-mix(in srgb, var(--border) 35%, transparent) 0 1px,
       transparent 1px 24px
-    );
+    ),
+    url("/images/noise.svg");
+  background-repeat: no-repeat, no-repeat, repeat, repeat, repeat;
+  background-size: auto, auto, auto, auto, 180px 180px;
   color: var(--foreground);
   font-family: var(--font-sans-stack);
   transition: background-color 0.3s ease, color 0.3s ease;
@@ -99,23 +102,10 @@ body {
       to bottom,
       color-mix(in srgb, var(--border) 55%, transparent) 0 1px,
       transparent 1px 26px
-    );
-}
-
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background-image: url("/images/noise.svg");
-  background-repeat: repeat;
-  opacity: 0.04;
-  mix-blend-mode: multiply;
-}
-
-.dark body::after {
-  opacity: 0.06;
-  mix-blend-mode: screen;
+    ),
+    url("/images/noise.svg");
+  background-repeat: no-repeat, no-repeat, repeat, repeat, repeat;
+  background-size: auto, auto, auto, auto, 200px 200px;
 }
 
 .font-display {
