@@ -1,16 +1,18 @@
 # Joonit Blog
 
-개인 블로그 - Next.js 16 + Tailwind CSS v4 + Framer Motion + MDX
+Joonit 개인 블로그 | 개발·역사·일상 기록
+
+읽기 좋은 글과, 정돈된 레이아웃을 기준으로 꾸준히 다듬습니다.
+바이브 코딩으로 빠르게 만들고, 실제로 쓰면서 계속 고칩니다.
 
 **Live**: https://joonit.vercel.app
 
-## Tech Stack
+## Built With
 
-- **Framework**: Next.js 16 (App Router)
-- **Styling**: Tailwind CSS v4
-- **Animation**: Framer Motion
-- **Content**: MDX (next-mdx-remote + gray-matter)
-- **Deployment**: Vercel
+- Next.js (App Router)
+- Tailwind CSS v4
+- MDX (frontmatter + markdown)
+- Vercel
 
 ## Features
 
@@ -49,31 +51,11 @@ npm run start
 
 ```
 joonit/
-├── app/
-│   ├── layout.tsx          # 루트 레이아웃
-│   ├── page.tsx            # 홈페이지
-│   ├── globals.css         # 글로벌 스타일
-│   ├── not-found.tsx       # 404 페이지
-│   ├── blog/
-│   │   ├── page.tsx        # 블로그 목록
-│   │   └── [slug]/
-│   │       └── page.tsx    # 블로그 상세
-│   └── about/
-│       └── page.tsx        # 소개 페이지
-├── components/
-│   ├── Header.tsx          # 네비게이션 + 다크모드 토글
-│   ├── Footer.tsx          # 푸터
-│   ├── PostCard.tsx        # 블로그 카드
-│   ├── AnimatedSection.tsx # 애니메이션 래퍼
-│   └── MDXComponents.tsx   # MDX 커스텀 컴포넌트
-├── content/
-│   └── posts/              # MDX 블로그 글
-│       └── hello-world.mdx
-├── lib/
-│   ├── mdx.ts              # MDX 파싱 유틸
-│   └── posts.ts            # 포스트 조회 함수
-└── public/
-    └── images/             # 이미지 파일
+├── app/                    # App Router routes/layouts
+├── components/             # UI components
+├── content/posts/          # MDX posts
+├── lib/                    # MDX/posts helpers
+└── public/                 # static assets (covers, favicon, etc.)
 ```
 
 ## Writing Blog Posts
@@ -97,7 +79,7 @@ description: "글 설명"
 date: "2025-02-04"
 category: "개발"
 tags: ["태그1", "태그2"]
-image: "/images/cover.jpg"  # 선택사항
+image: "/images/cover.jpg"  # 선택사항 (없으면 카테고리 커버를 기본으로 사용)
 ---
 
 ## 본문 내용
@@ -113,7 +95,7 @@ git commit -m "feat: 새 블로그 글 추가"
 git push
 ```
 
-원격 저장소에 푸시하면 Vercel이 자동으로 배포합니다.
+`main` 브랜치로 푸시하면 Vercel이 자동으로 배포합니다.
 
 ## MDX 지원 기능
 
