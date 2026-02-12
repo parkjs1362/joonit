@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import PostVisualCard from '@/components/PostVisualCard';
 import CategoryFilter from '@/components/CategoryFilter';
 import type { PostMeta } from '@/lib/posts';
@@ -13,6 +13,16 @@ interface HomePostsSectionProps {
 
 export default function HomePostsSection({ posts, categories }: HomePostsSectionProps) {
   const [selected, setSelected] = useState('전체');
+  const reduceMotion = useReducedMotion();
+
+  const cardMotion = reduceMotion
+    ? {}
+    : {
+        initial: { opacity: 0, scale: 0.98 },
+        animate: { opacity: 1, scale: 1 },
+        exit: { opacity: 0, scale: 0.98 },
+        transition: { duration: 0.25 },
+      };
 
   const filteredPosts =
     selected === '전체'
@@ -37,12 +47,9 @@ export default function HomePostsSection({ posts, categories }: HomePostsSection
             {bento[0] && (
               <motion.div
                 key={bento[0].slug}
-                layout
+                layout={!reduceMotion}
                 className="lg:col-span-7"
-                initial={{ opacity: 0, scale: 0.98 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.98 }}
-                transition={{ duration: 0.25 }}
+                {...cardMotion}
               >
                 <PostVisualCard
                   slug={bento[0].slug}
@@ -62,11 +69,8 @@ export default function HomePostsSection({ posts, categories }: HomePostsSection
               {bento[1] && (
                 <motion.div
                   key={bento[1].slug}
-                  layout
-                  initial={{ opacity: 0, scale: 0.98 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.98 }}
-                  transition={{ duration: 0.25 }}
+                  layout={!reduceMotion}
+                  {...cardMotion}
                 >
                   <PostVisualCard
                     slug={bento[1].slug}
@@ -84,11 +88,8 @@ export default function HomePostsSection({ posts, categories }: HomePostsSection
               {bento[2] && (
                 <motion.div
                   key={bento[2].slug}
-                  layout
-                  initial={{ opacity: 0, scale: 0.98 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.98 }}
-                  transition={{ duration: 0.25 }}
+                  layout={!reduceMotion}
+                  {...cardMotion}
                 >
                   <PostVisualCard
                     slug={bento[2].slug}
@@ -107,12 +108,9 @@ export default function HomePostsSection({ posts, categories }: HomePostsSection
             {bento.slice(3, 6).map((post) => (
               <motion.div
                 key={post.slug}
-                layout
+                layout={!reduceMotion}
                 className="lg:col-span-4"
-                initial={{ opacity: 0, scale: 0.98 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.98 }}
-                transition={{ duration: 0.25 }}
+                {...cardMotion}
               >
                 <PostVisualCard
                   slug={post.slug}

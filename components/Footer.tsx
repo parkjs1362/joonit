@@ -16,23 +16,23 @@ export default function Footer() {
           </div>
 
           <nav className="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-semibold tracking-[0.16em] uppercase text-muted">
-            <Link href="/blog" className="hover:text-foreground transition-colors">
+            <Link href="/blog" className="focus-ring hover:text-foreground transition-colors">
               글
             </Link>
-            <Link href="/about" className="hover:text-foreground transition-colors">
+            <Link href="/about" className="focus-ring hover:text-foreground transition-colors">
               소개
             </Link>
-            <Link href="/contact" className="hover:text-foreground transition-colors">
+            <Link href="/contact" className="focus-ring hover:text-foreground transition-colors">
               연락
             </Link>
             <span
               aria-hidden="true"
               className="h-4 w-px bg-border/90"
             />
-            <Link href="/privacy" className="hover:text-foreground transition-colors">
+            <Link href="/privacy" className="focus-ring hover:text-foreground transition-colors">
               개인정보처리방침
             </Link>
-            <Link href="/terms" className="hover:text-foreground transition-colors">
+            <Link href="/terms" className="focus-ring hover:text-foreground transition-colors">
               이용약관
             </Link>
           </nav>
@@ -40,7 +40,7 @@ export default function Footer() {
           <div className="flex items-center gap-3">
             <a
               href={`mailto:${siteConfig.author.email}`}
-              className="inline-flex items-center gap-2 rounded-xl border border-border bg-card/60 px-4 py-2 text-sm text-muted hover:text-foreground hover:bg-card/80 transition-colors"
+              className="focus-ring inline-flex items-center gap-2 rounded-xl border border-border bg-card/60 px-4 py-2 text-sm text-muted hover:text-foreground hover:bg-card/80 transition-colors"
             >
               <span className="text-xs font-semibold tracking-[0.16em] uppercase">
                 Email

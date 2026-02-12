@@ -2,13 +2,14 @@
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { usePathname } from 'next/navigation';
 
 export default function Header() {
   const [theme, setTheme] = useState<'light' | 'dark' | 'system'>('system');
   const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
+  const reduceMotion = useReducedMotion();
 
   const applyTheme = (newTheme: 'light' | 'dark' | 'system') => {
     const root = document.documentElement;
@@ -74,16 +75,23 @@ export default function Header() {
 
   return (
     <motion.header
-      initial={{ y: -100 }}
+      initial={reduceMotion ? { y: 0 } : { y: -100 }}
       animate={{ y: 0 }}
-      transition={{ type: 'spring', stiffness: 100, damping: 20 }}
+      transition={reduceMotion ? { duration: 0 } : { type: 'spring', stiffness: 100, damping: 20 }}
       className="sticky top-0 z-50 backdrop-blur-xl bg-background/75 border-b border-border/70"
     >
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <a
+          href="#content"
+          className="sr-only focus:not-sr-only focus-ring focus:absolute focus:left-4 focus:top-4 focus:z-[70] rounded-xl border border-border bg-card/90 px-4 py-2 text-sm font-semibold text-foreground backdrop-blur"
+        >
+          본문으로 건너뛰기
+        </a>
+
         <div className="flex items-center justify-between">
           <Link
             href="/"
-            className="font-display text-xl font-semibold tracking-tight hover:text-primary transition-colors"
+            className="focus-ring font-display text-xl font-semibold tracking-tight hover:text-primary transition-colors"
           >
             Joonit
           </Link>
@@ -100,7 +108,7 @@ export default function Header() {
                   <Link
                     key={item.href}
                     href={item.href}
-                    className={`group relative py-2 text-xs font-semibold tracking-[0.18em] uppercase transition-colors ${
+                    className={`focus-ring group relative py-2 text-xs font-semibold tracking-[0.18em] uppercase transition-colors ${
                       isActive ? 'text-foreground' : 'text-muted hover:text-foreground'
                     }`}
                   >
@@ -118,7 +126,7 @@ export default function Header() {
 
             <button
               onClick={toggleTheme}
-              className="p-2 rounded-xl border border-border bg-card/60 hover:bg-card/80 transition-colors"
+              className="focus-ring p-2 rounded-xl border border-border bg-card/60 hover:bg-card/80 transition-colors"
               aria-label="Toggle theme"
             >
               {getThemeIcon()}
@@ -135,7 +143,7 @@ export default function Header() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`px-4 py-2 text-xs font-semibold tracking-[0.14em] uppercase rounded-full border border-border bg-card/60 whitespace-nowrap transition-colors ${
+                className={`focus-ring px-4 py-2 text-xs font-semibold tracking-[0.14em] uppercase rounded-full border border-border bg-card/60 whitespace-nowrap transition-colors ${
                   isActive ? 'text-foreground' : 'text-muted hover:text-foreground'
                 }`}
               >

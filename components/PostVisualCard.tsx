@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { getCoverAlt, getCoverImage } from '@/lib/covers';
 
 interface PostVisualCardProps {
@@ -29,18 +29,25 @@ export default function PostVisualCard({
   priority = false,
 }: PostVisualCardProps) {
   const cover = getCoverImage({ category, image });
+  const reduceMotion = useReducedMotion();
+
+  const motionProps = reduceMotion
+    ? {}
+    : {
+        initial: { opacity: 0, y: 18 },
+        whileInView: { opacity: 1, y: 0 },
+        viewport: { once: true },
+        whileHover: { y: -2 },
+        transition: { duration: 0.28 },
+      };
 
   return (
     <motion.article
-      initial={{ opacity: 0, y: 18 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      whileHover={{ y: -2 }}
-      transition={{ duration: 0.28 }}
+      {...motionProps}
     >
       <Link
         href={`/blog/${slug}`}
-        className="group block overflow-hidden rounded-3xl border border-border bg-card/70 hover:bg-card/85 transition-colors"
+        className="focus-ring card-hover group block overflow-hidden rounded-3xl border border-border bg-card/70 hover:bg-card/85"
       >
         <div className={`relative ${aspectClassName}`}>
           <Image
@@ -88,4 +95,3 @@ export default function PostVisualCard({
     </motion.article>
   );
 }
-

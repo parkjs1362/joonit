@@ -131,15 +131,19 @@ const components: MDXComponents = {
   pre: ({ children }) => (
     <CodeBlock>{children}</CodeBlock>
   ),
-  img: ({ src, alt }) => (
-    <Image
-      src={src || ''}
-      alt={alt || ''}
-      width={800}
-      height={400}
-      className="rounded-2xl my-6 border border-border"
-    />
-  ),
+  img: ({ src, alt }) => {
+    if (!src) return null;
+    return (
+      <Image
+        src={src}
+        alt={alt || ''}
+        width={800}
+        height={400}
+        sizes="(max-width: 768px) 100vw, 800px"
+        className="rounded-2xl my-6 border border-border"
+      />
+    );
+  },
   hr: () => <hr className="my-8 border-border" />,
   table: ({ children }) => (
     <div className="overflow-x-auto my-4">

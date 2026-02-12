@@ -44,13 +44,13 @@ export default async function HomePage() {
           <div className="flex flex-wrap gap-3 mt-8">
             <Link
               href="/blog"
-              className="px-5 py-3 bg-primary text-white dark:text-background rounded-2xl hover:bg-primary-hover transition-colors shadow-sm"
+              className="focus-ring px-5 py-3 bg-primary text-white dark:text-background rounded-2xl hover:bg-primary-hover transition-colors shadow-sm"
             >
               글 보러가기
             </Link>
             <Link
               href="/about"
-              className="px-5 py-3 border border-border bg-card/40 rounded-2xl hover:bg-card/70 transition-colors"
+              className="focus-ring px-5 py-3 border border-border bg-card/40 rounded-2xl hover:bg-card/70 transition-colors"
             >
               소개 보기
             </Link>
@@ -76,7 +76,7 @@ export default async function HomePage() {
                     <Link
                       key={c}
                       href={`/blog?category=${encodeURIComponent(c)}`}
-                      className="group block overflow-hidden rounded-3xl border border-border bg-card/70 hover:bg-card/85 transition-colors"
+                      className="focus-ring card-hover group block overflow-hidden rounded-3xl border border-border bg-card/70 hover:bg-card/85"
                     >
                       <div className="relative aspect-[4/3]">
                         <Image
@@ -112,7 +112,7 @@ export default async function HomePage() {
           {featured && featuredCover ? (
             <Link
               href={`/blog/${featured.slug}`}
-              className="group mt-4 block overflow-hidden rounded-3xl border border-border bg-card/70"
+              className="focus-ring card-hover group mt-4 block overflow-hidden rounded-3xl border border-border bg-card/70"
             >
               <div className="relative aspect-[16/10]">
                 <Image
@@ -153,7 +153,7 @@ export default async function HomePage() {
           </h2>
           <Link
             href="/blog"
-            className="text-primary hover:text-primary-hover transition-colors"
+            className="focus-ring text-primary hover:text-primary-hover transition-colors"
           >
             모든 글 보기 &rarr;
           </Link>

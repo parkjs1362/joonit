@@ -85,7 +85,7 @@ export default function RootLayout({
       >
         <A11yFixes />
         <Header />
-        <main className="flex-1">{children}</main>
+        <main id="content" className="flex-1">{children}</main>
         <Footer />
       </body>
     </html>
