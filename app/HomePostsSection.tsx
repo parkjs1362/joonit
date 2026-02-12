@@ -48,7 +48,7 @@ export default function HomePostsSection({ posts, categories }: HomePostsSection
               <motion.div
                 key={bento[0].slug}
                 layout={!reduceMotion}
-                className="lg:col-span-7"
+                className="lg:col-span-7 lg:self-stretch"
                 {...cardMotion}
               >
                 <PostVisualCard
@@ -59,7 +59,8 @@ export default function HomePostsSection({ posts, categories }: HomePostsSection
                   category={bento[0].category}
                   tags={bento[0].tags}
                   image={bento[0].image}
-                  aspectClassName="aspect-[16/10] sm:aspect-[16/9]"
+                  aspectClassName="aspect-[16/10] sm:aspect-[16/9] lg:aspect-auto lg:h-full"
+                  fillHeight
                   priority
                 />
               </motion.div>

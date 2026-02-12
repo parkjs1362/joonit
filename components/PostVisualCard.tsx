@@ -15,6 +15,7 @@ interface PostVisualCardProps {
   image?: string;
   aspectClassName?: string;
   priority?: boolean;
+  fillHeight?: boolean;
 }
 
 export default function PostVisualCard({
@@ -27,6 +28,7 @@ export default function PostVisualCard({
   image,
   aspectClassName = 'aspect-[4/5]',
   priority = false,
+  fillHeight = false,
 }: PostVisualCardProps) {
   const cover = getCoverImage({ category, image });
   const reduceMotion = useReducedMotion();
@@ -44,12 +46,19 @@ export default function PostVisualCard({
   return (
     <motion.article
       {...motionProps}
+      className={fillHeight ? 'lg:h-full' : undefined}
     >
       <Link
         href={`/blog/${slug}`}
-        className="focus-ring card-hover group block overflow-hidden rounded-3xl border border-border bg-card/70 hover:bg-card/85"
+        className={`focus-ring card-hover group block overflow-hidden rounded-3xl border border-border bg-card/70 hover:bg-card/85 ${
+          fillHeight ? 'lg:h-full' : ''
+        }`}
       >
-        <div className={`relative ${aspectClassName}`}>
+        <div
+          className={`relative ${aspectClassName} ${
+            fillHeight ? 'lg:aspect-auto lg:h-full' : ''
+          }`}
+        >
           <Image
             src={cover}
             alt={getCoverAlt({ title, category })}
