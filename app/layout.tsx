@@ -6,6 +6,7 @@ import A11yFixes from '@/components/A11yFixes';
 import './globals.css';
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteConfig.url),
   title: {
     default: 'Joonit - 개인 블로그',
     template: '%s | Joonit',
@@ -13,6 +14,20 @@ export const metadata: Metadata = {
   description: siteConfig.description,
   keywords: siteConfig.keywords,
   authors: [{ name: siteConfig.author.name }],
+  alternates: {
+    canonical: '/',
+    languages: {
+      'ko-KR': '/',
+    },
+  },
+  icons: {
+    icon: [
+      { url: '/favicon.ico' },
+      { url: '/icon', type: 'image/png' },
+    ],
+    apple: [{ url: '/apple-icon', type: 'image/png' }],
+    shortcut: ['/favicon.ico'],
+  },
   openGraph: {
     type: 'website',
     locale: 'ko_KR',
@@ -29,6 +44,13 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
 };
 
@@ -38,9 +60,21 @@ const jsonLd = {
   name: siteConfig.title,
   url: siteConfig.url,
   description: siteConfig.description,
+  inLanguage: 'ko-KR',
   author: {
     '@type': 'Person',
     name: siteConfig.author.name,
+    url: `${siteConfig.url}/about`,
+  },
+  publisher: {
+    '@type': 'Person',
+    name: siteConfig.author.name,
+    url: `${siteConfig.url}/about`,
+  },
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: `${siteConfig.url}/blog?q={search_term_string}`,
+    'query-input': 'required name=search_term_string',
   },
 };
 
@@ -55,6 +89,12 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        <link
+          rel="alternate"
+          type="application/rss+xml"
+          title="Joonit RSS"
+          href="/feed.xml"
         />
         <script
           dangerouslySetInnerHTML={{

@@ -10,6 +10,7 @@ import ReadingProgress from '@/components/ReadingProgress';
 import TableOfContents from '@/components/TableOfContents';
 import { extractHeadingsFromMDX, estimateReadingMinutes } from '@/lib/content';
 import { getCoverAlt, getCoverImage } from '@/lib/covers';
+import { toAbsoluteUrl } from '@/lib/og';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -35,17 +36,20 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title: post.frontmatter.title,
     description: post.frontmatter.description,
+    alternates: {
+      canonical: `/blog/${slug}`,
+    },
     openGraph: {
       title: post.frontmatter.title,
       description: post.frontmatter.description,
       type: 'article',
       publishedTime: post.frontmatter.date,
       url: `${siteConfig.url}/blog/${slug}`,
-      images: [
-        post.frontmatter.image
-          ? post.frontmatter.image
-          : `${siteConfig.url}${getCoverImage({ category: post.frontmatter.category })}`,
-      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.frontmatter.title,
+      description: post.frontmatter.description,
     },
   };
 }
@@ -74,18 +78,69 @@ export default async function BlogPostPage({ params }: PageProps) {
     image: post.frontmatter.image,
   });
 
-  const jsonLd = {
+  const postUrl = `${siteConfig.url}/blog/${slug}`;
+  const coverUrl = toAbsoluteUrl(cover);
+  const aboutUrl = `${siteConfig.url}/about`;
+
+  const blogPostingJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
     headline: post.frontmatter.title,
     description: post.frontmatter.description,
     datePublished: post.frontmatter.date,
+    dateModified: post.frontmatter.date,
+    inLanguage: 'ko-KR',
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': postUrl,
+    },
     author: {
       '@type': 'Person',
       name: siteConfig.author.name,
+      url: aboutUrl,
     },
-    url: `${siteConfig.url}/blog/${slug}`,
-    ...(post.frontmatter.tags && { keywords: post.frontmatter.tags.join(', ') }),
+    publisher: {
+      '@type': 'Person',
+      name: siteConfig.author.name,
+      url: aboutUrl,
+    },
+    isPartOf: {
+      '@type': 'Blog',
+      name: siteConfig.title,
+      url: `${siteConfig.url}/blog`,
+    },
+    articleSection: post.frontmatter.category,
+    url: postUrl,
+    image: [coverUrl],
+    ...(post.frontmatter.tags &&
+      post.frontmatter.tags.length > 0 && {
+        keywords: post.frontmatter.tags.join(', '),
+      }),
+  };
+
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: siteConfig.url,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Blog',
+        item: `${siteConfig.url}/blog`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: post.frontmatter.title,
+        item: postUrl,
+      },
+    ],
   };
 
   return (
@@ -94,7 +149,11 @@ export default async function BlogPostPage({ params }: PageProps) {
       <article className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostingJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
         />
 
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_280px]">

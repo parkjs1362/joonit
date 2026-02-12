@@ -1,13 +1,13 @@
 import { ImageResponse } from 'next/og';
 
 export const size = {
-  width: 512,
-  height: 512,
+  width: 180,
+  height: 180,
 };
 
 export const contentType = 'image/png';
 
-export default function Icon() {
+export default function AppleIcon() {
   return new ImageResponse(
     (
       <div
@@ -17,13 +17,13 @@ export default function Icon() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          borderRadius: 128,
+          borderRadius: 48,
           background:
             'radial-gradient(circle at 30% 20%, #93C5FD 0%, #2563EB 45%, #0B1220 100%)',
           color: '#ffffff',
-          fontSize: 336,
+          fontSize: 124,
           fontWeight: 800,
-          letterSpacing: -16,
+          letterSpacing: -6,
         }}
       >
         J
@@ -32,3 +32,4 @@ export default function Icon() {
     size,
   );
 }
+
