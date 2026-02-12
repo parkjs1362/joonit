@@ -5,6 +5,8 @@ import { siteConfig } from '@/lib/config';
 import A11yFixes from '@/components/A11yFixes';
 import './globals.css';
 
+const iconVersion = '20260212';
+
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
@@ -22,11 +24,11 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: '/favicon.ico' },
-      { url: '/icon', type: 'image/png' },
+      { url: `/icon?v=${iconVersion}`, type: 'image/png', sizes: '512x512' },
+      { url: `/favicon.ico?v=${iconVersion}` },
     ],
-    apple: [{ url: '/apple-icon', type: 'image/png' }],
-    shortcut: ['/favicon.ico'],
+    apple: [{ url: `/apple-icon?v=${iconVersion}`, type: 'image/png', sizes: '180x180' }],
+    shortcut: [`/favicon.ico?v=${iconVersion}`],
   },
   openGraph: {
     type: 'website',

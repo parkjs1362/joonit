@@ -1,0 +1,68 @@
+---
+title: "Next.js OG 이미지에서 한글이 깨질 때: ImageResponse + 폰트 로딩"
+description: "next/og ImageResponse로 OG 이미지를 만들면 한글이 기본 폰트에서 깨질 수 있습니다. 폰트를 명시적으로 로딩해 안정적으로 렌더링하는 방법을 정리합니다."
+date: "2026-02-12"
+category: "개발"
+tags: ["Next.js", "SEO", "OpenGraph", "ImageResponse", "폰트"]
+---
+
+Next.js의 `next/og`는 **동적으로 OG 이미지를 생성**할 수 있어서 정말 편합니다.  
+그런데 한글이 들어가면 종종 문제가 생깁니다.
+
+- 글자가 네모(□)로 보인다
+- 폰트가 예측 불가능하게 바뀐다
+- 로컬에서는 되는데 배포에서 깨진다
+
+## 1) 왜 깨지나
+
+`ImageResponse`는 브라우저 렌더링이 아니라, 서버 런타임에서 이미지를 렌더링합니다.  
+즉, “CSS에서 불러온 웹폰트”가 자동으로 적용되지 않습니다.
+
+그래서 한글이 포함된 텍스트는 **한글을 포함한 폰트 데이터를 직접 제공**하는 게 안정적입니다.
+
+## 2) 해결 전략: 폰트(ArrayBuffer)를 `fonts`로 넘기기
+
+핵심은 두 가지입니다.
+
+- 폰트 파일을 가져온다(woff2 등)
+- `new ImageResponse(..., { fonts: [...] })`에 등록한다
+
+예시:
+
+```ts
+import { ImageResponse } from "next/og";
+
+export default async function OG() {
+  const fontData = await fetch("...woff2").then((r) => r.arrayBuffer());
+
+  return new ImageResponse(<div>한글 제목</div>, {
+    width: 1200,
+    height: 630,
+    fonts: [{ name: "Noto Sans KR", data: fontData, weight: 800 }],
+  });
+}
+```
+
+## 3) 글(포스트) OG 이미지에서 자주 놓치는 것
+
+### (1) 런타임: Edge vs Node.js
+
+포스트 OG 이미지를 만들 때 MDX 파일을 읽어 제목/날짜를 넣는다면,  
+이미지 라우트는 파일 시스템 접근이 필요합니다.
+
+이때는 다음처럼 Node 런타임을 명시하는 편이 안전합니다.
+
+```ts
+export const runtime = "nodejs";
+```
+
+### (2) “텍스트만” 로딩하면 폰트가 가벼워진다
+
+Google Fonts는 `text=` 파라미터로 “필요한 글자만” 내려받게 할 수 있어요.  
+OG 이미지 렌더링은 텍스트가 길어질수록 폰트가 커지기 때문에, 이 최적화가 체감이 큽니다.
+
+## 오늘의 메모
+
+OG 이미지는 “보너스” 같지만, 공유/검색에서의 첫인상을 결정합니다.  
+한글 사이트라면 폰트 로딩을 한 번 제대로 해두는 게 재작업을 줄여줍니다.
+
