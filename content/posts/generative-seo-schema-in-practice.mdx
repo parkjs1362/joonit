@@ -1,0 +1,69 @@
+---
+title: "GEO(생성형 검색) 대응을 코드로 바꾸기: Schema.org 실전 적용 순서"
+description: "LLM이 사이트를 잘 읽게 하려면 감각보다 구조가 먼저입니다. WebSite, BlogPosting, BreadcrumbList를 실제 페이지에 붙일 때의 우선순위를 정리합니다."
+date: "2026-02-13"
+category: "개발"
+tags: ["SEO", "GEO", "Schema", "JSON-LD", "Next.js"]
+---
+
+요즘 검색은 “링크 클릭”만이 아니라, 생성형 요약으로 먼저 소비됩니다.  
+그래서 메타데이터는 선택이 아니라 **문서 구조의 일부**가 됩니다.
+
+핵심은 어렵지 않습니다.  
+페이지마다 “이 문서가 무엇인지”를 기계가 바로 이해하게 만들면 됩니다.
+
+## 1) 전역은 `WebSite`부터
+
+루트 레이아웃에는 사이트 정체성을 먼저 넣습니다.
+
+- `@type: WebSite`
+- `name`, `url`, `inLanguage`
+- `author`/`publisher`
+- `SearchAction`(검색 URL 패턴)
+
+이 단계가 빠지면, 포스트가 좋아도 사이트 전체 맥락이 약합니다.
+
+## 2) 포스트는 `BlogPosting`으로 완성
+
+글 상세 페이지에는 문서 단위 정보를 넣습니다.
+
+- `headline`, `description`
+- `datePublished`, `dateModified`
+- `mainEntityOfPage`
+- `image`(절대 URL)
+- `articleSection`(카테고리)
+
+여기서 자주 놓치는 건 `mainEntityOfPage`와 절대 URL 이미지입니다.
+
+## 3) `BreadcrumbList`로 맥락 연결
+
+생성형 요약은 문서 자체보다 “문서의 위치”를 같이 봅니다.
+
+- Home → Blog → Post
+
+브레드크럼이 있으면, 글이 사이트 어디에 속하는지 구조적으로 명확해집니다.
+
+## 4) OG/Twitter 이미지는 텍스트와 함께 설계
+
+공유 미리보기는 클릭률뿐 아니라 신뢰감에도 영향을 줍니다.
+
+- 전역 OG 이미지 1종
+- 슬러그 기반 포스트 OG 이미지
+- 한글 렌더링 폰트 명시(`ImageResponse`에서 폰트 주입)
+
+“이미지 예쁘게”보다 “제목/카테고리/날짜가 안정적으로 보이는지”가 우선입니다.
+
+## 5) 운영 체크리스트
+
+적용 후에는 항상 점검합니다.
+
+- JSON-LD 파싱 에러 0
+- canonical/robots 누락 없음
+- 포스트 미리보기 이미지 정상 노출
+- RSS/사이트맵 최신 상태
+
+## 오늘의 메모
+
+GEO는 새로운 트릭이 아니라,  
+기존 SEO를 **기계 친화적인 문서 구조**로 끝까지 밀어붙이는 일에 가깝습니다.
+
