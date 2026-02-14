@@ -13,6 +13,9 @@
   --card: #fffaf2;
   --code-bg: #0b0d12;
   --code-fg: #f5f6f8;
+  --accent-cyan: #12b8d8;
+  --accent-amber: #ff9f2d;
+  --accent-fuchsia: #c74cff;
 
   --font-sans-stack: "Noto Sans KR", "Pretendard", ui-sans-serif, system-ui, -apple-system,
     "Segoe UI", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
@@ -45,6 +48,9 @@
   --card: #0f1117;
   --code-bg: #0f1117;
   --code-fg: #f5f6f8;
+  --accent-cyan: #44d7ff;
+  --accent-amber: #ffbe63;
+  --accent-fuchsia: #f07dff;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -56,6 +62,9 @@
     --muted: #a3aab8;
     --border: #1f2330;
     --card: #0f1117;
+    --accent-cyan: #44d7ff;
+    --accent-amber: #ffbe63;
+    --accent-fuchsia: #f07dff;
   }
 }
 
@@ -218,5 +227,79 @@ body {
     box-shadow:
       0 18px 48px -30px color-mix(in srgb, var(--primary) 28%, transparent),
       0 12px 26px -20px rgba(0, 0, 0, 0.55);
+  }
+
+  .chromatic-surface {
+    position: relative;
+    isolation: isolate;
+    border: 1px solid color-mix(in srgb, var(--border) 82%, transparent);
+    background:
+      linear-gradient(
+        160deg,
+        color-mix(in srgb, var(--card) 84%, transparent) 0%,
+        color-mix(in srgb, var(--card) 72%, transparent) 50%,
+        color-mix(in srgb, var(--card) 88%, transparent) 100%
+      );
+    backdrop-filter: blur(10px);
+  }
+
+  .chromatic-surface::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    z-index: 0;
+    background:
+      radial-gradient(110% 80% at 0% 0%, color-mix(in srgb, var(--accent-cyan) 26%, transparent), transparent 62%),
+      radial-gradient(100% 90% at 100% 0%, color-mix(in srgb, var(--accent-fuchsia) 20%, transparent), transparent 64%),
+      radial-gradient(90% 80% at 50% 100%, color-mix(in srgb, var(--accent-amber) 18%, transparent), transparent 66%);
+    opacity: 0.95;
+  }
+
+  .chromatic-surface > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-glow {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-glow::after {
+    content: "";
+    position: absolute;
+    inset: -26% -4% auto -4%;
+    height: 68%;
+    border-radius: 9999px;
+    pointer-events: none;
+    z-index: 0;
+    filter: blur(48px);
+    background:
+      radial-gradient(circle at 18% 40%, color-mix(in srgb, var(--accent-cyan) 40%, transparent), transparent 48%),
+      radial-gradient(circle at 82% 35%, color-mix(in srgb, var(--accent-fuchsia) 40%, transparent), transparent 44%),
+      radial-gradient(circle at 52% 62%, color-mix(in srgb, var(--accent-amber) 28%, transparent), transparent 56%);
+  }
+
+  .hero-glow > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .glass-edge {
+    border-color: color-mix(in srgb, var(--primary) 22%, var(--border));
+    background: color-mix(in srgb, var(--card) 84%, transparent);
+    box-shadow:
+      inset 0 1px 0 color-mix(in srgb, white 45%, transparent),
+      0 20px 44px -30px color-mix(in srgb, var(--primary) 40%, transparent),
+      0 10px 20px -16px rgba(0, 0, 0, 0.28);
+  }
+
+  .dark .glass-edge {
+    box-shadow:
+      inset 0 1px 0 color-mix(in srgb, white 18%, transparent),
+      0 22px 48px -30px color-mix(in srgb, var(--primary) 32%, transparent),
+      0 12px 24px -18px rgba(0, 0, 0, 0.62);
   }
 }

@@ -5,6 +5,12 @@ import { getAllPosts, getAllCategories } from '@/lib/posts';
 import { getCoverAlt, getCoverImage } from '@/lib/covers';
 import HomePostsSection from './HomePostsSection';
 
+const categoryLead: Record<string, string> = {
+  개발: '웹, UI, 성능, DX',
+  역사: '사실 기반 스토리텔링',
+  일상: '질문, 루틴, 기록',
+};
+
 export default async function HomePage() {
   const posts = await getAllPosts();
   const categories = await getAllCategories();
@@ -15,145 +21,162 @@ export default async function HomePage() {
     : null;
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
-      {/* Hero Section */}
-      <AnimatedSection className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr] items-start mb-16">
-        <div>
-          <div className="flex items-center gap-3">
-            <div
-              aria-hidden="true"
-              className="w-12 h-12 rounded-2xl border border-primary/20 bg-primary/10 text-primary flex items-center justify-center font-display text-xl"
-            >
-              J
+    <div
+      data-layout-version="home-v3"
+      className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-14"
+    >
+      <AnimatedSection className="mb-14 rounded-[2rem] chromatic-surface hero-glow p-5 sm:p-8 lg:p-10">
+        <div className="grid gap-8 lg:grid-cols-12 items-stretch">
+          <div className="lg:col-span-7">
+            <div className="flex flex-wrap items-center gap-3">
+              <span className="inline-flex items-center rounded-full glass-edge px-3.5 py-1.5 text-[11px] font-semibold tracking-[0.16em] uppercase">
+                Joonit Journal
+              </span>
+              <span className="inline-flex items-center rounded-full border border-border/70 bg-background/40 px-3.5 py-1.5 text-[11px] font-semibold tracking-[0.12em] uppercase text-muted">
+                High-color layout update
+              </span>
             </div>
-            <div>
-              <p className="text-sm font-semibold leading-none">Joonit</p>
-              <p className="text-xs text-muted mt-1">개발, 역사, 일상 기록</p>
+
+            <h1 className="mt-6 font-display text-[clamp(2.5rem,7.2vw,5.4rem)] font-semibold tracking-tight leading-[0.95]">
+              읽히는 구조와
+              <br />
+              <span className="text-primary">기억되는 색감</span>으로
+              <br />
+              블로그를 다듬습니다.
+            </h1>
+
+            <p className="mt-6 max-w-2xl text-base sm:text-lg leading-relaxed text-muted">
+              개발, 역사, 일상을 2~4분 분량의 글로 정리합니다. 카드 레이아웃과
+              타이포를 계속 개선해, 짧아도 정보 밀도와 가독성이 함께 남도록 설계합니다.
+            </p>
+
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link
+                href="/blog"
+                className="focus-ring rounded-2xl bg-primary px-5 py-3 text-white dark:text-background font-semibold shadow-sm transition-colors hover:bg-primary-hover"
+              >
+                최신 글 보기
+              </Link>
+              <Link
+                href="/about"
+                className="focus-ring rounded-2xl border border-border bg-background/55 px-5 py-3 font-semibold transition-colors hover:bg-background/80"
+              >
+                소개 보기
+              </Link>
+              <Link
+                href="/contact"
+                className="focus-ring rounded-2xl border border-border bg-background/45 px-5 py-3 font-semibold text-muted transition-colors hover:text-foreground hover:bg-background/75"
+              >
+                연락하기
+              </Link>
             </div>
-          </div>
 
-          <h1 className="font-display text-5xl sm:text-6xl font-semibold tracking-tight mt-6">
-            안녕하세요,
-            <span className="text-primary"> Joonit</span>입니다.
-          </h1>
-          <p className="text-lg text-muted leading-relaxed mt-6 max-w-xl">
-            웹 개발과 제품 감각, 그리고 역사와 일상을 짧고 구체적인 글로 남깁니다.
-            오래 읽어도 피곤하지 않은 레이아웃을 목표로 계속 다듬고 있습니다.
-          </p>
-
-          <div className="flex flex-wrap gap-3 mt-8">
-            <Link
-              href="/blog"
-              className="focus-ring px-5 py-3 bg-primary text-white dark:text-background rounded-2xl hover:bg-primary-hover transition-colors shadow-sm"
-            >
-              글 보러가기
-            </Link>
-            <Link
-              href="/about"
-              className="focus-ring px-5 py-3 border border-border bg-card/40 rounded-2xl hover:bg-card/70 transition-colors"
-            >
-              소개 보기
-            </Link>
-          </div>
-
-          {categories.length > 0 && (
-            <div className="mt-10">
-              <p className="text-xs font-semibold tracking-wide text-muted uppercase mb-3">
-                주제
-              </p>
-              <div className="grid gap-4 sm:grid-cols-3 max-w-xl">
-                {categories.slice(0, 3).map((c) => {
-                  const subtitle =
-                    c === '개발'
-                      ? '웹, UI, 성능, DX'
-                      : c === '역사'
-                        ? '기술과 사회의 교차점'
-                        : c === '일상'
-                          ? '습관, 기록, 생각 정리'
-                          : '기록';
-
-                  return (
-                    <Link
-                      key={c}
-                      href={`/blog?category=${encodeURIComponent(c)}`}
-                      className="focus-ring card-hover group block overflow-hidden rounded-3xl border border-border bg-card/70 hover:bg-card/85"
-                    >
-                      <div className="relative aspect-[4/3]">
-                        <Image
-                          src={getCoverImage({ category: c })}
-                          alt={`${c} 카테고리 대표 이미지`}
-                          fill
-                          sizes="(max-width: 640px) 100vw, 33vw"
-                          className="object-cover scale-[1.02] transition-transform duration-700 group-hover:scale-[1.08]"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/15 to-black/10" />
-                        <div className="absolute inset-0 p-5 flex flex-col justify-end">
-                          <p className="text-sm font-semibold tracking-tight text-white">
-                            {c}
-                          </p>
-                          <p className="mt-1 text-xs text-white/75">
-                            {subtitle}
-                          </p>
-                        </div>
+            {categories.length > 0 && (
+              <div className="mt-10 grid gap-4 sm:grid-cols-3">
+                {categories.slice(0, 3).map((category) => (
+                  <Link
+                    key={category}
+                    href={`/blog?category=${encodeURIComponent(category)}`}
+                    className="focus-ring card-hover glass-edge group block overflow-hidden rounded-3xl"
+                  >
+                    <div className="relative aspect-[4/3]">
+                      <Image
+                        src={getCoverImage({ category })}
+                        alt={`${category} 카테고리 대표 이미지`}
+                        fill
+                        sizes="(max-width: 640px) 100vw, 33vw"
+                        className="object-cover scale-[1.02] transition-transform duration-700 group-hover:scale-[1.08]"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/72 via-black/15 to-black/10" />
+                      <div className="absolute inset-0 p-4 flex flex-col justify-end">
+                        <p className="text-sm font-semibold tracking-tight text-white">{category}</p>
+                        <p className="mt-1 text-xs text-white/75">
+                          {categoryLead[category] ?? '기록'}
+                        </p>
                       </div>
-                    </Link>
-                  );
-                })}
+                    </div>
+                  </Link>
+                ))}
               </div>
-            </div>
-          )}
-        </div>
+            )}
+          </div>
 
-        <div className="rounded-3xl border border-border bg-card/60 p-6 backdrop-blur-sm">
-          <p className="text-xs font-semibold tracking-[0.16em] uppercase text-muted">
-            추천 글
-          </p>
-
-          {featured && featuredCover ? (
-            <Link
-              href={`/blog/${featured.slug}`}
-              className="focus-ring card-hover group mt-4 block overflow-hidden rounded-3xl border border-border bg-card/70"
-            >
-              <div className="relative aspect-[16/10]">
-                <Image
-                  src={featuredCover}
-                  alt={getCoverAlt({ title: featured.title, category: featured.category })}
-                  fill
-                  priority
-                  sizes="(max-width: 1024px) 100vw, 40vw"
-                  className="object-cover scale-[1.02] transition-transform duration-700 group-hover:scale-[1.08]"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/15 to-black/10" />
-                <div className="absolute inset-0 p-6 flex flex-col justify-end">
-                  <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-[11px] font-semibold tracking-[0.14em] uppercase text-white/75">
-                    <time className="text-white/70">{featured.date}</time>
-                    <span aria-hidden="true" className="h-1 w-1 rounded-full bg-white/40" />
-                    <span className="text-white/80">{featured.category}</span>
-                  </div>
-                  <p className="mt-3 font-display text-3xl font-semibold tracking-tight leading-[1.05] text-white drop-shadow-[0_1px_18px_rgba(0,0,0,0.32)] line-clamp-2">
-                    {featured.title}
-                  </p>
-                  <p className="mt-3 text-sm text-white/75 leading-relaxed line-clamp-2">
-                    {featured.description}
-                  </p>
+          <div className="lg:col-span-5 grid gap-4">
+            <div className="glass-edge rounded-3xl p-5">
+              <p className="text-[11px] font-semibold tracking-[0.16em] uppercase text-muted">
+                운영 상태
+              </p>
+              <div className="mt-3 grid grid-cols-3 gap-2 text-xs">
+                <div className="rounded-xl border border-border/75 bg-background/55 px-3 py-2">
+                  <p className="text-muted">톤</p>
+                  <p className="mt-1 font-semibold">High-color</p>
+                </div>
+                <div className="rounded-xl border border-border/75 bg-background/55 px-3 py-2">
+                  <p className="text-muted">레이아웃</p>
+                  <p className="mt-1 font-semibold">Bento v3</p>
+                </div>
+                <div className="rounded-xl border border-border/75 bg-background/55 px-3 py-2">
+                  <p className="text-muted">콘텐츠</p>
+                  <p className="mt-1 font-semibold">2~4분 읽기</p>
                 </div>
               </div>
-            </Link>
-          ) : (
-            <p className="mt-3 text-sm text-muted">아직 글이 없습니다.</p>
-          )}
+            </div>
+
+            {featured && featuredCover ? (
+              <Link
+                href={`/blog/${featured.slug}`}
+                className="focus-ring card-hover glass-edge group block overflow-hidden rounded-3xl"
+              >
+                <div className="relative aspect-[16/11] sm:aspect-[4/3]">
+                  <Image
+                    src={featuredCover}
+                    alt={getCoverAlt({ title: featured.title, category: featured.category })}
+                    fill
+                    priority
+                    sizes="(max-width: 1024px) 100vw, 40vw"
+                    className="object-cover scale-[1.02] transition-transform duration-700 group-hover:scale-[1.08]"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/78 via-black/18 to-black/8" />
+                  <div className="absolute inset-0 p-6 flex flex-col justify-end">
+                    <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-[11px] font-semibold tracking-[0.14em] uppercase text-white/75">
+                      <time className="text-white/70">{featured.date}</time>
+                      <span aria-hidden="true" className="h-1 w-1 rounded-full bg-white/40" />
+                      <span className="text-white/80">{featured.category}</span>
+                    </div>
+                    <p className="mt-3 font-display text-3xl sm:text-4xl font-semibold tracking-tight leading-[1.02] text-white drop-shadow-[0_2px_18px_rgba(0,0,0,0.42)] line-clamp-3">
+                      {featured.title}
+                    </p>
+                    <p className="mt-3 text-sm text-white/78 leading-relaxed line-clamp-2">
+                      {featured.description}
+                    </p>
+                  </div>
+                </div>
+              </Link>
+            ) : (
+              <div className="glass-edge rounded-3xl p-6">
+                <p className="text-sm text-muted">추천할 글이 아직 없습니다.</p>
+              </div>
+            )}
+          </div>
         </div>
       </AnimatedSection>
 
-      {/* Latest Posts Section */}
-      <AnimatedSection delay={0.2}>
-        <div className="flex items-center justify-between mb-8">
-          <h2 className="font-display text-2xl sm:text-3xl font-semibold tracking-tight">
-            최신 글
-          </h2>
+      <AnimatedSection
+        delay={0.18}
+        className="rounded-[2rem] chromatic-surface p-5 sm:p-8 lg:p-10"
+      >
+        <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <p className="text-[11px] font-semibold tracking-[0.16em] uppercase text-muted">
+              Fresh Dispatch
+            </p>
+            <h2 className="mt-2 font-display text-3xl sm:text-4xl font-semibold tracking-tight">
+              최신 글
+            </h2>
+          </div>
           <Link
             href="/blog"
-            className="focus-ring text-primary hover:text-primary-hover transition-colors"
+            className="focus-ring rounded-full border border-border bg-background/55 px-4 py-2 text-sm font-semibold text-primary transition-colors hover:text-primary-hover hover:bg-background/75"
           >
             모든 글 보기 &rarr;
           </Link>

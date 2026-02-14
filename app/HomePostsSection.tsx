@@ -31,6 +31,45 @@ export default function HomePostsSection({ posts, categories }: HomePostsSection
 
   const bento = filteredPosts.slice(0, 6);
 
+  const slotStyles = [
+    {
+      container: 'lg:col-span-7 lg:row-span-2',
+      aspect: 'aspect-[16/10] sm:aspect-[16/9] lg:aspect-auto',
+      variant: 'hero' as const,
+      fillHeight: true,
+    },
+    {
+      container: 'lg:col-span-5',
+      aspect: 'aspect-[4/3]',
+      variant: 'feature' as const,
+      fillHeight: false,
+    },
+    {
+      container: 'lg:col-span-5',
+      aspect: 'aspect-[4/3]',
+      variant: 'feature' as const,
+      fillHeight: false,
+    },
+    {
+      container: 'lg:col-span-4',
+      aspect: 'aspect-[4/5]',
+      variant: 'compact' as const,
+      fillHeight: false,
+    },
+    {
+      container: 'lg:col-span-4',
+      aspect: 'aspect-[4/5]',
+      variant: 'compact' as const,
+      fillHeight: false,
+    },
+    {
+      container: 'lg:col-span-4',
+      aspect: 'aspect-[4/5]',
+      variant: 'compact' as const,
+      fillHeight: false,
+    },
+  ];
+
   return (
     <div>
       <div className="mb-6">
@@ -43,88 +82,35 @@ export default function HomePostsSection({ posts, categories }: HomePostsSection
 
       {filteredPosts.length > 0 ? (
         <AnimatePresence mode="popLayout">
-          <div className="grid gap-6 lg:grid-cols-12">
-            {bento[0] && (
-              <motion.div
-                key={bento[0].slug}
-                layout={!reduceMotion}
-                className="lg:col-span-7 lg:self-stretch"
-                {...cardMotion}
-              >
-                <PostVisualCard
-                  slug={bento[0].slug}
-                  title={bento[0].title}
-                  description={bento[0].description}
-                  date={bento[0].date}
-                  category={bento[0].category}
-                  tags={bento[0].tags}
-                  image={bento[0].image}
-                  aspectClassName="aspect-[16/10] sm:aspect-[16/9] lg:aspect-auto lg:h-full"
-                  fillHeight
-                  priority
-                />
-              </motion.div>
-            )}
+          <div className="grid gap-6 lg:grid-cols-12 lg:auto-rows-[minmax(220px,1fr)]">
+            {bento.map((post, index) => {
+              const slot = slotStyles[index];
+              if (!slot) return null;
 
-            <div className="lg:col-span-5 grid gap-6">
-              {bento[1] && (
+              return (
                 <motion.div
-                  key={bento[1].slug}
+                  key={post.slug}
                   layout={!reduceMotion}
+                  className={`${slot.container} self-stretch h-full`}
                   {...cardMotion}
                 >
                   <PostVisualCard
-                    slug={bento[1].slug}
-                    title={bento[1].title}
-                    description={bento[1].description}
-                    date={bento[1].date}
-                    category={bento[1].category}
-                    tags={bento[1].tags}
-                    image={bento[1].image}
-                    aspectClassName="aspect-[4/3]"
+                    slug={post.slug}
+                    title={post.title}
+                    description={post.description}
+                    date={post.date}
+                    category={post.category}
+                    tags={post.tags}
+                    image={post.image}
+                    variant={slot.variant}
+                    aspectClassName={slot.aspect}
+                    fillHeight={slot.fillHeight}
+                    priority={index === 0}
+                    cardClassName="glass-edge"
                   />
                 </motion.div>
-              )}
-
-              {bento[2] && (
-                <motion.div
-                  key={bento[2].slug}
-                  layout={!reduceMotion}
-                  {...cardMotion}
-                >
-                  <PostVisualCard
-                    slug={bento[2].slug}
-                    title={bento[2].title}
-                    description={bento[2].description}
-                    date={bento[2].date}
-                    category={bento[2].category}
-                    tags={bento[2].tags}
-                    image={bento[2].image}
-                    aspectClassName="aspect-[4/3]"
-                  />
-                </motion.div>
-              )}
-            </div>
-
-            {bento.slice(3, 6).map((post) => (
-              <motion.div
-                key={post.slug}
-                layout={!reduceMotion}
-                className="lg:col-span-4"
-                {...cardMotion}
-              >
-                <PostVisualCard
-                  slug={post.slug}
-                  title={post.title}
-                  description={post.description}
-                  date={post.date}
-                  category={post.category}
-                  tags={post.tags}
-                  image={post.image}
-                  aspectClassName="aspect-[4/5]"
-                />
-              </motion.div>
-            ))}
+              );
+            })}
           </div>
         </AnimatePresence>
       ) : (
