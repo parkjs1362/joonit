@@ -47,23 +47,23 @@ export default function PostVisualCard({
     default: {
       meta: 'text-[11px] font-semibold tracking-[0.14em] uppercase text-white/75',
       title:
-        'mt-3 font-display text-2xl sm:text-3xl font-semibold tracking-tight leading-[1.05] text-white drop-shadow-[0_1px_18px_rgba(0,0,0,0.32)] line-clamp-2',
+        'mt-3 font-display text-xl sm:text-2xl font-semibold tracking-tight leading-[1.08] text-white drop-shadow-[0_1px_18px_rgba(0,0,0,0.32)] line-clamp-2',
       description: 'mt-3 text-sm leading-relaxed text-white/75 line-clamp-2',
       overlay: 'bg-gradient-to-t from-black/70 via-black/15 to-black/10',
       tagLimit: 3,
     },
     hero: {
-      meta: 'text-xs font-semibold tracking-[0.18em] uppercase text-white/80',
+      meta: 'text-[11px] font-semibold tracking-[0.16em] uppercase text-white/80',
       title:
-        'mt-3 font-display text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight leading-[1.01] text-white drop-shadow-[0_2px_22px_rgba(0,0,0,0.45)] line-clamp-3',
-      description: 'mt-4 text-base sm:text-lg leading-relaxed text-white/80 line-clamp-3',
+        'mt-3 font-display text-2xl sm:text-3xl lg:text-4xl font-semibold tracking-tight leading-[1.06] text-white drop-shadow-[0_2px_22px_rgba(0,0,0,0.45)] line-clamp-3',
+      description: 'mt-3 text-sm sm:text-base leading-relaxed text-white/80 line-clamp-3',
       overlay: 'bg-gradient-to-t from-black/78 via-black/16 to-black/8',
       tagLimit: 4,
     },
     feature: {
       meta: 'text-[11px] font-semibold tracking-[0.14em] uppercase text-white/75',
       title:
-        'mt-3 font-display text-2xl sm:text-3xl font-semibold tracking-tight leading-[1.03] text-white drop-shadow-[0_1px_18px_rgba(0,0,0,0.34)] line-clamp-2',
+        'mt-3 font-display text-xl sm:text-2xl font-semibold tracking-tight leading-[1.08] text-white drop-shadow-[0_1px_18px_rgba(0,0,0,0.34)] line-clamp-2',
       description: 'mt-3 text-sm leading-relaxed text-white/75 line-clamp-2',
       overlay: 'bg-gradient-to-t from-black/72 via-black/14 to-black/9',
       tagLimit: 3,
@@ -71,7 +71,7 @@ export default function PostVisualCard({
     compact: {
       meta: 'text-[10px] font-semibold tracking-[0.14em] uppercase text-white/70',
       title:
-        'mt-2.5 font-display text-xl sm:text-2xl font-semibold tracking-tight leading-[1.06] text-white drop-shadow-[0_1px_16px_rgba(0,0,0,0.28)] line-clamp-2',
+        'mt-2.5 font-display text-lg sm:text-xl font-semibold tracking-tight leading-[1.1] text-white drop-shadow-[0_1px_16px_rgba(0,0,0,0.28)] line-clamp-2',
       description: 'mt-2.5 text-sm leading-relaxed text-white/72 line-clamp-2',
       overlay: 'bg-gradient-to-t from-black/70 via-black/14 to-black/10',
       tagLimit: 2,

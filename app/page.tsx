@@ -32,12 +32,9 @@ export default async function HomePage() {
               <span className="inline-flex items-center rounded-full glass-edge px-3.5 py-1.5 text-[11px] font-semibold tracking-[0.16em] uppercase">
                 Joonit Journal
               </span>
-              <span className="inline-flex items-center rounded-full border border-border/70 bg-background/40 px-3.5 py-1.5 text-[11px] font-semibold tracking-[0.12em] uppercase text-muted">
-                High-color layout update
-              </span>
             </div>
 
-            <h1 className="mt-6 font-display text-[clamp(2.5rem,7.2vw,5.4rem)] font-semibold tracking-tight leading-[0.95]">
+            <h1 className="mt-6 font-display text-[clamp(2.1rem,5.4vw,4.2rem)] font-semibold tracking-tight leading-[0.98]">
               읽히는 구조와
               <br />
               <span className="text-primary">기억되는 색감</span>으로
@@ -46,8 +43,8 @@ export default async function HomePage() {
             </h1>
 
             <p className="mt-6 max-w-2xl text-base sm:text-lg leading-relaxed text-muted">
-              개발, 역사, 일상을 2~4분 분량의 글로 정리합니다. 카드 레이아웃과
-              타이포를 계속 개선해, 짧아도 정보 밀도와 가독성이 함께 남도록 설계합니다.
+              개발, 역사, 일상을 실제 운영 경험 중심으로 정리합니다. 카드 레이아웃과
+              타이포를 계속 개선해, 정보 밀도와 가독성이 함께 남도록 설계합니다.
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
@@ -102,26 +99,6 @@ export default async function HomePage() {
           </div>
 
           <div className="lg:col-span-5 grid gap-4">
-            <div className="glass-edge rounded-3xl p-5">
-              <p className="text-[11px] font-semibold tracking-[0.16em] uppercase text-muted">
-                운영 상태
-              </p>
-              <div className="mt-3 grid grid-cols-3 gap-2 text-xs">
-                <div className="rounded-xl border border-border/75 bg-background/55 px-3 py-2">
-                  <p className="text-muted">톤</p>
-                  <p className="mt-1 font-semibold">High-color</p>
-                </div>
-                <div className="rounded-xl border border-border/75 bg-background/55 px-3 py-2">
-                  <p className="text-muted">레이아웃</p>
-                  <p className="mt-1 font-semibold">Bento v3</p>
-                </div>
-                <div className="rounded-xl border border-border/75 bg-background/55 px-3 py-2">
-                  <p className="text-muted">콘텐츠</p>
-                  <p className="mt-1 font-semibold">2~4분 읽기</p>
-                </div>
-              </div>
-            </div>
-
             {featured && featuredCover ? (
               <Link
                 href={`/blog/${featured.slug}`}
@@ -143,7 +120,7 @@ export default async function HomePage() {
                       <span aria-hidden="true" className="h-1 w-1 rounded-full bg-white/40" />
                       <span className="text-white/80">{featured.category}</span>
                     </div>
-                    <p className="mt-3 font-display text-3xl sm:text-4xl font-semibold tracking-tight leading-[1.02] text-white drop-shadow-[0_2px_18px_rgba(0,0,0,0.42)] line-clamp-3">
+                    <p className="mt-3 font-display text-2xl sm:text-3xl font-semibold tracking-tight leading-[1.06] text-white drop-shadow-[0_2px_18px_rgba(0,0,0,0.42)] line-clamp-3">
                       {featured.title}
                     </p>
                     <p className="mt-3 text-sm text-white/78 leading-relaxed line-clamp-2">
@@ -170,7 +147,7 @@ export default async function HomePage() {
             <p className="text-[11px] font-semibold tracking-[0.16em] uppercase text-muted">
               Fresh Dispatch
             </p>
-            <h2 className="mt-2 font-display text-3xl sm:text-4xl font-semibold tracking-tight">
+            <h2 className="mt-2 font-display text-2xl sm:text-3xl font-semibold tracking-tight">
               최신 글
             </h2>
           </div>
