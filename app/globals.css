@@ -26,6 +26,14 @@
     "Segoe UI", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
   --font-mono-stack: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Monaco, Consolas,
     "Liberation Mono", "Courier New", monospace;
+
+  /* Category colors (NomadCoders-inspired) */
+  --cat-dev: #3b82f6;        /* 개발 — 파란 */
+  --cat-dev-bg: #eff6ff;
+  --cat-history: #f59e0b;    /* 역사 — 노란 */
+  --cat-history-bg: #fffbeb;
+  --cat-life: #10b981;       /* 일상 — 초록 */
+  --cat-life-bg: #ecfdf5;
 }
 
 @theme inline {
@@ -57,6 +65,12 @@
   --accent-cyan: #22d3ee;
   --accent-amber: #ffbe63;
   --accent-fuchsia: #f07dff;
+  --cat-dev: #60a5fa;
+  --cat-dev-bg: rgba(96,165,250,0.1);
+  --cat-history: #fbbf24;
+  --cat-history-bg: rgba(251,191,36,0.1);
+  --cat-life: #34d399;
+  --cat-life-bg: rgba(52,211,153,0.1);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -75,6 +89,12 @@
     --accent-cyan: #22d3ee;
     --accent-amber: #ffbe63;
     --accent-fuchsia: #f07dff;
+    --cat-dev: #60a5fa;
+    --cat-dev-bg: rgba(96,165,250,0.1);
+    --cat-history: #fbbf24;
+    --cat-history-bg: rgba(251,191,36,0.1);
+    --cat-life: #34d399;
+    --cat-life-bg: rgba(52,211,153,0.1);
   }
 }
 
