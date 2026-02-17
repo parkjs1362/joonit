@@ -96,44 +96,42 @@ export default function Header() {
             Joonit
           </Link>
 
-          <div className="flex items-center gap-3">
-            <div className="hidden sm:flex items-center gap-5">
-              {navItems.map((item) => {
-                const isActive =
-                  item.href === '/blog'
-                    ? pathname.startsWith('/blog')
-                    : pathname === item.href;
+          <div className="hidden sm:flex items-center gap-5">
+            {navItems.map((item) => {
+              const isActive =
+                item.href === '/blog'
+                  ? pathname.startsWith('/blog')
+                  : pathname === item.href;
 
-                return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className={`focus-ring group relative py-2 text-sm font-medium transition-colors ${
-                      isActive
-                        ? 'text-[#1d1d1f] dark:text-foreground'
-                        : 'text-[#1d1d1f]/75 dark:text-muted hover:text-[#1d1d1f] dark:hover:text-foreground'
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`focus-ring group relative py-2 text-sm font-medium transition-colors ${
+                    isActive
+                      ? 'text-[#1d1d1f] dark:text-foreground'
+                      : 'text-[#1d1d1f]/75 dark:text-muted hover:text-[#1d1d1f] dark:hover:text-foreground'
+                  }`}
+                >
+                  {item.label}
+                  <span
+                    aria-hidden="true"
+                    className={`absolute left-0 -bottom-0.5 h-px w-full bg-primary origin-left transition-transform ${
+                      isActive ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
                     }`}
-                  >
-                    {item.label}
-                    <span
-                      aria-hidden="true"
-                      className={`absolute left-0 -bottom-0.5 h-px w-full bg-primary origin-left transition-transform ${
-                        isActive ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
-                      }`}
-                    />
-                  </Link>
-                );
-              })}
-            </div>
-
-            <button
-              onClick={toggleTheme}
-              className="focus-ring p-2 rounded-xl border border-black/10 dark:border-border bg-[#f5f5f7]/60 dark:bg-card/60 hover:bg-[#f5f5f7] dark:hover:bg-card/80 transition-colors"
-              aria-label="Toggle theme"
-            >
-              {getThemeIcon()}
-            </button>
+                  />
+                </Link>
+              );
+            })}
           </div>
+
+          <button
+            onClick={toggleTheme}
+            className="focus-ring p-2 rounded-xl border border-black/10 dark:border-border bg-[#f5f5f7]/60 dark:bg-card/60 hover:bg-[#f5f5f7] dark:hover:bg-card/80 transition-colors"
+            aria-label="Toggle theme"
+          >
+            {getThemeIcon()}
+          </button>
         </div>
 
         <div className="sm:hidden mt-3 flex gap-2 overflow-x-auto scrollbar-hide pb-2 -mb-2">
