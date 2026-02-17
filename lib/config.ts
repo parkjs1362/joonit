@@ -1,5 +1,5 @@
 export const siteConfig = {
-  url: 'https://joonit.vercel.app',
+  url: 'https://joonit.co',
   title: 'Joonit',
   description: '웹 개발 실전 경험과 역사·일상의 맥락을 구체적으로 기록합니다.',
   author: {
