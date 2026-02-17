@@ -78,7 +78,7 @@ export default function Header() {
       initial={reduceMotion ? { y: 0 } : { y: -100 }}
       animate={{ y: 0 }}
       transition={reduceMotion ? { duration: 0 } : { type: 'spring', stiffness: 100, damping: 20 }}
-      className="sticky top-0 z-50 backdrop-blur-xl bg-[#07080d]/85 border-b border-white/[0.06]"
+      className="sticky top-0 z-50 backdrop-blur-xl bg-white/80 border-b border-black/[0.06] dark:bg-[#07080d]/85 dark:border-white/[0.06]"
     >
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <a
@@ -91,7 +91,7 @@ export default function Header() {
         <div className="flex items-center justify-between">
           <Link
             href="/"
-            className="focus-ring text-lg sm:text-xl font-semibold tracking-tight hover:text-primary transition-colors"
+            className="focus-ring text-lg sm:text-xl font-bold tracking-[-0.02em] text-[#1d1d1f] dark:text-foreground hover:text-primary transition-colors"
           >
             Joonit
           </Link>
@@ -108,8 +108,10 @@ export default function Header() {
                   <Link
                     key={item.href}
                     href={item.href}
-                    className={`focus-ring group relative py-2 text-sm font-medium tracking-[0.02em] transition-colors ${
-                      isActive ? 'text-foreground' : 'text-muted hover:text-foreground'
+                    className={`focus-ring group relative py-2 text-sm font-medium transition-colors ${
+                      isActive
+                        ? 'text-[#1d1d1f] dark:text-foreground'
+                        : 'text-[#1d1d1f]/75 dark:text-muted hover:text-[#1d1d1f] dark:hover:text-foreground'
                     }`}
                   >
                     {item.label}
@@ -126,7 +128,7 @@ export default function Header() {
 
             <button
               onClick={toggleTheme}
-              className="focus-ring p-2 rounded-xl border border-border bg-card/60 hover:bg-card/80 transition-colors"
+              className="focus-ring p-2 rounded-xl border border-black/10 dark:border-border bg-[#f5f5f7]/60 dark:bg-card/60 hover:bg-[#f5f5f7] dark:hover:bg-card/80 transition-colors"
               aria-label="Toggle theme"
             >
               {getThemeIcon()}

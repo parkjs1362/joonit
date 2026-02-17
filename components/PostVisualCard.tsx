@@ -13,16 +13,8 @@ interface PostVisualCardProps {
   category?: string;
   tags?: string[];
   image?: string;
-  aspectClassName?: string;
   priority?: boolean;
-  fillHeight?: boolean;
-  variant?: 'hero' | 'feature' | 'compact' | 'default';
-  cardClassName?: string;
-  imageWrapClassName?: string;
-}
-
-function cx(...classes: Array<string | undefined | false>) {
-  return classes.filter(Boolean).join(' ');
+  aspectClassName?: string;
 }
 
 export default function PostVisualCard({
@@ -33,52 +25,11 @@ export default function PostVisualCard({
   category,
   tags,
   image,
-  aspectClassName = 'aspect-[4/5]',
   priority = false,
-  fillHeight = false,
-  variant = 'default',
-  cardClassName,
-  imageWrapClassName,
+  aspectClassName = 'aspect-[4/5]',
 }: PostVisualCardProps) {
   const cover = getCoverImage({ category, image });
   const reduceMotion = useReducedMotion();
-
-  const variantStyles = {
-    default: {
-      meta: 'text-[11px] font-semibold tracking-[0.08em] uppercase text-white/75',
-      title:
-        'mt-3 font-display text-lg sm:text-xl font-semibold tracking-tight leading-[1.12] text-white drop-shadow-[0_1px_10px_rgba(0,0,0,0.24)] line-clamp-2',
-      description: 'mt-3 text-sm leading-relaxed text-white/75 line-clamp-2',
-      overlay: 'bg-gradient-to-t from-black/62 via-black/12 to-black/8',
-      tagLimit: 3,
-    },
-    hero: {
-      meta: 'text-[11px] font-semibold tracking-[0.08em] uppercase text-white/80',
-      title:
-        'mt-3 font-display text-xl sm:text-2xl lg:text-3xl font-semibold tracking-tight leading-[1.1] text-white drop-shadow-[0_1px_12px_rgba(0,0,0,0.28)] line-clamp-3',
-      description: 'mt-3 text-sm sm:text-[15px] leading-relaxed text-white/80 line-clamp-3',
-      overlay: 'bg-gradient-to-t from-black/66 via-black/14 to-black/7',
-      tagLimit: 4,
-    },
-    feature: {
-      meta: 'text-[11px] font-semibold tracking-[0.08em] uppercase text-white/75',
-      title:
-        'mt-3 font-display text-lg sm:text-xl font-semibold tracking-tight leading-[1.12] text-white drop-shadow-[0_1px_10px_rgba(0,0,0,0.24)] line-clamp-2',
-      description: 'mt-3 text-sm leading-relaxed text-white/75 line-clamp-2',
-      overlay: 'bg-gradient-to-t from-black/64 via-black/12 to-black/8',
-      tagLimit: 3,
-    },
-    compact: {
-      meta: 'text-[10px] font-semibold tracking-[0.08em] uppercase text-white/70',
-      title:
-        'mt-2.5 font-display text-base sm:text-lg font-semibold tracking-tight leading-[1.14] text-white drop-shadow-[0_1px_8px_rgba(0,0,0,0.22)] line-clamp-2',
-      description: 'mt-2.5 text-sm leading-relaxed text-white/72 line-clamp-2',
-      overlay: 'bg-gradient-to-t from-black/62 via-black/12 to-black/9',
-      tagLimit: 2,
-    },
-  } as const;
-
-  const style = variantStyles[variant];
 
   const motionProps = reduceMotion
     ? {}
@@ -86,31 +37,17 @@ export default function PostVisualCard({
         initial: { opacity: 0, y: 18 },
         whileInView: { opacity: 1, y: 0 },
         viewport: { once: true },
-        whileHover: { y: -4, scale: 1.01 },
-        transition: { type: 'spring' as const, stiffness: 300, damping: 25 },
+        whileHover: { y: -8, scale: 1.02 },
+        transition: { type: 'spring' as const, stiffness: 400, damping: 30 },
       };
 
   return (
-    <motion.article
-      {...motionProps}
-      className={cx(fillHeight && 'lg:h-full')}
-    >
+    <motion.article {...motionProps}>
       <Link
         href={`/blog/${slug}`}
-        className={cx(
-          'focus-ring card-hover group block overflow-hidden rounded-3xl border border-[rgba(255,255,255,0.08)] bg-card/80 hover:bg-card/95',
-          fillHeight && 'lg:h-full',
-          cardClassName
-        )}
+        className="focus-ring card-hover group block overflow-hidden rounded-2xl border border-[rgba(0,0,0,0.08)] dark:border-border bg-white dark:bg-card"
       >
-        <div
-          className={cx(
-            'relative',
-            aspectClassName,
-            fillHeight && 'lg:aspect-auto lg:h-full',
-            imageWrapClassName
-          )}
-        >
+        <div className={`relative ${aspectClassName}`}>
           <Image
             src={cover}
             alt={getCoverAlt({ title, category })}
@@ -119,10 +56,10 @@ export default function PostVisualCard({
             sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
             className="object-cover scale-[1.01] transition-transform duration-700 group-hover:scale-[1.05]"
           />
-          <div className={cx('absolute inset-0', style.overlay)} />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/62 via-black/12 to-black/8" />
 
           <div className="absolute inset-0 p-6 flex flex-col justify-end">
-            <div className={cx('flex flex-wrap items-center gap-x-3 gap-y-2', style.meta)}>
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-[11px] font-semibold tracking-[0.08em] uppercase text-white/75">
               <time className="text-white/70">{date}</time>
               <span aria-hidden="true" className="h-1 w-1 rounded-full bg-white/40" />
               {category && (
@@ -130,20 +67,20 @@ export default function PostVisualCard({
               )}
             </div>
 
-            <h2 className={style.title}>
+            <h2 className="mt-3 font-display text-lg sm:text-xl font-semibold tracking-tight leading-[1.12] text-white drop-shadow-[0_1px_10px_rgba(0,0,0,0.24)] line-clamp-2">
               {title}
             </h2>
 
-            <p className={style.description}>
+            <p className="mt-3 text-sm leading-relaxed text-white/75 line-clamp-2">
               {description}
             </p>
 
             {tags && tags.length > 0 && (
               <div className="mt-4 flex flex-wrap gap-2">
-                {tags.slice(0, style.tagLimit).map((tag) => (
+                {tags.slice(0, 3).map((tag) => (
                   <span
                     key={tag}
-                    className="px-2.5 py-1 text-[11px] rounded-full border border-white/20 bg-black/16 text-white/75 backdrop-blur"
+                    className="px-2.5 py-1 text-[11px] rounded-full border border-white/20 bg-black/20 text-white/75 backdrop-blur"
                   >
                     {tag}
                   </span>

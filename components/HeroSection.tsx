@@ -5,12 +5,6 @@ import Image from 'next/image';
 import { motion, useReducedMotion } from 'framer-motion';
 import { getCoverAlt, getCoverImage } from '@/lib/covers';
 
-const categoryLead: Record<string, string> = {
-  개발: '웹, UI, 성능, DX',
-  역사: '사실 기반 스토리텔링',
-  일상: '질문, 루틴, 기록',
-};
-
 const heroWords = ['읽히는', '구조와', '기억되는', '색감으로', '블로그를', '다듬습니다.'];
 const accentWord = '기억되는';
 
@@ -42,151 +36,140 @@ export default function HeroSection({ featured, categories, featuredCover }: Her
         };
 
   return (
-    <div className="relative mb-14 rounded-[2rem] chromatic-surface hero-glow p-5 sm:p-8 lg:p-10 overflow-hidden">
-      {/* Mesh gradient background */}
-      <div className="hero-mesh-bg" aria-hidden="true" />
+    <div className="w-full py-24 sm:py-32 text-center">
+      {/* Badge */}
+      <motion.div {...fadeUp(0)} className="flex justify-center">
+        <span className="inline-flex items-center rounded-full border border-[rgba(0,0,0,0.1)] dark:border-white/10 bg-[#f5f5f7] dark:bg-white/5 px-4 py-1.5 text-[11px] font-semibold tracking-[0.08em] uppercase text-[#6e6e73] dark:text-muted">
+          Joonit Journal
+        </span>
+      </motion.div>
 
-      <div className="relative z-10 grid gap-8 lg:grid-cols-12 items-stretch">
-        <div className="lg:col-span-7">
-          {/* Badge */}
-          <motion.div {...fadeUp(0)} className="flex flex-wrap items-center gap-3">
-            <span className="inline-flex items-center rounded-full glass-edge px-3.5 py-1.5 text-[11px] font-semibold tracking-[0.08em] uppercase">
-              Joonit Journal
+      {/* Hero heading — word-by-word stagger */}
+      <h1 className="mt-6 font-display text-[clamp(2.2rem,5vw,4rem)] font-extrabold tracking-[-0.04em] leading-[1.06] text-[#1d1d1f] dark:text-foreground">
+        {heroWords.map((word, i) =>
+          reduceMotion ? (
+            <span
+              key={word}
+              style={{ marginRight: '0.25em' }}
+              className={word === accentWord ? 'text-[#0071e3] dark:text-primary' : undefined}
+            >
+              {word}
             </span>
-          </motion.div>
-
-          {/* Hero heading — word-by-word stagger */}
-          <h1 className="mt-6 font-display text-[clamp(1.85rem,4.8vw,3.6rem)] font-semibold tracking-tight leading-[1.04]">
-            {heroWords.map((word, i) =>
-              reduceMotion ? (
-                <span
-                  key={word}
-                  style={{ marginRight: '0.25em' }}
-                  className={word === accentWord ? 'text-primary' : undefined}
-                >
-                  {word}
-                </span>
-              ) : (
-                <motion.span
-                  key={word}
-                  initial={{ opacity: 0, y: 24 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{
-                    delay: 0.1 + i * 0.08,
-                    type: 'spring',
-                    stiffness: 200,
-                    damping: 20,
-                  }}
-                  style={{ display: 'inline-block', marginRight: '0.25em' }}
-                  className={word === accentWord ? 'text-primary' : undefined}
-                >
-                  {word}
-                </motion.span>
-              )
-            )}
-          </h1>
-
-          {/* Description */}
-          <motion.p
-            {...fadeUp(0.65)}
-            className="mt-6 max-w-2xl text-base sm:text-lg leading-relaxed text-muted"
-          >
-            개발, 역사, 일상을 실제 운영 경험 중심으로 정리합니다. 카드 레이아웃과
-            타이포를 계속 개선해, 정보 밀도와 가독성이 함께 남도록 설계합니다.
-          </motion.p>
-
-          {/* CTA Buttons */}
-          <motion.div {...fadeUp(0.8)} className="mt-8 flex flex-wrap gap-3">
-            <Link
-              href="/blog"
-              className="focus-ring rounded-2xl bg-primary px-5 py-3 text-white dark:text-background font-semibold shadow-sm transition-colors hover:bg-primary-hover"
+          ) : (
+            <motion.span
+              key={word}
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                delay: 0.1 + i * 0.05,
+                type: 'spring',
+                stiffness: 200,
+                damping: 20,
+              }}
+              style={{ display: 'inline-block', marginRight: '0.25em' }}
+              className={word === accentWord ? 'text-[#0071e3] dark:text-primary' : undefined}
             >
-              최신 글 보기
-            </Link>
-            <Link
-              href="/about"
-              className="focus-ring rounded-2xl border border-border bg-background/55 px-5 py-3 font-semibold transition-colors hover:bg-background/80"
-            >
-              소개 보기
-            </Link>
-            <Link
-              href="/contact"
-              className="focus-ring rounded-2xl border border-border bg-background/45 px-5 py-3 font-semibold text-muted transition-colors hover:text-foreground hover:bg-background/75"
-            >
-              연락하기
-            </Link>
-          </motion.div>
+              {word}
+            </motion.span>
+          )
+        )}
+      </h1>
 
-          {/* Category tiles */}
-          {categories.length > 0 && (
-            <motion.div {...fadeUp(0.95)} className="mt-10 grid gap-4 sm:grid-cols-3">
-              {categories.slice(0, 3).map((category) => (
-                <Link
-                  key={category}
-                  href={`/blog?category=${encodeURIComponent(category)}`}
-                  className="focus-ring card-hover glass-edge group block overflow-hidden rounded-3xl"
-                >
-                  <div className="relative aspect-[4/3]">
-                    <Image
-                      src={getCoverImage({ category })}
-                      alt={`${category} 카테고리 대표 이미지`}
-                      fill
-                      sizes="(max-width: 640px) 100vw, 33vw"
-                      className="object-cover scale-[1.02] transition-transform duration-700 group-hover:scale-[1.08]"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/72 via-black/15 to-black/10" />
-                    <div className="absolute inset-0 p-4 flex flex-col justify-end">
-                      <p className="text-sm font-semibold tracking-tight text-white">{category}</p>
-                      <p className="mt-1 text-xs text-white/75">
-                        {categoryLead[category] ?? '기록'}
-                      </p>
-                    </div>
-                  </div>
-                </Link>
-              ))}
-            </motion.div>
-          )}
-        </div>
+      {/* Description */}
+      <motion.p
+        {...fadeUp(0.45)}
+        className="mt-6 text-lg sm:text-xl text-[#6e6e73] dark:text-muted text-center max-w-2xl mx-auto leading-relaxed"
+      >
+        개발, 역사, 일상을 실제 운영 경험 중심으로 정리합니다. 카드 레이아웃과
+        타이포를 계속 개선해, 정보 밀도와 가독성이 함께 남도록 설계합니다.
+      </motion.p>
 
-        {/* Featured post */}
-        <div className="lg:col-span-5 grid gap-4">
-          {featured && featuredCover ? (
+      {/* CTA Buttons — Apple pill style */}
+      <motion.div {...fadeUp(0.6)} className="mt-10 flex flex-wrap justify-center gap-3">
+        <Link
+          href="/blog"
+          className="focus-ring rounded-full bg-[#0071e3] dark:bg-primary text-white px-8 py-3 text-sm font-semibold hover:bg-[#0077ed] dark:hover:bg-primary-hover transition-colors"
+        >
+          최신 글 보기
+        </Link>
+        <Link
+          href="/about"
+          className="focus-ring rounded-full border border-[rgba(0,0,0,0.15)] dark:border-border text-[#1d1d1f] dark:text-foreground px-8 py-3 text-sm font-semibold hover:bg-[#f5f5f7] dark:hover:bg-card/80 transition-colors"
+        >
+          소개 보기
+        </Link>
+        <Link
+          href="/contact"
+          className="focus-ring rounded-full border border-[rgba(0,0,0,0.10)] dark:border-border text-[#6e6e73] dark:text-muted px-8 py-3 text-sm font-semibold hover:text-[#1d1d1f] dark:hover:text-foreground hover:bg-[#f5f5f7] dark:hover:bg-card/80 transition-colors"
+        >
+          연락하기
+        </Link>
+      </motion.div>
+
+      {/* Category tiles */}
+      {categories.length > 0 && (
+        <motion.div {...fadeUp(0.75)} className="mt-14 grid gap-4 sm:grid-cols-3 max-w-3xl mx-auto">
+          {categories.slice(0, 3).map((category) => (
             <Link
-              href={`/blog/${featured.slug}`}
-              className="focus-ring card-hover glass-edge group block overflow-hidden rounded-3xl"
+              key={category}
+              href={`/blog?category=${encodeURIComponent(category)}`}
+              className="focus-ring card-hover group block overflow-hidden rounded-2xl border border-[rgba(0,0,0,0.08)] dark:border-border bg-white dark:bg-card"
             >
-              <div className="relative aspect-[16/11] sm:aspect-[4/3]">
+              <div className="relative aspect-[4/3]">
                 <Image
-                  src={featuredCover}
-                  alt={getCoverAlt({ title: featured.title, category: featured.category })}
+                  src={getCoverImage({ category })}
+                  alt={`${category} 카테고리 대표 이미지`}
                   fill
-                  priority
-                  sizes="(max-width: 1024px) 100vw, 40vw"
+                  sizes="(max-width: 640px) 100vw, 33vw"
                   className="object-cover scale-[1.02] transition-transform duration-700 group-hover:scale-[1.08]"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/78 via-black/18 to-black/8" />
-                <div className="absolute inset-0 p-6 flex flex-col justify-end">
-                  <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-[11px] font-semibold tracking-[0.08em] uppercase text-white/75">
-                    <time className="text-white/70">{featured.date}</time>
-                    <span aria-hidden="true" className="h-1 w-1 rounded-full bg-white/40" />
-                    <span className="text-white/80">{featured.category}</span>
-                  </div>
-                  <p className="mt-3 font-display text-xl sm:text-2xl font-semibold tracking-tight leading-[1.1] text-white drop-shadow-[0_1px_10px_rgba(0,0,0,0.3)] line-clamp-3">
-                    {featured.title}
-                  </p>
-                  <p className="mt-3 text-sm text-white/78 leading-relaxed line-clamp-2">
-                    {featured.description}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/72 via-black/15 to-black/10" />
+                <div className="absolute inset-0 p-4 flex flex-col justify-end">
+                  <p className="text-sm font-semibold tracking-tight text-white">{category}</p>
+                  <p className="mt-1 text-xs text-white/75">
+                    {category === '개발' ? '웹, UI, 성능, DX' : category === '역사' ? '사실 기반 스토리텔링' : '질문, 루틴, 기록'}
                   </p>
                 </div>
               </div>
             </Link>
-          ) : (
-            <div className="glass-edge rounded-3xl p-6">
-              <p className="text-sm text-muted">추천할 글이 아직 없습니다.</p>
+          ))}
+        </motion.div>
+      )}
+
+      {/* Featured post */}
+      {featured && featuredCover && (
+        <motion.div {...fadeUp(0.9)} className="mt-14 max-w-2xl mx-auto">
+          <Link
+            href={`/blog/${featured.slug}`}
+            className="focus-ring card-hover group block overflow-hidden rounded-2xl border border-[rgba(0,0,0,0.08)] dark:border-border bg-white dark:bg-card"
+          >
+            <div className="relative aspect-[16/9]">
+              <Image
+                src={featuredCover}
+                alt={getCoverAlt({ title: featured.title, category: featured.category })}
+                fill
+                priority
+                sizes="(max-width: 768px) 100vw, 672px"
+                className="object-cover scale-[1.02] transition-transform duration-700 group-hover:scale-[1.08]"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/78 via-black/18 to-black/8" />
+              <div className="absolute inset-0 p-6 flex flex-col justify-end text-left">
+                <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-[11px] font-semibold tracking-[0.08em] uppercase text-white/75">
+                  <time className="text-white/70">{featured.date}</time>
+                  <span aria-hidden="true" className="h-1 w-1 rounded-full bg-white/40" />
+                  <span className="text-white/80">{featured.category}</span>
+                </div>
+                <p className="mt-3 font-display text-xl sm:text-2xl font-semibold tracking-tight leading-[1.1] text-white drop-shadow-[0_1px_10px_rgba(0,0,0,0.3)] line-clamp-3">
+                  {featured.title}
+                </p>
+                <p className="mt-3 text-sm text-white/78 leading-relaxed line-clamp-2">
+                  {featured.description}
+                </p>
+              </div>
             </div>
-          )}
-        </div>
-      </div>
+          </Link>
+        </motion.div>
+      )}
     </div>
   );
 }

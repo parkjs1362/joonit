@@ -3,23 +3,22 @@
 @plugin "@tailwindcss/typography";
 
 :root {
-  /* Linear-style dark theme (default) */
-  --background: #07080d;
-  --card: #0d0f18;
-  --foreground: #f1f5f9;
-  --muted: #64748b;
-  --primary: #60a5fa;
-  --primary-hover: #93c5fd;
-  --border: rgba(255,255,255,0.08);
-  --code-bg: #0a0b10;
-  --code-fg: #e2e8f0;
-  /* Hero mesh glow colors */
-  --accent-blue: #60a5fa;
-  --accent-violet: #a78bfa;
-  --accent-cyan: #22d3ee;
+  /* Apple-style light theme (default) */
+  --background: #ffffff;
+  --card: #f5f5f7;          /* Apple 시그니처 연회색 */
+  --foreground: #1d1d1f;   /* Apple near-black */
+  --muted: #6e6e73;         /* Apple 중간 회색 */
+  --primary: #0071e3;       /* Apple blue */
+  --primary-hover: #0077ed;
+  --border: rgba(0, 0, 0, 0.08);
+  --code-bg: #1d1d1f;
+  --code-fg: #f5f5f7;
+  --accent-blue: #0071e3;
+  --accent-violet: #bf5af2; /* Apple purple */
+  --accent-cyan: #32ade6;   /* Apple teal */
   /* Legacy accent vars */
-  --accent-amber: #ffbe63;
-  --accent-fuchsia: #f07dff;
+  --accent-amber: #ff9f0a;
+  --accent-fuchsia: #bf5af2;
 
   --font-sans-stack: "Noto Sans KR", "Pretendard", ui-sans-serif, system-ui, -apple-system,
     "Segoe UI", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
@@ -42,25 +41,7 @@
   --font-mono: var(--font-mono-stack);
 }
 
-/* Light mode override */
-.light {
-  --background: #f7f2eb;
-  --foreground: #121318;
-  --primary: #1f6a92;
-  --primary-hover: #2779a7;
-  --muted: #596273;
-  --border: #e6ddcf;
-  --card: #fffaf2;
-  --code-bg: #0b0d12;
-  --code-fg: #f5f6f8;
-  --accent-blue: #1f6a92;
-  --accent-violet: #8b5cf6;
-  --accent-cyan: #12b8d8;
-  --accent-amber: #ff9f2d;
-  --accent-fuchsia: #c74cff;
-}
-
-/* .dark keeps same as :root (dark is default) */
+/* .dark keeps Linear dark theme */
 .dark {
   --background: #07080d;
   --card: #0d0f18;
@@ -78,22 +59,22 @@
   --accent-fuchsia: #f07dff;
 }
 
-@media (prefers-color-scheme: light) {
-  :root:not(.dark) {
-    --background: #f7f2eb;
-    --foreground: #121318;
-    --primary: #1f6a92;
-    --primary-hover: #2779a7;
-    --muted: #596273;
-    --border: #e6ddcf;
-    --card: #fffaf2;
-    --code-bg: #0b0d12;
-    --code-fg: #f5f6f8;
-    --accent-blue: #1f6a92;
-    --accent-violet: #8b5cf6;
-    --accent-cyan: #12b8d8;
-    --accent-amber: #ff9f2d;
-    --accent-fuchsia: #c74cff;
+@media (prefers-color-scheme: dark) {
+  :root:not(.light) {
+    --background: #07080d;
+    --card: #0d0f18;
+    --foreground: #f1f5f9;
+    --muted: #64748b;
+    --primary: #60a5fa;
+    --primary-hover: #93c5fd;
+    --border: rgba(255,255,255,0.08);
+    --code-bg: #0a0b10;
+    --code-fg: #e2e8f0;
+    --accent-blue: #60a5fa;
+    --accent-violet: #a78bfa;
+    --accent-cyan: #22d3ee;
+    --accent-amber: #ffbe63;
+    --accent-fuchsia: #f07dff;
   }
 }
 
@@ -109,22 +90,6 @@ html {
 
 body {
   background: var(--background);
-  background-image:
-    radial-gradient(900px circle at 10% -10%, color-mix(in srgb, var(--accent-blue) 8%, transparent), transparent 58%),
-    radial-gradient(700px circle at 90% 10%, color-mix(in srgb, var(--accent-violet) 6%, transparent), transparent 60%),
-    repeating-linear-gradient(
-      to right,
-      color-mix(in srgb, var(--border) 45%, transparent) 0 1px,
-      transparent 1px 26px
-    ),
-    repeating-linear-gradient(
-      to bottom,
-      color-mix(in srgb, var(--border) 30%, transparent) 0 1px,
-      transparent 1px 26px
-    ),
-    url("/images/noise.svg");
-  background-repeat: no-repeat, no-repeat, repeat, repeat, repeat;
-  background-size: auto, auto, auto, auto, 260px 260px;
   color: var(--foreground);
   font-family: var(--font-sans-stack);
   transition: background-color 0.3s ease, color 0.3s ease;
@@ -132,23 +97,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.light body {
+/* Dark mode body: keep subtle gradient */
+.dark body {
   background-image:
-    radial-gradient(1000px circle at 10% -10%, color-mix(in srgb, var(--primary) 5%, transparent), transparent 58%),
-    radial-gradient(800px circle at 95% 0%, color-mix(in srgb, var(--primary) 4%, transparent), transparent 62%),
-    repeating-linear-gradient(
-      to right,
-      color-mix(in srgb, var(--border) 32%, transparent) 0 1px,
-      transparent 1px 24px
-    ),
-    repeating-linear-gradient(
-      to bottom,
-      color-mix(in srgb, var(--border) 18%, transparent) 0 1px,
-      transparent 1px 24px
-    ),
-    url("/images/noise.svg");
-  background-repeat: no-repeat, no-repeat, repeat, repeat, repeat;
-  background-size: auto, auto, auto, auto, 240px 240px;
+    radial-gradient(900px circle at 10% -10%, color-mix(in srgb, var(--accent-blue) 8%, transparent), transparent 58%),
+    radial-gradient(700px circle at 90% 10%, color-mix(in srgb, var(--accent-violet) 6%, transparent), transparent 60%);
+  background-repeat: no-repeat, no-repeat;
 }
 
 .font-display {
@@ -199,7 +153,6 @@ body {
 .prose strong {
   color: var(--foreground);
   font-weight: 750;
-  /* Marker-style emphasis that stays readable in both light/dark modes */
   background-image: linear-gradient(
     to bottom,
     transparent 58%,
@@ -244,41 +197,21 @@ body {
       transform 240ms ease;
   }
 
+  /* Light mode: shadow lift */
   .card-hover:hover {
+    border-color: rgba(0, 0, 0, 0.12);
+    box-shadow:
+      0 20px 60px rgba(0, 0, 0, 0.10),
+      0 8px 20px rgba(0, 0, 0, 0.06);
+  }
+
+  /* Dark mode: glow effect */
+  .dark .card-hover:hover {
     border-color: rgba(96, 165, 250, 0.3);
     box-shadow:
       0 0 0 1px rgba(96, 165, 250, 0.15),
       0 20px 60px rgba(96, 165, 250, 0.12),
       0 4px 16px rgba(0, 0, 0, 0.4);
-  }
-
-  .light .card-hover:hover {
-    border-color: color-mix(in srgb, var(--primary) 30%, var(--border));
-    box-shadow:
-      0 10px 28px -22px color-mix(in srgb, var(--primary) 20%, transparent),
-      0 6px 16px -14px rgba(0, 0, 0, 0.12);
-  }
-
-  .hero-mesh-bg {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    border-radius: inherit;
-    z-index: 0;
-    background:
-      radial-gradient(ellipse 80% 50% at 20% 20%, rgba(96, 165, 250, 0.06) 0%, transparent 60%),
-      radial-gradient(ellipse 60% 40% at 80% 80%, rgba(167, 139, 250, 0.05) 0%, transparent 60%),
-      radial-gradient(ellipse 50% 30% at 50% 50%, rgba(34, 211, 238, 0.03) 0%, transparent 70%);
-    animation: meshShift 20s ease-in-out infinite alternate;
-  }
-
-  @keyframes meshShift {
-    0% {
-      background-position: 0% 0%, 100% 100%, 50% 50%;
-    }
-    100% {
-      background-position: 20% 10%, 80% 90%, 60% 40%;
-    }
   }
 
   .chromatic-surface {
@@ -310,30 +243,6 @@ body {
   }
 
   .chromatic-surface > * {
-    position: relative;
-    z-index: 1;
-  }
-
-  .hero-glow {
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero-glow::after {
-    content: "";
-    position: absolute;
-    inset: -18% -8% auto -8%;
-    height: 52%;
-    border-radius: 9999px;
-    pointer-events: none;
-    z-index: 0;
-    filter: blur(64px);
-    background:
-      radial-gradient(circle at 50% 40%, color-mix(in srgb, var(--primary) 18%, transparent), transparent 56%);
-    opacity: 0.16;
-  }
-
-  .hero-glow > * {
     position: relative;
     z-index: 1;
   }
