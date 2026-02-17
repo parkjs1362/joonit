@@ -12,6 +12,7 @@ export interface PostMeta {
   category: string;
   tags?: string[];
   image?: string;
+  draft?: boolean;
 }
 
 export async function getAllPosts(): Promise<PostMeta[]> {
@@ -36,8 +37,10 @@ export async function getAllPosts(): Promise<PostMeta[]> {
         category: data.category || '개발',
         tags: data.tags || [],
         image: data.image,
+        draft: data.draft || false,
       };
-    });
+    })
+    .filter((post) => !post.draft);
 
   return posts.sort((a, b) => {
     if (a.date === b.date) {

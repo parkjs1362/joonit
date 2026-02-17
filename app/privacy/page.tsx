@@ -66,7 +66,28 @@ export default function PrivacyPage() {
           </p>
           <ul>
             <li>이용자는 브라우저 설정을 통해 쿠키 저장을 거부하거나 삭제할 수 있습니다.</li>
-            <li>맞춤형 광고 노출 여부는 Google 광고 설정 등에서 관리할 수 있습니다.</li>
+            <li>
+              맞춤형 광고 노출 여부는{' '}
+              <a
+                href="https://adssettings.google.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Google 광고 설정
+              </a>
+              에서 관리할 수 있습니다.
+            </li>
+            <li>
+              Google의 광고 관련 정책은{' '}
+              <a
+                href="https://policies.google.com/technologies/ads"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Google 광고 기술 정책
+              </a>
+              에서 확인할 수 있습니다.
+            </li>
           </ul>
 
           <h2>6. 정보주체의 권리</h2>
