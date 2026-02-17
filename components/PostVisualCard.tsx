@@ -86,8 +86,8 @@ export default function PostVisualCard({
         initial: { opacity: 0, y: 18 },
         whileInView: { opacity: 1, y: 0 },
         viewport: { once: true },
-        whileHover: { y: -1 },
-        transition: { duration: 0.28 },
+        whileHover: { y: -4, scale: 1.01 },
+        transition: { type: 'spring' as const, stiffness: 300, damping: 25 },
       };
 
   return (
@@ -98,7 +98,7 @@ export default function PostVisualCard({
       <Link
         href={`/blog/${slug}`}
         className={cx(
-          'focus-ring card-hover group block overflow-hidden rounded-3xl border border-border bg-card/70 hover:bg-card/85',
+          'focus-ring card-hover group block overflow-hidden rounded-3xl border border-[rgba(255,255,255,0.08)] bg-card/80 hover:bg-card/95',
           fillHeight && 'lg:h-full',
           cardClassName
         )}

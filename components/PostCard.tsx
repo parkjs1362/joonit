@@ -30,12 +30,12 @@ export default function PostCard({
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      whileHover={{ y: -2 }}
-      transition={{ duration: 0.3 }}
+      whileHover={{ y: -4, scale: 1.01 }}
+      transition={{ type: 'spring', stiffness: 300, damping: 25 }}
     >
       <Link
         href={`/blog/${slug}`}
-        className="group relative block overflow-hidden rounded-3xl border border-border bg-card/75 transition-colors duration-200 hover:border-primary/20 hover:bg-card/90"
+        className="group relative block overflow-hidden rounded-3xl border border-border bg-card/75 card-hover transition-colors duration-200 hover:bg-card/90"
       >
         <div className="relative flex flex-col">
           <div className="relative aspect-[16/9] w-full overflow-hidden">

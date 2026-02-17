@@ -92,7 +92,14 @@ export default function HomePostsSection({ posts, categories }: HomePostsSection
                   key={post.slug}
                   layout={!reduceMotion}
                   className={`${slot.container} self-stretch h-full`}
-                  {...cardMotion}
+                  initial={reduceMotion ? undefined : { opacity: 0, y: 24 }}
+                  whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-80px' }}
+                  transition={reduceMotion ? undefined : {
+                    delay: index * 0.06,
+                    duration: 0.5,
+                    ease: [0.25, 0.46, 0.45, 0.94],
+                  }}
                 >
                   <PostVisualCard
                     slug={post.slug}

@@ -78,7 +78,7 @@ export default function Header() {
       initial={reduceMotion ? { y: 0 } : { y: -100 }}
       animate={{ y: 0 }}
       transition={reduceMotion ? { duration: 0 } : { type: 'spring', stiffness: 100, damping: 20 }}
-      className="sticky top-0 z-50 backdrop-blur-md bg-background/88 border-b border-border/70"
+      className="sticky top-0 z-50 backdrop-blur-xl bg-[#07080d]/85 border-b border-white/[0.06]"
     >
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <a
