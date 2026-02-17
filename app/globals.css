@@ -220,18 +220,15 @@ body {
   /* Light mode: shadow lift */
   .card-hover:hover {
     border-color: rgba(0, 0, 0, 0.12);
-    box-shadow:
-      0 20px 60px rgba(0, 0, 0, 0.10),
-      0 8px 20px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.12);
+    transform: translateY(-6px);
   }
 
   /* Dark mode: glow effect */
   .dark .card-hover:hover {
     border-color: rgba(96, 165, 250, 0.3);
-    box-shadow:
-      0 0 0 1px rgba(96, 165, 250, 0.15),
-      0 20px 60px rgba(96, 165, 250, 0.12),
-      0 4px 16px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 24px 64px rgba(96, 165, 250, 0.10);
+    transform: translateY(-6px);
   }
 
   .chromatic-surface {
