@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { getCoverAlt, getCoverImage } from '@/lib/covers';
+import { getCategoryColor } from '@/lib/categoryColors';
 
 interface PostCardProps {
   slug: string;
@@ -25,13 +26,14 @@ export default function PostCard({
   image,
 }: PostCardProps) {
   const cover = getCoverImage({ category, image });
+  const catColor = getCategoryColor(category ?? '');
   return (
     <motion.article
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      whileHover={{ y: -8, scale: 1.02 }}
-      transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+      whileHover={{ y: -10, scale: 1.02 }}
+      transition={{ type: 'spring', stiffness: 300, damping: 25 }}
     >
       <Link
         href={`/blog/${slug}`}
@@ -43,7 +45,7 @@ export default function PostCard({
               src={cover}
               alt={getCoverAlt({ title, category })}
               fill
-              className="object-cover scale-[1.01] transition-transform duration-500 group-hover:scale-[1.05]"
+              className="object-cover scale-[1.01] transition-transform duration-500 group-hover:scale-[1.1]"
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             />
           </div>
@@ -52,7 +54,7 @@ export default function PostCard({
             <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
               <time className="text-sm text-[#6e6e73] dark:text-muted">{date}</time>
               {category && (
-                <span className="px-2.5 py-0.5 text-xs font-medium rounded-full border border-[#0071e3]/20 dark:border-primary/20 bg-[#0071e3]/5 dark:bg-primary/5 text-[#0071e3] dark:text-primary">
+                <span className={`px-2.5 py-0.5 text-xs font-medium rounded-full border ${catColor.border} ${catColor.bg} ${catColor.text}`}>
                   {category}
                 </span>
               )}

@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { motion, useReducedMotion } from 'framer-motion';
 import { getCoverAlt, getCoverImage } from '@/lib/covers';
+import { getCategoryColor } from '@/lib/categoryColors';
 
 interface PostVisualCardProps {
   slug: string;
@@ -29,6 +30,7 @@ export default function PostVisualCard({
   aspectClassName = 'aspect-[4/5]',
 }: PostVisualCardProps) {
   const cover = getCoverImage({ category, image });
+  const catColor = getCategoryColor(category ?? '');
   const reduceMotion = useReducedMotion();
 
   const motionProps = reduceMotion
@@ -54,7 +56,7 @@ export default function PostVisualCard({
             fill
             priority={priority}
             sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
-            className="object-cover scale-[1.01] transition-transform duration-700 group-hover:scale-[1.05]"
+            className="object-cover scale-[1.01] transition-transform duration-700 group-hover:scale-[1.12]"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/62 via-black/12 to-black/8" />
 
@@ -63,7 +65,9 @@ export default function PostVisualCard({
               <time className="text-white/70">{date}</time>
               <span aria-hidden="true" className="h-1 w-1 rounded-full bg-white/40" />
               {category && (
-                <span className="text-white/80">{category}</span>
+                <span className={`px-2 py-0.5 text-[11px] rounded-full ${catColor.bg} ${catColor.text} font-medium backdrop-blur`}>
+                  {category}
+                </span>
               )}
             </div>
 
