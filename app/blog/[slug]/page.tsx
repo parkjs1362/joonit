@@ -11,6 +11,7 @@ import TableOfContents from '@/components/TableOfContents';
 import { extractHeadingsFromMDX, estimateReadingMinutes } from '@/lib/content';
 import { getCoverAlt, getCoverImage } from '@/lib/covers';
 import { toAbsoluteUrl } from '@/lib/og';
+import { getCategoryColor } from '@/lib/categoryColors';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -78,6 +79,7 @@ export default async function BlogPostPage({ params }: PageProps) {
     image: post.frontmatter.image,
   });
 
+  const catColor = getCategoryColor(post.frontmatter.category);
   const postUrl = `${siteConfig.url}/blog/${slug}`;
   const coverUrl = toAbsoluteUrl(cover);
   const aboutUrl = `${siteConfig.url}/about`;
@@ -203,7 +205,7 @@ export default async function BlogPostPage({ params }: PageProps) {
                     <span className="h-1 w-1 rounded-full bg-border" />
                     <Link
                       href={`/blog?category=${encodeURIComponent(post.frontmatter.category)}`}
-                      className="px-2.5 py-0.5 rounded-full border border-primary/20 bg-primary/5 text-primary hover:bg-primary/10 transition-colors"
+                      className={`px-3 py-1 text-xs rounded-full border ${catColor.border} ${catColor.bg} ${catColor.text} font-medium transition-colors`}
                     >
                       {post.frontmatter.category}
                     </Link>
