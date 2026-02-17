@@ -11,6 +11,9 @@ const categoryLead: Record<string, string> = {
   일상: '질문, 루틴, 기록',
 };
 
+const heroWords = ['읽히는', '구조와', '기억되는', '색감으로', '블로그를', '다듬습니다.'];
+const accentWord = '기억되는';
+
 interface HeroPost {
   slug: string;
   title: string;
@@ -21,32 +24,22 @@ interface HeroPost {
 }
 
 interface HeroSectionProps {
-  featured: HeroPost | null;
+  featured: HeroPost | null | undefined;
   categories: string[];
   featuredCover: string | null;
 }
 
-const heroHeadline = '읽히는 구조와 기억되는 색감으로 블로그를 다듬습니다.';
-
-const containerVariants = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.08, delayChildren: 0.1 },
-  },
-};
-
-const wordVariants = {
-  hidden: { opacity: 0, y: 24 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { type: 'spring' as const, stiffness: 200, damping: 20 },
-  },
-};
-
 export default function HeroSection({ featured, categories, featuredCover }: HeroSectionProps) {
   const reduceMotion = useReducedMotion();
-  const words = heroHeadline.split(' ');
+
+  const fadeUp = (delay: number) =>
+    reduceMotion
+      ? {}
+      : {
+          initial: { opacity: 0, y: 16 },
+          animate: { opacity: 1, y: 0 },
+          transition: { delay, duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] as const },
+        };
 
   return (
     <div className="relative mb-14 rounded-[2rem] chromatic-surface hero-glow p-5 sm:p-8 lg:p-10 overflow-hidden">
@@ -56,50 +49,46 @@ export default function HeroSection({ featured, categories, featuredCover }: Her
       <div className="relative z-10 grid gap-8 lg:grid-cols-12 items-stretch">
         <div className="lg:col-span-7">
           {/* Badge */}
-          <motion.div
-            initial={reduceMotion ? undefined : { opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, ease: 'easeOut' }}
-            className="flex flex-wrap items-center gap-3"
-          >
+          <motion.div {...fadeUp(0)} className="flex flex-wrap items-center gap-3">
             <span className="inline-flex items-center rounded-full glass-edge px-3.5 py-1.5 text-[11px] font-semibold tracking-[0.08em] uppercase">
               Joonit Journal
             </span>
           </motion.div>
 
           {/* Hero heading — word-by-word stagger */}
-          {reduceMotion ? (
-            <h1 className="mt-6 font-display text-[clamp(1.85rem,4.8vw,3.6rem)] font-semibold tracking-tight leading-[1.04]">
-              {heroHeadline}
-            </h1>
-          ) : (
-            <motion.h1
-              variants={containerVariants}
-              initial="hidden"
-              animate="visible"
-              className="mt-6 font-display text-[clamp(1.85rem,4.8vw,3.6rem)] font-semibold tracking-tight leading-[1.04]"
-            >
-              {words.map((word, i) => {
-                const isAccent = word === '기억되는';
-                return (
-                  <motion.span
-                    key={i}
-                    variants={wordVariants}
-                    style={{ display: 'inline-block', marginRight: '0.25em' }}
-                    className={isAccent ? 'text-primary' : undefined}
-                  >
-                    {word}
-                  </motion.span>
-                );
-              })}
-            </motion.h1>
-          )}
+          <h1 className="mt-6 font-display text-[clamp(1.85rem,4.8vw,3.6rem)] font-semibold tracking-tight leading-[1.04]">
+            {heroWords.map((word, i) =>
+              reduceMotion ? (
+                <span
+                  key={word}
+                  style={{ marginRight: '0.25em' }}
+                  className={word === accentWord ? 'text-primary' : undefined}
+                >
+                  {word}
+                </span>
+              ) : (
+                <motion.span
+                  key={word}
+                  initial={{ opacity: 0, y: 24 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    delay: 0.1 + i * 0.08,
+                    type: 'spring',
+                    stiffness: 200,
+                    damping: 20,
+                  }}
+                  style={{ display: 'inline-block', marginRight: '0.25em' }}
+                  className={word === accentWord ? 'text-primary' : undefined}
+                >
+                  {word}
+                </motion.span>
+              )
+            )}
+          </h1>
 
           {/* Description */}
           <motion.p
-            initial={reduceMotion ? undefined : { opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.55, duration: 0.5, ease: 'easeOut' }}
+            {...fadeUp(0.65)}
             className="mt-6 max-w-2xl text-base sm:text-lg leading-relaxed text-muted"
           >
             개발, 역사, 일상을 실제 운영 경험 중심으로 정리합니다. 카드 레이아웃과
@@ -107,12 +96,7 @@ export default function HeroSection({ featured, categories, featuredCover }: Her
           </motion.p>
 
           {/* CTA Buttons */}
-          <motion.div
-            initial={reduceMotion ? undefined : { opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.72, duration: 0.5, ease: 'easeOut' }}
-            className="mt-8 flex flex-wrap gap-3"
-          >
+          <motion.div {...fadeUp(0.8)} className="mt-8 flex flex-wrap gap-3">
             <Link
               href="/blog"
               className="focus-ring rounded-2xl bg-primary px-5 py-3 text-white dark:text-background font-semibold shadow-sm transition-colors hover:bg-primary-hover"
@@ -135,12 +119,7 @@ export default function HeroSection({ featured, categories, featuredCover }: Her
 
           {/* Category tiles */}
           {categories.length > 0 && (
-            <motion.div
-              initial={reduceMotion ? undefined : { opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.88, duration: 0.5, ease: 'easeOut' }}
-              className="mt-10 grid gap-4 sm:grid-cols-3"
-            >
+            <motion.div {...fadeUp(0.95)} className="mt-10 grid gap-4 sm:grid-cols-3">
               {categories.slice(0, 3).map((category) => (
                 <Link
                   key={category}
