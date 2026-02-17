@@ -11,6 +11,6 @@ export const siteConfig = {
   },
   keywords: ['블로그', '개발', '웹', '기록', '역사', '일상'] as string[],
   analytics: {
-    gaId: '', // TODO: GA4 Measurement ID 발급 후 입력 (예: G-XXXXXXXXXX)
+    gaId: 'G-SR5RYTMCET',
   },
 } as const;
