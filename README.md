@@ -5,7 +5,7 @@ Joonit 개인 블로그 | 개발·역사·일상 기록
 읽기 좋은 글과, 정돈된 레이아웃을 기준으로 꾸준히 다듬습니다.
 바이브 코딩으로 빠르게 만들고, 실제로 쓰면서 계속 고칩니다.
 
-**Live**: https://joonit.co
+**Live**: https://joonit.vercel.app
 
 ## Built With
 
