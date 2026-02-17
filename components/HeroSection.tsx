@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { motion, useReducedMotion } from 'framer-motion';
 import { getCoverAlt, getCoverImage } from '@/lib/covers';
+import { getCategoryColor } from '@/lib/categoryColors';
 
 const heroWords = ['읽히는', '구조와', '기억되는', '색감으로', '블로그를', '다듬습니다.'];
 const accentWord = '기억되는';
@@ -106,33 +107,56 @@ export default function HeroSection({ featured, categories, featuredCover }: Her
         </Link>
       </motion.div>
 
+      {/* Blog stats */}
+      <motion.div {...fadeUp(0.72)} className="flex items-center justify-center gap-8 mt-10">
+        <div className="text-center">
+          <p className="text-2xl sm:text-3xl font-bold text-foreground">80+</p>
+          <p className="text-sm text-muted mt-1">발행된 글</p>
+        </div>
+        <div className="h-8 w-px bg-border" />
+        <div className="text-center">
+          <p className="text-2xl sm:text-3xl font-bold text-foreground">3</p>
+          <p className="text-sm text-muted mt-1">카테고리</p>
+        </div>
+        <div className="h-8 w-px bg-border" />
+        <div className="text-center">
+          <p className="text-2xl sm:text-3xl font-bold text-foreground">매주</p>
+          <p className="text-sm text-muted mt-1">업데이트</p>
+        </div>
+      </motion.div>
+
       {/* Category tiles */}
       {categories.length > 0 && (
         <motion.div {...fadeUp(0.75)} className="mt-14 grid gap-4 sm:grid-cols-3 max-w-3xl mx-auto">
-          {categories.slice(0, 3).map((category) => (
-            <Link
-              key={category}
-              href={`/blog?category=${encodeURIComponent(category)}`}
-              className="focus-ring card-hover group block overflow-hidden rounded-2xl border border-[rgba(0,0,0,0.08)] dark:border-border bg-white dark:bg-card"
-            >
-              <div className="relative aspect-[4/3]">
-                <Image
-                  src={getCoverImage({ category })}
-                  alt={`${category} 카테고리 대표 이미지`}
-                  fill
-                  sizes="(max-width: 640px) 100vw, 33vw"
-                  className="object-cover scale-[1.02] transition-transform duration-700 group-hover:scale-[1.08]"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/72 via-black/15 to-black/10" />
-                <div className="absolute inset-0 p-4 flex flex-col justify-end">
-                  <p className="text-sm font-semibold tracking-tight text-white">{category}</p>
-                  <p className="mt-1 text-xs text-white/75">
-                    {category === '개발' ? '웹, UI, 성능, DX' : category === '역사' ? '사실 기반 스토리텔링' : '질문, 루틴, 기록'}
-                  </p>
+          {categories.slice(0, 3).map((category) => {
+            const catColor = getCategoryColor(category);
+            return (
+              <Link
+                key={category}
+                href={`/blog?category=${encodeURIComponent(category)}`}
+                className="focus-ring card-hover group block overflow-hidden rounded-2xl border border-[rgba(0,0,0,0.08)] dark:border-border bg-white dark:bg-card"
+              >
+                <div className="relative aspect-[4/3]">
+                  <Image
+                    src={getCoverImage({ category })}
+                    alt={`${category} 카테고리 대표 이미지`}
+                    fill
+                    sizes="(max-width: 640px) 100vw, 33vw"
+                    className="object-cover scale-[1.02] transition-transform duration-700 group-hover:scale-[1.08]"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/72 via-black/15 to-black/10" />
+                  <div className="absolute inset-0 p-4 flex flex-col justify-end">
+                    <div className={`pl-3 border-l-4 ${catColor.border}`}>
+                      <p className="text-sm font-semibold tracking-tight text-white">{category}</p>
+                      <p className="mt-1 text-xs text-white/75">
+                        {category === '개발' ? '웹, UI, 성능, DX' : category === '역사' ? '사실 기반 스토리텔링' : '질문, 루틴, 기록'}
+                      </p>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </Link>
-          ))}
+              </Link>
+            );
+          })}
         </motion.div>
       )}
 
