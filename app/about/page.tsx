@@ -19,7 +19,7 @@ export default function AboutPage() {
         <div className="prose prose-lg mx-auto max-w-[72ch]">
           <h2>만드는 사람</h2>
           <p>
-            안녕하세요. <strong>박준상(Joonit)</strong>입니다.
+            안녕하세요. <strong>J. Park (Joonit)</strong>입니다.
             프론트엔드 개발을 주로 하고 있으며, 웹 기술로 실용적인 도구를 만드는 데 관심이 많습니다.
           </p>
           <p>

@@ -7,7 +7,7 @@ export const siteConfig = {
     email: 'joonit1362@gmail.com',
   },
   social: {
-    github: 'https://github.com/joonsang-park',
+    github: 'https://github.com/parkjs1362',
   },
   keywords: ['블로그', '개발', '웹', '기록', '역사', '일상'] as string[],
 } as const;
