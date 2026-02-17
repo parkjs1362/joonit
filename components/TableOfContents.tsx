@@ -8,7 +8,7 @@ export default function TableOfContents({ headings }: TableOfContentsProps) {
   if (!headings || headings.length === 0) return null;
 
   return (
-    <nav className="rounded-2xl border border-border bg-card/60 p-5 backdrop-blur-sm">
+    <nav aria-label="목차" className="rounded-2xl border border-border bg-card/60 p-5 backdrop-blur-sm">
       <p className="text-xs font-semibold tracking-wide text-muted">
         목차
       </p>

@@ -134,7 +134,7 @@ export default function Header() {
           </button>
         </div>
 
-        <div className="sm:hidden mt-3 flex gap-2 overflow-x-auto scrollbar-hide pb-2 -mb-2">
+        <nav aria-label="모바일 메뉴" className="sm:hidden mt-3 flex gap-2 overflow-x-auto scrollbar-hide pb-2 -mb-2">
           {navItems.map((item) => {
             const isActive =
               item.href === '/blog' ? pathname.startsWith('/blog') : pathname === item.href;
@@ -151,7 +151,7 @@ export default function Header() {
               </Link>
             );
           })}
-        </div>
+        </nav>
       </nav>
     </motion.header>
   );

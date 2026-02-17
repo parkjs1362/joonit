@@ -114,6 +114,25 @@ export default function RootLayout({
             `,
           }}
         />
+        {/* Google Analytics (GA4) */}
+        {siteConfig.analytics.gaId && (
+          <>
+            <script
+              async
+              src={`https://www.googletagmanager.com/gtag/js?id=${siteConfig.analytics.gaId}`}
+            />
+            <script
+              dangerouslySetInnerHTML={{
+                __html: `
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+                  gtag('config', '${siteConfig.analytics.gaId}');
+                `,
+              }}
+            />
+          </>
+        )}
         {/* Google AdSense */}
         <meta name="google-adsense-account" content="ca-pub-9437130351538375" />
         <script

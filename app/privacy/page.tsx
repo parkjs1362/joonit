@@ -51,11 +51,24 @@ export default function PrivacyPage() {
           </ul>
 
           <h2>4. 제3자 제공</h2>
-          <p>본 사이트는 광고 제공을 위해 다음과 같은 제3자 서비스를 이용합니다:</p>
+          <p>본 사이트는 광고 제공 및 사이트 분석을 위해 다음과 같은 제3자 서비스를 이용합니다:</p>
           <ul>
             <li>
               <strong>Google AdSense</strong>: 광고 제공 목적.
               맞춤형 광고를 위해 쿠키가 사용될 수 있습니다.
+            </li>
+            <li>
+              <strong>Google Analytics</strong>: 사이트 이용 통계 분석 목적.
+              방문 페이지, 체류 시간, 유입 경로 등의 정보를 수집하며,
+              수집된 데이터는 Google의{' '}
+              <a
+                href="https://policies.google.com/privacy"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                개인정보처리방침
+              </a>
+              에 따라 처리됩니다.
             </li>
           </ul>
 

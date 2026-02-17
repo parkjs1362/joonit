@@ -76,6 +76,7 @@ export default function BlogContent({
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="제목, 태그, 카테고리..."
+              aria-label="블로그 글 검색"
               className="w-full rounded-2xl border border-border bg-background/40 px-10 py-3 text-sm outline-none focus:ring-2 focus:ring-primary/30"
             />
           </div>
