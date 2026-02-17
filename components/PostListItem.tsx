@@ -42,7 +42,7 @@ export default function PostListItem({
     >
       <Link
         href={`/blog/${slug}`}
-        className="group block rounded-3xl border border-border bg-card/70 p-6 transition-colors hover:bg-card/85"
+        className="group block rounded-3xl border border-border bg-card/70 p-6 transition-colors hover:border-primary/18 hover:bg-card/85"
       >
         <div className="flex items-start gap-6">
           <div className="hidden sm:block w-12 pt-1">
@@ -52,7 +52,7 @@ export default function PostListItem({
           </div>
 
           <div className="min-w-0 flex-1">
-            <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-xs font-semibold tracking-[0.14em] uppercase text-muted">
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-xs font-medium tracking-[0.08em] uppercase text-muted">
               <time>{date}</time>
               <span aria-hidden="true" className="h-1 w-1 rounded-full bg-border" />
               {category ? (
@@ -62,7 +62,7 @@ export default function PostListItem({
               )}
             </div>
 
-            <h2 className="mt-3 font-display text-3xl sm:text-4xl font-semibold tracking-tight leading-[1.1] group-hover:text-primary transition-colors line-clamp-2">
+            <h2 className="mt-3 text-2xl sm:text-3xl font-semibold tracking-tight leading-[1.14] group-hover:text-primary transition-colors line-clamp-2">
               {title}
             </h2>
 
@@ -90,7 +90,7 @@ export default function PostListItem({
                 src={cover}
                 alt={getCoverAlt({ title, category })}
                 fill
-                className="object-cover scale-[1.02] transition-transform duration-500 group-hover:scale-[1.07]"
+                className="object-cover scale-[1.01] transition-transform duration-500 group-hover:scale-[1.05]"
                 sizes="180px"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-card/70 via-transparent to-transparent" />
@@ -101,4 +101,3 @@ export default function PostListItem({
     </motion.article>
   );
 }
-

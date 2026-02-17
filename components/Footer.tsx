@@ -7,7 +7,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <p className="font-display text-lg font-semibold tracking-tight">
+            <p className="text-lg font-semibold tracking-tight">
               {siteConfig.title}
             </p>
             <p className="text-sm text-muted mt-1 max-w-md">
@@ -15,7 +15,7 @@ export default function Footer() {
             </p>
           </div>
 
-          <nav className="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-semibold tracking-[0.16em] uppercase text-muted">
+          <nav className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm font-medium tracking-[0.02em] text-muted">
             <Link href="/blog" className="focus-ring hover:text-foreground transition-colors">
               글
             </Link>
@@ -42,7 +42,7 @@ export default function Footer() {
               href={`mailto:${siteConfig.author.email}`}
               className="focus-ring inline-flex items-center gap-2 rounded-xl border border-border bg-card/60 px-4 py-2 text-sm text-muted hover:text-foreground hover:bg-card/80 transition-colors"
             >
-              <span className="text-xs font-semibold tracking-[0.16em] uppercase">
+              <span className="text-xs font-semibold tracking-[0.03em]">
                 Email
               </span>
               <span className="text-sm">{siteConfig.author.email}</span>

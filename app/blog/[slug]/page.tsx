@@ -211,7 +211,7 @@ export default async function BlogPostPage({ params }: PageProps) {
                     <span>{readingMinutes}분 읽기</span>
                   </div>
 
-                  <h1 className="font-display mt-4 text-4xl sm:text-5xl font-semibold tracking-tight">
+                  <h1 className="mt-4 text-3xl sm:text-4xl font-semibold tracking-tight leading-[1.12]">
                     {post.frontmatter.title}
                   </h1>
 
@@ -249,12 +249,12 @@ export default async function BlogPostPage({ params }: PageProps) {
                         {newerPost && (
                           <Link
                             href={`/blog/${newerPost.slug}`}
-                            className="group rounded-3xl border border-border bg-card/60 p-6 backdrop-blur-sm hover:border-primary/25 hover:shadow-lg hover:shadow-primary/10 transition-colors"
+                            className="group rounded-3xl border border-border bg-card/60 p-6 hover:border-primary/20 hover:bg-card/80 transition-colors"
                           >
-                            <p className="text-xs font-semibold tracking-wide text-muted uppercase">
+                            <p className="text-xs font-medium tracking-[0.08em] text-muted uppercase">
                               더 최근 글
                             </p>
-                            <p className="mt-2 font-display text-xl font-semibold tracking-tight group-hover:text-primary transition-colors">
+                            <p className="mt-2 text-lg sm:text-xl font-semibold tracking-tight leading-[1.14] group-hover:text-primary transition-colors">
                               {newerPost.title}
                             </p>
                             <p className="mt-3 text-sm text-muted line-clamp-2">
@@ -266,12 +266,12 @@ export default async function BlogPostPage({ params }: PageProps) {
                         {olderPost && (
                           <Link
                             href={`/blog/${olderPost.slug}`}
-                            className="group rounded-3xl border border-border bg-card/60 p-6 backdrop-blur-sm hover:border-primary/25 hover:shadow-lg hover:shadow-primary/10 transition-colors"
+                            className="group rounded-3xl border border-border bg-card/60 p-6 hover:border-primary/20 hover:bg-card/80 transition-colors"
                           >
-                            <p className="text-xs font-semibold tracking-wide text-muted uppercase">
+                            <p className="text-xs font-medium tracking-[0.08em] text-muted uppercase">
                               이전 글
                             </p>
-                            <p className="mt-2 font-display text-xl font-semibold tracking-tight group-hover:text-primary transition-colors">
+                            <p className="mt-2 text-lg sm:text-xl font-semibold tracking-tight leading-[1.14] group-hover:text-primary transition-colors">
                               {olderPost.title}
                             </p>
                             <p className="mt-3 text-sm text-muted line-clamp-2">
@@ -290,10 +290,10 @@ export default async function BlogPostPage({ params }: PageProps) {
                             <Link
                               key={p.slug}
                               href={`/blog/${p.slug}`}
-                              className="group rounded-3xl border border-border bg-card/60 p-6 backdrop-blur-sm hover:border-primary/25 hover:shadow-lg hover:shadow-primary/10 transition-colors"
+                              className="group rounded-3xl border border-border bg-card/60 p-6 hover:border-primary/20 hover:bg-card/80 transition-colors"
                             >
                               <p className="text-sm text-muted">{p.date}</p>
-                              <p className="mt-2 font-display text-lg font-semibold tracking-tight group-hover:text-primary transition-colors line-clamp-2">
+                              <p className="mt-2 text-lg font-semibold tracking-tight leading-[1.14] group-hover:text-primary transition-colors line-clamp-2">
                                 {p.title}
                               </p>
                               <p className="mt-3 text-sm text-muted line-clamp-2">
@@ -314,7 +314,7 @@ export default async function BlogPostPage({ params }: PageProps) {
             <div className="sticky top-28 space-y-6">
               <TableOfContents headings={headings} />
 
-              <div className="rounded-2xl border border-border bg-card/60 p-5 backdrop-blur-sm">
+              <div className="rounded-2xl border border-border bg-card/60 p-5">
                 <p className="text-sm font-semibold">{siteConfig.author.name}</p>
                 <p className="mt-1 text-sm text-muted leading-relaxed">
                   {siteConfig.description}

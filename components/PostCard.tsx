@@ -35,20 +35,18 @@ export default function PostCard({
     >
       <Link
         href={`/blog/${slug}`}
-        className="group relative block overflow-hidden rounded-3xl border border-border bg-card/70 backdrop-blur-sm transition-all duration-300 hover:border-primary/25 hover:shadow-lg hover:shadow-primary/10"
+        className="group relative block overflow-hidden rounded-3xl border border-border bg-card/75 transition-colors duration-200 hover:border-primary/20 hover:bg-card/90"
       >
-        <div className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-[radial-gradient(800px_circle_at_20%_0%,color-mix(in_srgb,var(--primary)_12%,transparent),transparent_55%)]" />
-
         <div className="relative flex flex-col">
           <div className="relative aspect-[16/9] w-full overflow-hidden">
             <Image
               src={cover}
               alt={getCoverAlt({ title, category })}
               fill
-              className="object-cover scale-[1.02] transition-transform duration-500 group-hover:scale-[1.08]"
+              className="object-cover scale-[1.01] transition-transform duration-500 group-hover:scale-[1.05]"
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-card/85 via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-card/72 via-transparent to-transparent" />
           </div>
 
           <div className="p-6 flex flex-col gap-3">
@@ -61,7 +59,7 @@ export default function PostCard({
               )}
             </div>
 
-            <h2 className="font-display text-2xl font-semibold tracking-tight group-hover:text-primary transition-colors">
+            <h2 className="text-xl sm:text-[1.35rem] font-semibold tracking-tight leading-[1.14] group-hover:text-primary transition-colors">
               {title}
             </h2>
 

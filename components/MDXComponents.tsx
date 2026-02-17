@@ -31,7 +31,7 @@ function HeadingLink({
   return (
     <Tag
       id={id}
-      className={`font-display scroll-mt-28 group ${className}`}
+      className={`scroll-mt-28 group ${className}`}
       >
         <a
           href={`#${id}`}
@@ -53,7 +53,7 @@ const components: MDXComponents = {
   h1: ({ children }) => (
     <HeadingLink
       level={1}
-      className="text-3xl sm:text-4xl font-semibold tracking-tight mt-10 mb-4"
+      className="text-2xl sm:text-3xl font-semibold tracking-tight leading-[1.12] mt-10 mb-4"
     >
       {children}
     </HeadingLink>
@@ -61,7 +61,7 @@ const components: MDXComponents = {
   h2: ({ children }) => (
     <HeadingLink
       level={2}
-      className="text-2xl sm:text-3xl font-semibold tracking-tight mt-10 mb-3"
+      className="text-xl sm:text-2xl font-semibold tracking-tight leading-[1.13] mt-10 mb-3"
     >
       {children}
     </HeadingLink>
@@ -69,13 +69,13 @@ const components: MDXComponents = {
   h3: ({ children }) => (
     <HeadingLink
       level={3}
-      className="text-xl sm:text-2xl font-semibold tracking-tight mt-8 mb-2"
+      className="text-lg sm:text-xl font-semibold tracking-tight leading-[1.15] mt-8 mb-2"
     >
       {children}
     </HeadingLink>
   ),
   p: ({ children }) => (
-    <p className="my-4 leading-[1.85]">{children}</p>
+    <p className="my-4 leading-[1.82]">{children}</p>
   ),
   a: ({ href, children }) => {
     const isExternal = href?.startsWith('http');
@@ -107,7 +107,7 @@ const components: MDXComponents = {
     <ol className="my-4 ml-6 list-decimal space-y-2">{children}</ol>
   ),
   li: ({ children }) => (
-    <li className="leading-relaxed">{children}</li>
+    <li className="leading-[1.75]">{children}</li>
   ),
   blockquote: ({ children }) => (
     <blockquote className="my-6 rounded-xl border border-border bg-card/60 px-5 py-4 text-foreground/85">

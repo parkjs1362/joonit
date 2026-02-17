@@ -29,12 +29,12 @@ export default async function HomePage() {
         <div className="grid gap-8 lg:grid-cols-12 items-stretch">
           <div className="lg:col-span-7">
             <div className="flex flex-wrap items-center gap-3">
-              <span className="inline-flex items-center rounded-full glass-edge px-3.5 py-1.5 text-[11px] font-semibold tracking-[0.16em] uppercase">
+              <span className="inline-flex items-center rounded-full glass-edge px-3.5 py-1.5 text-[11px] font-semibold tracking-[0.08em] uppercase">
                 Joonit Journal
               </span>
             </div>
 
-            <h1 className="mt-6 font-display text-[clamp(2.1rem,5.4vw,4.2rem)] font-semibold tracking-tight leading-[0.98]">
+            <h1 className="mt-6 font-display text-[clamp(1.85rem,4.8vw,3.6rem)] font-semibold tracking-tight leading-[1.04]">
               읽히는 구조와
               <br />
               <span className="text-primary">기억되는 색감</span>으로
@@ -115,12 +115,12 @@ export default async function HomePage() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/78 via-black/18 to-black/8" />
                   <div className="absolute inset-0 p-6 flex flex-col justify-end">
-                    <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-[11px] font-semibold tracking-[0.14em] uppercase text-white/75">
+                    <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-[11px] font-semibold tracking-[0.08em] uppercase text-white/75">
                       <time className="text-white/70">{featured.date}</time>
                       <span aria-hidden="true" className="h-1 w-1 rounded-full bg-white/40" />
                       <span className="text-white/80">{featured.category}</span>
                     </div>
-                    <p className="mt-3 font-display text-2xl sm:text-3xl font-semibold tracking-tight leading-[1.06] text-white drop-shadow-[0_2px_18px_rgba(0,0,0,0.42)] line-clamp-3">
+                    <p className="mt-3 font-display text-xl sm:text-2xl font-semibold tracking-tight leading-[1.1] text-white drop-shadow-[0_1px_10px_rgba(0,0,0,0.3)] line-clamp-3">
                       {featured.title}
                     </p>
                     <p className="mt-3 text-sm text-white/78 leading-relaxed line-clamp-2">
@@ -144,7 +144,7 @@ export default async function HomePage() {
       >
         <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
           <div>
-            <p className="text-[11px] font-semibold tracking-[0.16em] uppercase text-muted">
+            <p className="text-[11px] font-semibold tracking-[0.1em] uppercase text-muted">
               Fresh Dispatch
             </p>
             <h2 className="mt-2 font-display text-2xl sm:text-3xl font-semibold tracking-tight">

@@ -55,7 +55,7 @@ export default function BlogContent({
     <div className="grid gap-10 lg:grid-cols-[320px_1fr]">
       <aside className="space-y-6 lg:sticky lg:top-28 self-start">
         <div className="rounded-3xl border border-border bg-card/60 p-6 backdrop-blur-sm">
-          <p className="text-xs font-semibold tracking-[0.16em] uppercase text-muted">
+          <p className="text-xs font-semibold tracking-[0.08em] uppercase text-muted">
             검색
           </p>
           <div className="relative mt-3">
@@ -86,7 +86,7 @@ export default function BlogContent({
         </div>
 
         <div className="rounded-3xl border border-border bg-card/60 p-6 backdrop-blur-sm">
-          <p className="text-xs font-semibold tracking-[0.16em] uppercase text-muted mb-3">
+          <p className="text-xs font-semibold tracking-[0.08em] uppercase text-muted mb-3">
             주제
           </p>
           <CategoryFilter

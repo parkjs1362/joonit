@@ -78,7 +78,7 @@ export default function Header() {
       initial={reduceMotion ? { y: 0 } : { y: -100 }}
       animate={{ y: 0 }}
       transition={reduceMotion ? { duration: 0 } : { type: 'spring', stiffness: 100, damping: 20 }}
-      className="sticky top-0 z-50 backdrop-blur-xl bg-background/75 border-b border-border/70"
+      className="sticky top-0 z-50 backdrop-blur-md bg-background/88 border-b border-border/70"
     >
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <a
@@ -91,13 +91,13 @@ export default function Header() {
         <div className="flex items-center justify-between">
           <Link
             href="/"
-            className="focus-ring font-display text-xl font-semibold tracking-tight hover:text-primary transition-colors"
+            className="focus-ring text-lg sm:text-xl font-semibold tracking-tight hover:text-primary transition-colors"
           >
             Joonit
           </Link>
 
           <div className="flex items-center gap-3">
-            <div className="hidden sm:flex items-center gap-6">
+            <div className="hidden sm:flex items-center gap-5">
               {navItems.map((item) => {
                 const isActive =
                   item.href === '/blog'
@@ -108,7 +108,7 @@ export default function Header() {
                   <Link
                     key={item.href}
                     href={item.href}
-                    className={`focus-ring group relative py-2 text-xs font-semibold tracking-[0.18em] uppercase transition-colors ${
+                    className={`focus-ring group relative py-2 text-sm font-medium tracking-[0.02em] transition-colors ${
                       isActive ? 'text-foreground' : 'text-muted hover:text-foreground'
                     }`}
                   >
@@ -143,7 +143,7 @@ export default function Header() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`focus-ring px-4 py-2 text-xs font-semibold tracking-[0.14em] uppercase rounded-full border border-border bg-card/60 whitespace-nowrap transition-colors ${
+                className={`focus-ring px-4 py-2 text-sm font-medium tracking-[0.01em] rounded-full border border-border bg-card/60 whitespace-nowrap transition-colors ${
                   isActive ? 'text-foreground' : 'text-muted hover:text-foreground'
                 }`}
               >

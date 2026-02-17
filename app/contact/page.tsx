@@ -11,10 +11,10 @@ export default function ContactPage() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <AnimatedSection>
-        <h1 className="font-display text-4xl sm:text-5xl font-semibold tracking-tight mb-4">
+        <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight leading-[1.12] mb-4">
           연락
         </h1>
-        <p className="text-muted text-lg mb-10 max-w-2xl">
+        <p className="text-muted text-base sm:text-lg mb-10 max-w-2xl leading-[1.8]">
           궁금한 점이 있으시거나 협업 제안이 있으시다면 아래 채널로 연락해 주세요.
         </p>
       </AnimatedSection>
@@ -23,7 +23,7 @@ export default function ContactPage() {
         <AnimatedSection delay={0.1}>
           <a
             href={`mailto:${siteConfig.author.email}`}
-            className="block p-7 rounded-3xl border border-border bg-card/60 hover:border-primary/25 hover:shadow-lg hover:shadow-primary/10 transition-colors backdrop-blur-sm"
+            className="block p-7 rounded-3xl border border-border bg-card/60 hover:border-primary/20 hover:bg-card/80 transition-colors"
           >
             <div className="flex items-center gap-3 mb-3">
               <svg
@@ -46,7 +46,7 @@ export default function ContactPage() {
         </AnimatedSection>
 
         <AnimatedSection delay={0.2}>
-          <div className="p-7 rounded-3xl border border-border bg-card/60 backdrop-blur-sm">
+          <div className="p-7 rounded-3xl border border-border bg-card/60">
             <div className="flex items-center gap-3 mb-3">
               <svg
                 className="w-6 h-6 text-primary"

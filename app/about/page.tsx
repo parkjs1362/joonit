@@ -11,7 +11,7 @@ export default function AboutPage() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <AnimatedSection>
-        <h1 className="font-display text-4xl sm:text-5xl font-semibold tracking-tight mb-8">
+        <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight leading-[1.12] mb-8">
           소개
         </h1>
 
