@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400..700&family=Noto+Sans+KR:wght@300..800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400..700&family=Noto+Sans+KR:wght@300..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap");
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
@@ -26,6 +26,7 @@
     "Segoe UI", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
   --font-mono-stack: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Monaco, Consolas,
     "Liberation Mono", "Courier New", monospace;
+  --font-editorial-stack: "Playfair Display", "Georgia", "Times New Roman", serif;
 
   /* Category colors (NomadCoders-inspired) */
   --cat-dev: #3b82f6;        /* 개발 — 파란 */
@@ -47,6 +48,7 @@
   --font-sans: var(--font-sans-stack);
   --font-display: var(--font-display-stack);
   --font-mono: var(--font-mono-stack);
+  --font-editorial: var(--font-editorial-stack);
 }
 
 /* .dark keeps Linear dark theme */
