@@ -90,7 +90,7 @@ export default function BlogContent({
       </aside>
 
       {/* 메인 컨텐츠 */}
-      <section>
+      <section aria-label="블로그 글 목록">
         {filteredPosts.length === 0 ? (
           <div className="py-20 text-center text-muted">
             <p>해당 조건에 맞는 글이 없습니다.</p>
