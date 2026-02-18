@@ -12,7 +12,6 @@ interface BlogHeroProps {
   description: string;
   date: string;
   category?: string;
-  tags?: string[];
   image?: string;
 }
 
@@ -22,7 +21,6 @@ export default function BlogHero({
   description,
   date,
   category,
-  tags,
   image,
 }: BlogHeroProps) {
   const cover = getCoverImage({ category, image });
@@ -44,7 +42,7 @@ export default function BlogHero({
     <motion.article {...motionProps} className="mb-16">
       <Link
         href={`/blog/${slug}`}
-        className="group block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 rounded-sm"
+        className="focus-ring group block"
       >
         {/* 커버 이미지 */}
         <div className="relative aspect-[2/1] overflow-hidden rounded-2xl bg-card border border-border">
@@ -63,7 +61,7 @@ export default function BlogHero({
         <div className="mt-7">
           {/* 메타 */}
           <div className="flex items-center gap-3 text-xs font-semibold tracking-[0.1em] uppercase text-muted">
-            <time>{date}</time>
+            <time dateTime={date}>{date}</time>
             {category && (
               <>
                 <span aria-hidden="true" className="h-1 w-1 rounded-full bg-border" />
