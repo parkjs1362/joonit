@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { getCoverAlt, getCoverImage } from '@/lib/covers';
 import { getCategoryColor } from '@/lib/categoryColors';
 
@@ -27,6 +27,7 @@ export default function PostListItem({
   tags,
   image,
 }: PostListItemProps) {
+  const reduceMotion = useReducedMotion();
   const cover = getCoverImage({ category, image });
   const catColor = getCategoryColor(category ?? '');
 
@@ -36,12 +37,12 @@ export default function PostListItem({
       initial={{ opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 14 }}
-      transition={{ duration: 0.22, delay: Math.min(index * 0.04, 0.3) }}
-      className="group border-t border-border py-7 first:border-t-0"
+      transition={{ duration: reduceMotion ? 0 : 0.22, delay: reduceMotion ? 0 : Math.min(index * 0.04, 0.3) }}
+      className="group border-t border-border first:border-t-0"
     >
       <Link
         href={`/blog/${slug}`}
-        className="focus-ring flex items-start gap-6"
+        className="focus-ring flex items-start gap-6 py-7"
       >
         {/* 텍스트 영역 */}
         <div className="min-w-0 flex-1">
