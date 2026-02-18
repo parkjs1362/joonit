@@ -2,7 +2,8 @@
 
 import { useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
-import PostVisualCard from '@/components/PostVisualCard';
+import BlogHero from '@/components/BlogHero';
+import PostListItem from '@/components/PostListItem';
 import CategoryFilter from '@/components/CategoryFilter';
 import type { PostMeta } from '@/lib/posts';
 
@@ -30,35 +31,26 @@ export default function BlogContent({
     .filter((post) => (selected === '전체' ? true : post.category === selected))
     .filter((post) => {
       if (!normalizedQuery) return true;
-      const hay = [
-        post.title,
-        post.description,
-        post.category,
-        ...(post.tags ?? []),
-      ]
+      const hay = [post.title, post.description, post.category, ...(post.tags ?? [])]
         .join(' ')
         .toLowerCase();
       return hay.includes(normalizedQuery);
     });
 
-  const pickAspect = (index: number) => {
-    const mod = index % 6;
-    if (mod === 0) return 'aspect-[4/5]';
-    if (mod === 1) return 'aspect-[16/9]';
-    if (mod === 2) return 'aspect-[1/1]';
-    if (mod === 3) return 'aspect-[3/4]';
-    if (mod === 4) return 'aspect-[4/3]';
-    return 'aspect-[9/16]';
-  };
+  const [heroPosts, listPosts] = filteredPosts.length > 0
+    ? [filteredPosts.slice(0, 1), filteredPosts.slice(1)]
+    : [[], []];
 
   return (
-    <div className="grid gap-10 lg:grid-cols-[320px_1fr]">
-      <aside className="space-y-6 lg:sticky lg:top-28 self-start">
-        <div className="rounded-3xl border border-border bg-card/60 p-6 backdrop-blur-sm">
-          <p className="text-xs font-semibold tracking-[0.08em] uppercase text-muted">
+    <div className="grid gap-10 lg:grid-cols-[300px_1fr]">
+      {/* 사이드바 */}
+      <aside className="space-y-5 lg:sticky lg:top-28 self-start">
+        {/* 검색 */}
+        <div className="rounded-2xl border border-border bg-card/60 p-5 backdrop-blur-sm">
+          <p className="text-xs font-semibold tracking-[0.08em] uppercase text-muted mb-3">
             검색
           </p>
-          <div className="relative mt-3">
+          <div className="relative">
             <svg
               className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted"
               fill="none"
@@ -77,16 +69,14 @@ export default function BlogContent({
               onChange={(e) => setQuery(e.target.value)}
               placeholder="제목, 태그, 카테고리..."
               aria-label="블로그 글 검색"
-              className="w-full rounded-2xl border border-border bg-background/40 px-10 py-3 text-sm outline-none focus:ring-2 focus:ring-primary/30"
+              className="w-full rounded-xl border border-border bg-background/40 px-10 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/30 transition"
             />
           </div>
-
-          <p className="mt-4 text-sm text-muted">
-            {filteredPosts.length}개의 글
-          </p>
+          <p className="mt-3 text-xs text-muted">{filteredPosts.length}개의 글</p>
         </div>
 
-        <div className="rounded-3xl border border-border bg-card/60 p-6 backdrop-blur-sm">
+        {/* 카테고리 */}
+        <div className="rounded-2xl border border-border bg-card/60 p-5 backdrop-blur-sm">
           <p className="text-xs font-semibold tracking-[0.08em] uppercase text-muted mb-3">
             주제
           </p>
@@ -99,30 +89,54 @@ export default function BlogContent({
         </div>
       </aside>
 
+      {/* 메인 컨텐츠 */}
       <section>
-        {filteredPosts.length > 0 ? (
-          <AnimatePresence mode="popLayout">
-            <div className="columns-1 md:columns-2 2xl:columns-3 [column-gap:1.5rem]">
-              {filteredPosts.map((post, idx) => (
-                <div key={post.slug} className="mb-6 [break-inside:avoid]">
-                  <PostVisualCard
-                    slug={post.slug}
-                    title={post.title}
-                    description={post.description}
-                    date={post.date}
-                    category={post.category}
-                    tags={post.tags}
-                    image={post.image}
-                    aspectClassName={pickAspect(idx)}
-                  />
-                </div>
-              ))}
-            </div>
-          </AnimatePresence>
-        ) : (
-          <div className="text-center py-12 text-muted">
+        {filteredPosts.length === 0 ? (
+          <div className="py-20 text-center text-muted">
             <p>해당 조건에 맞는 글이 없습니다.</p>
           </div>
+        ) : (
+          <>
+            {/* Hero — 최신 글 */}
+            {heroPosts.map((post) => (
+              <BlogHero
+                key={post.slug}
+                slug={post.slug}
+                title={post.title}
+                description={post.description}
+                date={post.date}
+                category={post.category}
+                image={post.image}
+              />
+            ))}
+
+            {/* 리스트 구분선 */}
+            {listPosts.length > 0 && (
+              <div className="mb-2 flex items-center gap-4">
+                <p className="text-xs font-semibold tracking-[0.1em] uppercase text-muted shrink-0">
+                  더 많은 글
+                </p>
+                <div className="flex-1 h-px bg-border" />
+              </div>
+            )}
+
+            {/* 리스트 — 나머지 글 */}
+            <AnimatePresence mode="popLayout">
+              {listPosts.map((post, idx) => (
+                <PostListItem
+                  key={post.slug}
+                  index={idx}
+                  slug={post.slug}
+                  title={post.title}
+                  description={post.description}
+                  date={post.date}
+                  category={post.category}
+                  tags={post.tags}
+                  image={post.image}
+                />
+              ))}
+            </AnimatePresence>
+          </>
         )}
       </section>
     </div>
