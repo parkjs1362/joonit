@@ -36,7 +36,7 @@ export default function PostListItem({
       layout
       initial={{ opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: 14 }}
+      exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 14 }}
       transition={{ duration: reduceMotion ? 0 : 0.22, delay: reduceMotion ? 0 : Math.min(index * 0.04, 0.3) }}
       className="group border-t border-border first:border-t-0"
     >
