@@ -112,7 +112,7 @@ export default function BlogContent({
 
             {/* 리스트 구분선 */}
             {listPosts.length > 0 && (
-              <div className="mb-2 flex items-center gap-4">
+              <div className="mb-2 flex items-center gap-4" aria-hidden="true">
                 <p className="text-xs font-semibold tracking-[0.1em] uppercase text-muted shrink-0">
                   더 많은 글
                 </p>
