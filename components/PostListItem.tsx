@@ -28,15 +28,22 @@ export default function PostListItem({
   image,
 }: PostListItemProps) {
   const reduceMotion = useReducedMotion();
+  const motionVariants = reduceMotion
+    ? { initial: { opacity: 0 }, animate: { opacity: 1 }, exit: { opacity: 0 } }
+    : {
+        initial: { opacity: 0, y: 14 },
+        animate: { opacity: 1, y: 0 },
+        exit: { opacity: 0, y: 14 },
+      };
   const cover = getCoverImage({ category, image });
   const catColor = getCategoryColor(category ?? '');
 
   return (
     <motion.article
       layout
-      initial={{ opacity: 0, y: 14 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 14 }}
+      initial={motionVariants.initial}
+      animate={motionVariants.animate}
+      exit={motionVariants.exit}
       transition={{ duration: reduceMotion ? 0 : 0.22, delay: reduceMotion ? 0 : Math.min(index * 0.04, 0.3) }}
       className="group border-t border-border first:border-t-0"
     >
