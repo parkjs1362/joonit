@@ -12,6 +12,7 @@ export function getCoverImage({
     개발: '/images/covers/dev-1.svg',
     역사: '/images/covers/history-1.svg',
     일상: '/images/covers/daily-1.svg',
+    여행: '/images/covers/travel-1.svg',
     default: '/images/covers/default-1.svg',
   };
 
@@ -29,4 +30,3 @@ export function getCoverAlt({
   const prefix = category ? `${category} ` : '';
   return `${prefix}${title} 커버 이미지`;
 }
-

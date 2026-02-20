@@ -14,6 +14,11 @@ const categoryColorMap: Record<string, { text: string; bg: string; border: strin
     bg: 'bg-emerald-50 dark:bg-emerald-500/10',
     border: 'border-emerald-200 dark:border-emerald-500/20',
   },
+  여행: {
+    text: 'text-sky-500 dark:text-sky-400',
+    bg: 'bg-sky-50 dark:bg-sky-500/10',
+    border: 'border-sky-200 dark:border-sky-500/20',
+  },
 };
 
 const fallback = {

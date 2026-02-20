@@ -20,6 +20,8 @@ function getAccent(category?: string): { a: string; b: string } {
       return { a: '#34D399', b: '#22C55E' };
     case '개발':
       return { a: '#60A5FA', b: '#2563EB' };
+    case '여행':
+      return { a: '#22D3EE', b: '#0EA5E9' };
     default:
       return { a: '#A78BFA', b: '#6366F1' };
   }

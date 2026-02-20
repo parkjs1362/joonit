@@ -9,6 +9,21 @@ import { getCategoryColor } from '@/lib/categoryColors';
 const heroWords = ['읽히는', '구조와', '기억되는', '색감으로', '블로그를', '다듬습니다.'];
 const accentWord = '기억되는';
 
+function getCategorySummary(category: string): string {
+  switch (category) {
+    case '개발':
+      return '웹, UI, 성능, DX';
+    case '역사':
+      return '사실 기반 스토리텔링';
+    case '일상':
+      return '질문, 루틴, 기록';
+    case '여행':
+      return '동선, 예산, 실행 가이드';
+    default:
+      return '기록과 인사이트';
+  }
+}
+
 interface HeroPost {
   slug: string;
   title: string;
@@ -115,7 +130,7 @@ export default function HeroSection({ featured, categories, featuredCover }: Her
         </div>
         <div className="h-8 w-px bg-border" />
         <div className="text-center">
-          <p className="text-2xl sm:text-3xl font-bold text-foreground">3</p>
+          <p className="text-2xl sm:text-3xl font-bold text-foreground">{categories.length}</p>
           <p className="text-sm text-muted mt-1">카테고리</p>
         </div>
         <div className="h-8 w-px bg-border" />
@@ -127,8 +142,8 @@ export default function HeroSection({ featured, categories, featuredCover }: Her
 
       {/* Category tiles */}
       {categories.length > 0 && (
-        <motion.div {...fadeUp(0.75)} className="mt-14 grid gap-4 sm:grid-cols-3 max-w-3xl mx-auto">
-          {categories.slice(0, 3).map((category) => {
+        <motion.div {...fadeUp(0.75)} className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4 max-w-5xl mx-auto">
+          {categories.slice(0, 4).map((category) => {
             const catColor = getCategoryColor(category);
             return (
               <Link
@@ -149,7 +164,7 @@ export default function HeroSection({ featured, categories, featuredCover }: Her
                     <div className={`pl-3 border-l-4 ${catColor.border}`}>
                       <p className="text-sm font-semibold tracking-tight text-white">{category}</p>
                       <p className="mt-1 text-xs text-white/75">
-                        {category === '개발' ? '웹, UI, 성능, DX' : category === '역사' ? '사실 기반 스토리텔링' : '질문, 루틴, 기록'}
+                        {getCategorySummary(category)}
                       </p>
                     </div>
                   </div>

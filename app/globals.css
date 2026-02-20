@@ -35,6 +35,8 @@
   --cat-history-bg: #fffbeb;
   --cat-life: #10b981;       /* 일상 — 초록 */
   --cat-life-bg: #ecfdf5;
+  --cat-travel: #0ea5e9;     /* 여행 — 스카이 */
+  --cat-travel-bg: #f0f9ff;
 }
 
 @theme inline {
@@ -73,6 +75,8 @@
   --cat-history-bg: rgba(251,191,36,0.1);
   --cat-life: #34d399;
   --cat-life-bg: rgba(52,211,153,0.1);
+  --cat-travel: #38bdf8;
+  --cat-travel-bg: rgba(56,189,248,0.1);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -97,6 +101,8 @@
     --cat-history-bg: rgba(251,191,36,0.1);
     --cat-life: #34d399;
     --cat-life-bg: rgba(52,211,153,0.1);
+    --cat-travel: #38bdf8;
+    --cat-travel-bg: rgba(56,189,248,0.1);
   }
 }
 

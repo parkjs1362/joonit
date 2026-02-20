@@ -3,6 +3,7 @@ import path from 'path';
 import matter from 'gray-matter';
 
 const postsDirectory = path.join(process.cwd(), 'content/posts');
+const baseCategories = ['개발', '역사', '일상', '여행'] as const;
 
 export interface PostMeta {
   slug: string;
@@ -81,6 +82,9 @@ export async function getLatestPosts(count: number = 5): Promise<PostMeta[]> {
 
 export async function getAllCategories(): Promise<string[]> {
   const posts = await getAllPosts();
-  const categories = [...new Set(posts.map((post) => post.category))];
-  return categories;
+  const discovered = [...new Set(posts.map((post) => post.category).filter(Boolean))];
+  const extras = discovered
+    .filter((category) => !baseCategories.includes(category as (typeof baseCategories)[number]))
+    .sort((a, b) => a.localeCompare(b, 'ko-KR'));
+  return [...baseCategories, ...extras];
 }
