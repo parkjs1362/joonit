@@ -32,10 +32,11 @@ export default function HomePostsSection({ posts, categories }: HomePostsSection
 
       {filteredPosts.length > 0 ? (
         <AnimatePresence mode="popLayout">
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 [grid-auto-rows:1fr]">
             {filteredPosts.map((post, index) => (
               <motion.div
                 key={post.slug}
+                className="h-full"
                 layout={!reduceMotion}
                 initial={reduceMotion ? undefined : { opacity: 0, y: 24 }}
                 whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}

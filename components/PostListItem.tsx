@@ -49,7 +49,7 @@ export default function PostListItem({
     >
       <Link
         href={`/blog/${slug}`}
-        className="focus-ring flex items-start gap-6 py-7"
+        className="focus-ring flex min-h-[12.5rem] sm:min-h-[13.625rem] items-start gap-6 py-7"
       >
         {/* 텍스트 영역 */}
         <div className="min-w-0 flex-1">
@@ -75,18 +75,20 @@ export default function PostListItem({
           </p>
 
           {/* 태그 */}
-          {tags && tags.length > 0 && (
-            <div className="mt-3 flex flex-wrap gap-1.5">
-              {tags.slice(0, 3).map((tag) => (
-                <span
-                  key={tag}
-                  className="px-2 py-0.5 text-[11px] rounded-full border border-border bg-card/80 text-muted"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-          )}
+          <div className="mt-3 min-h-7">
+            {tags && tags.length > 0 && (
+              <div className="flex min-h-7 flex-wrap gap-1.5">
+                {tags.slice(0, 3).map((tag) => (
+                  <span
+                    key={tag}
+                    className="px-2 py-0.5 text-[11px] rounded-full border border-border bg-card/80 text-muted"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
 
         {/* 썸네일 */}
