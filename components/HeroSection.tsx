@@ -9,21 +9,6 @@ import { getCategoryColor } from '@/lib/categoryColors';
 const heroWords = ['읽히는', '구조와', '기억되는', '색감으로', '블로그를', '다듬습니다.'];
 const accentWord = '기억되는';
 
-function getCategorySummary(category: string): string {
-  switch (category) {
-    case '개발':
-      return '웹, UI, 성능, DX';
-    case '역사':
-      return '사실 기반 스토리텔링';
-    case '일상':
-      return '질문, 루틴, 기록';
-    case '여행':
-      return '동선, 예산, 실행 가이드';
-    default:
-      return '기록과 인사이트';
-  }
-}
-
 interface HeroPost {
   slug: string;
   title: string;
@@ -37,9 +22,21 @@ interface HeroSectionProps {
   featured: HeroPost | null | undefined;
   categories: string[];
   featuredCover: string | null;
+  stats: {
+    totalPosts: number;
+    categoryCount: number;
+    recentPostsCount: number;
+  };
+  categoryMeta: Record<string, { summary: string; count: number }>;
 }
 
-export default function HeroSection({ featured, categories, featuredCover }: HeroSectionProps) {
+export default function HeroSection({
+  featured,
+  categories,
+  featuredCover,
+  stats,
+  categoryMeta,
+}: HeroSectionProps) {
   const reduceMotion = useReducedMotion();
 
   const fadeUp = (delay: number) =>
@@ -125,18 +122,20 @@ export default function HeroSection({ featured, categories, featuredCover }: Her
       {/* Blog stats */}
       <motion.div {...fadeUp(0.72)} className="flex items-center justify-center gap-8 mt-10">
         <div className="text-center">
-          <p className="text-2xl sm:text-3xl font-bold text-foreground">80+</p>
+          <p className="text-2xl sm:text-3xl font-bold text-foreground">
+            {stats.totalPosts.toLocaleString('ko-KR')}
+          </p>
           <p className="text-sm text-muted mt-1">발행된 글</p>
         </div>
         <div className="h-8 w-px bg-border" />
         <div className="text-center">
-          <p className="text-2xl sm:text-3xl font-bold text-foreground">{categories.length}</p>
+          <p className="text-2xl sm:text-3xl font-bold text-foreground">{stats.categoryCount}</p>
           <p className="text-sm text-muted mt-1">카테고리</p>
         </div>
         <div className="h-8 w-px bg-border" />
         <div className="text-center">
-          <p className="text-2xl sm:text-3xl font-bold text-foreground">매주</p>
-          <p className="text-sm text-muted mt-1">업데이트</p>
+          <p className="text-2xl sm:text-3xl font-bold text-foreground">{stats.recentPostsCount}</p>
+          <p className="text-sm text-muted mt-1">최근 7일 업데이트</p>
         </div>
       </motion.div>
 
@@ -164,7 +163,7 @@ export default function HeroSection({ featured, categories, featuredCover }: Her
                     <div className={`pl-3 border-l-4 ${catColor.border}`}>
                       <p className="text-sm font-semibold tracking-tight text-white">{category}</p>
                       <p className="mt-1 text-xs text-white/75">
-                        {getCategorySummary(category)}
+                        {categoryMeta[category]?.summary ?? `${categoryMeta[category]?.count ?? 0}편 발행`}
                       </p>
                     </div>
                   </div>

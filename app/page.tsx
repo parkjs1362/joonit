@@ -5,6 +5,39 @@ import { getAllPosts, getAllCategories } from '@/lib/posts';
 import { getCoverImage } from '@/lib/covers';
 import HomePostsSection from './HomePostsSection';
 
+function getCategoryMeta(
+  posts: Array<{ category?: string; tags?: string[] }>,
+  categories: string[]
+) {
+  const meta: Record<string, { summary: string; count: number }> = {};
+
+  for (const category of categories) {
+    const inCategory = posts.filter((post) => post.category === category);
+    const count = inCategory.length;
+    const tagCounter = new Map<string, number>();
+
+    for (const post of inCategory) {
+      for (const tag of post.tags ?? []) {
+        const normalized = tag.trim();
+        if (!normalized) continue;
+        tagCounter.set(normalized, (tagCounter.get(normalized) ?? 0) + 1);
+      }
+    }
+
+    const topTags = [...tagCounter.entries()]
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 3)
+      .map(([tag]) => tag);
+
+    meta[category] = {
+      summary: topTags.length > 0 ? topTags.join(', ') : `${count}편 발행`,
+      count,
+    };
+  }
+
+  return meta;
+}
+
 export default async function HomePage() {
   const posts = await getAllPosts();
   const categories = await getAllCategories();
@@ -13,6 +46,16 @@ export default async function HomePage() {
   const featuredCover = featured
     ? getCoverImage({ category: featured.category, image: featured.image })
     : null;
+  const categoriesWithPosts = categories.filter((category) =>
+    posts.some((post) => post.category === category)
+  );
+  const sevenDaysAgo = new Date();
+  sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+  const recentPostsCount = posts.filter((post) => {
+    const published = new Date(`${post.date}T00:00:00`);
+    return !Number.isNaN(published.getTime()) && published >= sevenDaysAgo;
+  }).length;
+  const categoryMeta = getCategoryMeta(posts, categories);
 
   return (
     <div data-layout-version="home-v5">
@@ -22,6 +65,12 @@ export default async function HomePage() {
           featured={featured}
           categories={categories}
           featuredCover={featuredCover}
+          stats={{
+            totalPosts: posts.length,
+            categoryCount: categoriesWithPosts.length,
+            recentPostsCount,
+          }}
+          categoryMeta={categoryMeta}
         />
       </div>
 
