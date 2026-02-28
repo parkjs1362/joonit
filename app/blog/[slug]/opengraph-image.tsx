@@ -14,6 +14,8 @@ export const contentType = 'image/png';
 
 function getAccent(category?: string): { a: string; b: string } {
   switch (category) {
+    case '경제':
+      return { a: '#A3E635', b: '#65A30D' };
     case '역사':
       return { a: '#F97316', b: '#FB7185' };
     case '일상':

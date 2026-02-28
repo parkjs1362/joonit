@@ -3,7 +3,7 @@ import path from 'path';
 import matter from 'gray-matter';
 
 const postsDirectory = path.join(process.cwd(), 'content/posts');
-const baseCategories = ['개발', '역사', '일상', '여행'] as const;
+const baseCategories = ['개발', '경제', '역사', '일상', '여행'] as const;
 
 export interface PostMeta {
   slug: string;

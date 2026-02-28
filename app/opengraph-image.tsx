@@ -88,7 +88,7 @@ export default async function OpenGraphImage() {
                 color: '#ffffff',
               }}
             >
-              개발과 역사, 그리고 일상
+              개발, 경제, 역사, 그리고 일상
             </div>
 
             <div

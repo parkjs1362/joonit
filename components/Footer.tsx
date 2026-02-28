@@ -6,7 +6,7 @@ export default function Footer() {
     <footer className="border-t border-border/70 mt-auto">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="flex flex-wrap gap-2 mb-6">
-          {['개발', '역사', '일상', '여행'].map((cat) => (
+          {['개발', '경제', '역사', '일상', '여행'].map((cat) => (
             <Link
               key={cat}
               href={`/blog?category=${encodeURIComponent(cat)}`}

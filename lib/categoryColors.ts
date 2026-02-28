@@ -4,6 +4,11 @@ const categoryColorMap: Record<string, { text: string; bg: string; border: strin
     bg: 'bg-blue-50 dark:bg-blue-500/10',
     border: 'border-blue-200 dark:border-blue-500/20',
   },
+  경제: {
+    text: 'text-lime-600 dark:text-lime-400',
+    bg: 'bg-lime-50 dark:bg-lime-500/10',
+    border: 'border-lime-200 dark:border-lime-500/20',
+  },
   역사: {
     text: 'text-amber-500 dark:text-amber-400',
     bg: 'bg-amber-50 dark:bg-amber-500/10',

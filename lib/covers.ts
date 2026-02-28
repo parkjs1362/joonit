@@ -10,6 +10,7 @@ export function getCoverImage({
   // Category-level unified covers (same image for all posts in a category).
   const byCategory: Record<string, string> = {
     개발: '/images/covers/dev-1.svg',
+    경제: '/images/covers/economy-1.svg',
     역사: '/images/covers/history-1.svg',
     일상: '/images/covers/daily-1.svg',
     여행: '/images/covers/travel-1.svg',

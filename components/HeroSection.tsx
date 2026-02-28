@@ -93,7 +93,7 @@ export default function HeroSection({
         {...fadeUp(0.45)}
         className="mt-6 text-lg sm:text-xl text-[#6e6e73] dark:text-muted text-center max-w-2xl mx-auto leading-relaxed"
       >
-        개발, 역사, 일상을 실제 운영 경험 중심으로 정리합니다. 카드 레이아웃과
+        개발, 경제, 역사, 일상을 실제 운영 경험 중심으로 정리합니다. 카드 레이아웃과
         타이포를 계속 개선해, 정보 밀도와 가독성이 함께 남도록 설계합니다.
       </motion.p>
 
@@ -141,8 +141,11 @@ export default function HeroSection({
 
       {/* Category tiles */}
       {categories.length > 0 && (
-        <motion.div {...fadeUp(0.75)} className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4 max-w-5xl mx-auto">
-          {categories.slice(0, 4).map((category) => {
+        <motion.div
+          {...fadeUp(0.75)}
+          className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 max-w-6xl mx-auto"
+        >
+          {categories.slice(0, 5).map((category) => {
             const catColor = getCategoryColor(category);
             return (
               <Link
