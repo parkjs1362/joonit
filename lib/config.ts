@@ -13,4 +13,8 @@ export const siteConfig = {
   analytics: {
     gaId: 'G-SR5RYTMCET',
   },
+  adsense: {
+    publisherId: 'ca-pub-9437130351538375',
+    adsTxt: 'google.com, pub-9437130351538375, DIRECT, f08c47fec0942fa0',
+  },
 } as const;

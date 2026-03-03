@@ -134,10 +134,10 @@ export default function RootLayout({
           </>
         )}
         {/* Google AdSense */}
-        <meta name="google-adsense-account" content="ca-pub-9437130351538375" />
+        <meta name="google-adsense-account" content={siteConfig.adsense.publisherId} />
         <script
           async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9437130351538375"
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${siteConfig.adsense.publisherId}`}
           crossOrigin="anonymous"
         />
       </head>
