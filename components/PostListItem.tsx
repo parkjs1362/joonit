@@ -31,9 +31,9 @@ export default function PostListItem({
   const motionVariants = reduceMotion
     ? { initial: { opacity: 0 }, animate: { opacity: 1 }, exit: { opacity: 0 } }
     : {
-        initial: { opacity: 0, y: 14 },
+        initial: { opacity: 0, y: 12 },
         animate: { opacity: 1, y: 0 },
-        exit: { opacity: 0, y: 14 },
+        exit: { opacity: 0, y: 12 },
       };
   const cover = getCoverImage({ category, image });
   const catColor = getCategoryColor(category ?? '');
@@ -44,17 +44,15 @@ export default function PostListItem({
       initial={motionVariants.initial}
       animate={motionVariants.animate}
       exit={motionVariants.exit}
-      transition={{ duration: reduceMotion ? 0 : 0.22, delay: reduceMotion ? 0 : Math.min(index * 0.04, 0.3) }}
-      className="group border-t border-border first:border-t-0"
+      transition={{ duration: reduceMotion ? 0 : 0.2, delay: reduceMotion ? 0 : Math.min(index * 0.03, 0.24) }}
+      className="mb-3"
     >
       <Link
         href={`/blog/${slug}`}
-        className="focus-ring flex min-h-[12.5rem] sm:min-h-[13.625rem] items-start gap-6 py-7"
+        className="focus-ring card-hover flex min-h-[11rem] sm:min-h-[12rem] items-stretch gap-4 sm:gap-5 rounded-xl border border-border bg-white/80 dark:bg-card/70 p-4 sm:p-5"
       >
-        {/* 텍스트 영역 */}
         <div className="min-w-0 flex-1">
-          {/* 메타 */}
-          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs font-semibold tracking-[0.1em] uppercase text-muted">
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs font-semibold tracking-[0.08em] uppercase text-muted">
             <time dateTime={date}>{date}</time>
             {category && (
               <>
@@ -64,24 +62,21 @@ export default function PostListItem({
             )}
           </div>
 
-          {/* 제목 */}
-          <h2 className="mt-2.5 text-xl sm:text-2xl font-semibold tracking-tight leading-[1.18] group-hover:text-primary transition-colors duration-200 line-clamp-2">
+          <h2 className="mt-2 text-lg sm:text-xl font-semibold tracking-tight leading-[1.24] text-foreground group-hover:text-primary transition-colors duration-200 line-clamp-2">
             {title}
           </h2>
 
-          {/* 설명 */}
-          <p className="mt-2 text-sm text-muted leading-relaxed line-clamp-2 max-w-xl">
+          <p className="mt-2 text-sm text-muted leading-relaxed line-clamp-2 max-w-2xl min-h-[2.7rem]">
             {description}
           </p>
 
-          {/* 태그 */}
-          <div className="mt-3 min-h-7">
+          <div className="mt-3 min-h-6">
             {tags && tags.length > 0 && (
-              <div className="flex min-h-7 flex-wrap gap-1.5">
+              <div className="flex min-h-6 flex-wrap gap-1.5">
                 {tags.slice(0, 3).map((tag) => (
                   <span
                     key={tag}
-                    className="px-2 py-0.5 text-[11px] rounded-full border border-border bg-card/80 text-muted"
+                    className="px-2 py-0.5 text-[11px] rounded-full border border-border bg-card/70 text-muted"
                   >
                     {tag}
                   </span>
@@ -91,15 +86,14 @@ export default function PostListItem({
           </div>
         </div>
 
-        {/* 썸네일 */}
-        <div className="relative hidden sm:block w-[120px] md:w-[160px] shrink-0">
-          <div className="relative aspect-[4/3] overflow-hidden rounded-xl border border-border bg-card">
+        <div className="relative hidden sm:block w-[112px] md:w-[148px] shrink-0">
+          <div className="relative h-full min-h-[104px] overflow-hidden rounded-lg border border-border bg-card">
             <Image
               src={cover}
               alt={getCoverAlt({ title, category })}
               fill
               className="object-cover scale-[1.01] transition-transform duration-500 group-hover:scale-[1.06]"
-              sizes="(max-width: 768px) 120px, 160px"
+              sizes="(max-width: 768px) 112px, 148px"
             />
           </div>
         </div>

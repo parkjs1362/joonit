@@ -37,19 +37,14 @@ export default function BlogContent({
       return hay.includes(normalizedQuery);
     });
 
-  const [heroPosts, listPosts] = filteredPosts.length > 0
-    ? [filteredPosts.slice(0, 1), filteredPosts.slice(1)]
-    : [[], []];
+  const [heroPosts, listPosts] =
+    filteredPosts.length > 0 ? [filteredPosts.slice(0, 1), filteredPosts.slice(1)] : [[], []];
 
   return (
-    <div className="grid gap-10 lg:grid-cols-[300px_1fr]">
-      {/* 사이드바 */}
-      <aside className="space-y-5 lg:sticky lg:top-28 self-start">
-        {/* 검색 */}
-        <div className="rounded-2xl border border-border bg-card/60 p-5 backdrop-blur-sm">
-          <p className="text-xs font-semibold tracking-[0.08em] uppercase text-muted mb-3">
-            검색
-          </p>
+    <div className="grid gap-8 lg:grid-cols-[280px_1fr] lg:gap-10">
+      <aside className="space-y-4 lg:sticky lg:top-24 self-start">
+        <div className="rounded-2xl border border-border bg-white/80 dark:bg-card/60 p-5 backdrop-blur-sm">
+          <p className="text-xs font-semibold tracking-[0.08em] uppercase text-muted mb-3">검색</p>
           <div className="relative">
             <svg
               className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted"
@@ -69,17 +64,14 @@ export default function BlogContent({
               onChange={(e) => setQuery(e.target.value)}
               placeholder="제목, 태그, 카테고리..."
               aria-label="블로그 글 검색"
-              className="w-full rounded-xl border border-border bg-background/40 px-10 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/30 transition"
+              className="w-full rounded-xl border border-border bg-background/70 px-10 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/30 transition"
             />
           </div>
           <p className="mt-3 text-xs text-muted">{filteredPosts.length}개의 글</p>
         </div>
 
-        {/* 카테고리 */}
-        <div className="rounded-2xl border border-border bg-card/60 p-5 backdrop-blur-sm">
-          <p className="text-xs font-semibold tracking-[0.08em] uppercase text-muted mb-3">
-            주제
-          </p>
+        <div className="rounded-2xl border border-border bg-white/80 dark:bg-card/60 p-5 backdrop-blur-sm">
+          <p className="text-xs font-semibold tracking-[0.08em] uppercase text-muted mb-3">주제</p>
           <CategoryFilter
             categories={categories}
             selected={selected}
@@ -89,15 +81,13 @@ export default function BlogContent({
         </div>
       </aside>
 
-      {/* 메인 컨텐츠 */}
-      <section aria-label="블로그 글 목록">
+      <section aria-label="블로그 글 목록" className="min-w-0">
         {filteredPosts.length === 0 ? (
           <div className="py-20 text-center text-muted">
             <p>해당 조건에 맞는 글이 없습니다.</p>
           </div>
         ) : (
           <>
-            {/* Hero — 최신 글 */}
             {heroPosts.map((post) => (
               <BlogHero
                 key={post.slug}
@@ -110,9 +100,8 @@ export default function BlogContent({
               />
             ))}
 
-            {/* 리스트 구분선 */}
             {listPosts.length > 0 && (
-              <div className="mb-2 flex items-center gap-4" aria-hidden="true">
+              <div className="mb-3 mt-2 flex items-center gap-4" aria-hidden="true">
                 <p className="text-xs font-semibold tracking-[0.1em] uppercase text-muted shrink-0">
                   더 많은 글
                 </p>
@@ -120,7 +109,6 @@ export default function BlogContent({
               </div>
             )}
 
-            {/* 리스트 — 나머지 글 */}
             <AnimatePresence mode="popLayout">
               {listPosts.map((post, idx) => (
                 <PostListItem

@@ -15,37 +15,39 @@ export default function HomePostsSection({ posts, categories }: HomePostsSection
   const [selected, setSelected] = useState('전체');
   const reduceMotion = useReducedMotion();
 
-  const filteredPosts =
+  const candidatePosts =
     selected === '전체'
-      ? posts.slice(0, 6)
-      : posts.filter((post) => post.category === selected).slice(0, 6);
+      ? posts
+      : posts.filter((post) => post.category === selected);
+
+  const filteredPosts = candidatePosts.slice(0, 6);
 
   return (
     <div>
       <div className="mb-6">
-        <CategoryFilter
-          categories={categories}
-          selected={selected}
-          onChange={setSelected}
-        />
+        <CategoryFilter categories={categories} selected={selected} onChange={setSelected} />
       </div>
 
       {filteredPosts.length > 0 ? (
         <AnimatePresence mode="popLayout">
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 [grid-auto-rows:1fr]">
+          <div className="grid items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3 [grid-auto-rows:minmax(0,1fr)]">
             {filteredPosts.map((post, index) => (
               <motion.div
                 key={post.slug}
-                className="h-full"
+                className="h-full min-h-0"
                 layout={!reduceMotion}
-                initial={reduceMotion ? undefined : { opacity: 0, y: 24 }}
+                initial={reduceMotion ? undefined : { opacity: 0, y: 20 }}
                 whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-80px' }}
-                transition={reduceMotion ? undefined : {
-                  delay: index * 0.05,
-                  duration: 0.5,
-                  ease: [0.25, 0.1, 0.25, 1],
-                }}
+                transition={
+                  reduceMotion
+                    ? undefined
+                    : {
+                        delay: index * 0.04,
+                        duration: 0.45,
+                        ease: [0.25, 0.1, 0.25, 1],
+                      }
+                }
               >
                 <PostCard
                   slug={post.slug}
